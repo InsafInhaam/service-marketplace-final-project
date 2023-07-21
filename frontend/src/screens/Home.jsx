@@ -607,9 +607,8 @@ const Home = () => {
           </section>
           {/* Featued Vender End */}
           {/* Recently Posted Jobs */}
-          <div className="section-full aon-postjobs-area2">
+          {/* <div className="section-full aon-postjobs-area2">
             <div className="container">
-              {/*Title Section Start*/}
               <div className="section-head">
                 <div className="row">
                   <div className="col-lg-6 col-md-12">
@@ -628,7 +627,6 @@ const Home = () => {
               <div className="section-content">
                 <div className="aon-postjobs-area2-section">
                   <div className="row">
-                    {/* COLUMNS 1 */}
                     <div className="col-lg-6 col-md-6">
                       <div className="aon-post-jobsCol media-bg-animate mba-bdr-15">
                         <div className="aon-post-jobs2 aon-icon-effect">
@@ -675,7 +673,6 @@ const Home = () => {
                         </div>
                       </div>
                     </div>
-                    {/* COLUMNS 2 */}
                     <div className="col-lg-6 col-md-6">
                       <div className="aon-post-jobsCol media-bg-animate mba-bdr-15">
                         <div className="aon-post-jobs2 aon-icon-effect">
@@ -722,7 +719,6 @@ const Home = () => {
                         </div>
                       </div>
                     </div>
-                    {/* COLUMNS 3 */}
                     <div className="col-lg-6 col-md-6">
                       <div className="aon-post-jobsCol media-bg-animate mba-bdr-15">
                         <div className="aon-post-jobs2 aon-icon-effect">
@@ -769,7 +765,6 @@ const Home = () => {
                         </div>
                       </div>
                     </div>
-                    {/* COLUMNS 4 */}
                     <div className="col-lg-6 col-md-6">
                       <div className="aon-post-jobsCol media-bg-animate mba-bdr-15">
                         <div className="aon-post-jobs2 aon-icon-effect">
@@ -816,7 +811,6 @@ const Home = () => {
                         </div>
                       </div>
                     </div>
-                    {/* COLUMNS 5 */}
                     <div className="col-lg-6 col-md-6">
                       <div className="aon-post-jobsCol media-bg-animate mba-bdr-15">
                         <div className="aon-post-jobs2 aon-icon-effect">
@@ -863,7 +857,6 @@ const Home = () => {
                         </div>
                       </div>
                     </div>
-                    {/* COLUMNS 6 */}
                     <div className="col-lg-6 col-md-6">
                       <div className="aon-post-jobsCol media-bg-animate mba-bdr-15">
                         <div className="aon-post-jobs2 aon-icon-effect">
@@ -914,7 +907,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* Recently Posted Jobs Section END */}
 
           {/* Services Finder categories END */}

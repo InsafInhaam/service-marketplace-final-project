@@ -5,30 +5,45 @@ const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
 
 // Admin login
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { email, password } = req.body;
-
-    // Find the admin by email
     const admin = await Admin.findOne({ email });
+
     if (!admin) {
-      return res.status(401).json({ message: 'Authentication failed' });
+      return res.json({ success: false, message: "Admin not found" });
     }
 
-    // Compare passwords
-    const passwordMatch = await bcrypt.compare(password, admin.password);
-    if (!passwordMatch) {
-      return res.status(401).json({ message: 'Authentication failed' });
+    const validPassword = await bcrypt.compare(password, admin.password);
+
+    if (!validPassword) {
+      return res.json({ success: false, message: "Invalid password" });
     }
 
-    // Generate and send the JWT token
-    const token = jwt.sign({ adminId: admin._id }, 'your-secret-key');
-    res.json({ token });
+    // Generate JWT token
+    const token = jwt.sign({ id: admin._id }, process.env.JWT_SECERT_KEY);
+
+    const { _id, name } = admin;
+
+    return res.status(200).json({
+      message: "Successfully logged in",
+      admin: {
+        email: admin.email,
+        _id,
+        name,
+      },
+      token,
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({
+      success: false,
+      error: "An error occurred while logging",
+    });
   }
 });
+
 
 // Get all admins
 router.get('/admins', async (req, res) => {
@@ -58,7 +73,7 @@ router.get('/admins/:id', async (req, res) => {
 // Create a new admin
 router.post('/admins', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
 
     // Check if the admin already exists
     const existingAdmin = await Admin.findOne({ email });
@@ -70,13 +85,13 @@ router.post('/admins', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new admin
-    const admin = new Admin({ email, password: hashedPassword });
+    const admin = new Admin({ name, email, password: hashedPassword });
     await admin.save();
 
     res.status(201).json({ message: 'Admin created successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

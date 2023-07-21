@@ -45,7 +45,7 @@ router.post("/login", async (req, res) => {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "An error occurred while logging insaf",
+      message: "An error occurred while logging",
     });
   }
 });
