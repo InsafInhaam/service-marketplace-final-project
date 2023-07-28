@@ -56,7 +56,7 @@ const Login = () => {
       />
       <div className="contents order-2 order-md-1">
         <div className="container">
-          <div className="row align-items-center justify-content-center">
+          <div className="row align-items-center justify-content-center login-page-row">
             <div className="col-md-7">
               <h3>
                 Login to <strong>Service Finder</strong>

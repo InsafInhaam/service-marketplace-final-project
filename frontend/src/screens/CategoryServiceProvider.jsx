@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 import { useLocation } from "react-router-dom";
+import LabourCard from "../components/LabourCard";
 
 const CategoryServiceProvider = () => {
   const location = useLocation();
@@ -58,7 +59,7 @@ const CategoryServiceProvider = () => {
               <div className="row">
                 {/*Category Detail Left*/}
                 <div className="col-md-6">
-                  <div className="sf-caty-pic">
+                <div className="sf-caty-pic" style={{ backgroundImage: `url(${category.image})` }}>
                     <div className="sf-caty-btn">View Providers</div>
                     {/* <div className="sf-caty-cirle">
                       <i className="fa fa-arrow-circle-down" />
@@ -75,6 +76,13 @@ const CategoryServiceProvider = () => {
                     <h3>{category.title}</h3>
                     <div className="sf-caty-text">
                       <p>{category.description}</p>
+                    </div>
+
+                    <div className="sf-caty-text">
+                      <p>
+                        <strong>{category.totalServiceProviders}</strong>
+                        Listing labours in this category
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -163,86 +171,8 @@ const CategoryServiceProvider = () => {
                 </div>
                 {/*Showing results topbar End*/}
                 <div className="row">
-                  {categoryLabours?.map((catLabour) => (
-                    <div className="col-md-6" key={catLabour._id}>
-                      <div className="sf-vender-list-wrap">
-                        <div className="sf-vender-list-box d-flex">
-                          <div
-                            className="sf-vender-list-pic"
-                            style={{
-                              backgroundImage: `url(${catLabour.image})`,
-                            }}
-                          >
-                            <a
-                              className="sf-vender-pic-link"
-                              href={`/labour-profile/${catLabour._id}`}
-                            />
-                          </div>
-                          <div className="sf-vender-list-info">
-                            <h4 className="sf-venders-title">
-                              <a href={`/labour-profile/${catLabour._id}`}>
-                                {catLabour.name}
-                              </a>
-                            </h4>
-                            <span className="sf-venders-address">
-                              <i className="fa fa-map-marker" />
-                              {catLabour.city}
-                            </span>
-                            <div className="sf-ow-pro-rating">
-                              <span className="fa fa-star" />
-                              <span className="fa fa-star" />
-                              <span className="fa fa-star" />
-                              <span className="fa fa-star" />
-                              <span className="fa fa-star text-gray" />
-                            </div>
-                            <p>
-                              Through our expertise, technological knowledge,
-                              global presence and bespoke.
-                            </p>
-                            <div className="sf-pro-check">
-                              <span>
-                                <i className="fa fa-check" />
-                              </span>
-                            </div>
-                            <div className="sf-pro-favorite">
-                              <a href="#">
-                                <i className="fa fa-heart-o" />
-                              </a>
-                            </div>
-                            <div className="dropdown action-dropdown dropdown-left">
-                              <button
-                                className="action-button gray dropdown-toggle"
-                                type="button"
-                                data-toggle="dropdown"
-                                aria-expanded="true"
-                              >
-                                <i className="fa fa-ellipsis-v" />
-                              </button>
-                              <ul className="dropdown-menu">
-                                <li>
-                                  <a href="javascript:;">
-                                    <i className="feather-sliders" /> Display
-                                    Services
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="javascript:;">
-                                    <i className="feather-save" /> 0 Review
-                                    Comments
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="javascript:;">
-                                    <i className="feather-trash" /> Request A
-                                    Quote
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  {categoryLabours?.map((labour) => (
+                    <LabourCard key={labour._id} labour={labour} />
                   ))}
 
                   {/*Pagination Start*/}

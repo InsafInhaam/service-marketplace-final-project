@@ -9,11 +9,63 @@ const Home = () => {
         <Navbar />
         {/* partial */}
         <div className="container-fluid page-body-wrapper">
-          
-          <Sidebar/>
+          <Sidebar />
           {/* partial */}
           <div className="main-panel">
             <div className="content-wrapper">
+              <div className="main-content">
+              <div className="row">
+          <div className="col-lg-3 col-sm-6">
+            <div className="card-box bg-blue">
+              <div className="inner">
+                <h3> 13436 </h3>
+                <p> Student Strength </p>
+              </div>
+              <div className="icon">
+                <i className="fa fa-graduation-cap" aria-hidden="true" />
+              </div>
+              <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
+            </div>
+          </div>
+          <div className="col-lg-3 col-sm-6">
+            <div className="card-box bg-green">
+              <div className="inner">
+                <h3> ₹185358 </h3>
+                <p> Today’s Collection </p>
+              </div>
+              <div className="icon">
+                <i className="fa fa-money" aria-hidden="true" />
+              </div>
+              <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
+            </div>
+          </div>
+          <div className="col-lg-3 col-sm-6">
+            <div className="card-box bg-orange">
+              <div className="inner">
+                <h3> 5464 </h3>
+                <p> New Admissions </p>
+              </div>
+              <div className="icon">
+                <i className="fa fa-user-plus" aria-hidden="true" />
+              </div>
+              <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
+            </div>
+          </div>
+          <div className="col-lg-3 col-sm-6">
+            <div className="card-box bg-red">
+              <div className="inner">
+                <h3> 723 </h3>
+                <p> Faculty Strength </p>
+              </div>
+              <div className="icon">
+                <i className="fa fa-users" />
+              </div>
+              <a href="#" className="card-box-footer">View More <i className="fa fa-arrow-circle-right" /></a>
+            </div>
+          </div>
+        </div>
+                {/* Page content */}
+              </div>
               <div className="row">
                 <div className="col-sm-12">
                   <div className="home-tab">
@@ -47,64 +99,6 @@ const Home = () => {
                         role="tabpanel"
                         aria-labelledby="overview"
                       >
-                        <div className="row">
-                          <div className="col-sm-12">
-                            <div className="statistics-details d-flex align-items-center justify-content-between">
-                              <div>
-                                <p className="statistics-title">Bounce Rate</p>
-                                <h3 className="rate-percentage">32.53%</h3>
-                                <p className="text-danger d-flex">
-                                  <i className="mdi mdi-menu-down" />
-                                  <span>-0.5%</span>
-                                </p>
-                              </div>
-                              <div>
-                                <p className="statistics-title">Page Views</p>
-                                <h3 className="rate-percentage">7,682</h3>
-                                <p className="text-success d-flex">
-                                  <i className="mdi mdi-menu-up" />
-                                  <span>+0.1%</span>
-                                </p>
-                              </div>
-                              <div>
-                                <p className="statistics-title">New Sessions</p>
-                                <h3 className="rate-percentage">68.8</h3>
-                                <p className="text-danger d-flex">
-                                  <i className="mdi mdi-menu-down" />
-                                  <span>68.8</span>
-                                </p>
-                              </div>
-                              <div className="d-none d-md-block">
-                                <p className="statistics-title">
-                                  Avg. Time on Site
-                                </p>
-                                <h3 className="rate-percentage">2m:35s</h3>
-                                <p className="text-success d-flex">
-                                  <i className="mdi mdi-menu-down" />
-                                  <span>+0.8%</span>
-                                </p>
-                              </div>
-                              <div className="d-none d-md-block">
-                                <p className="statistics-title">New Sessions</p>
-                                <h3 className="rate-percentage">68.8</h3>
-                                <p className="text-danger d-flex">
-                                  <i className="mdi mdi-menu-down" />
-                                  <span>68.8</span>
-                                </p>
-                              </div>
-                              <div className="d-none d-md-block">
-                                <p className="statistics-title">
-                                  Avg. Time on Site
-                                </p>
-                                <h3 className="rate-percentage">2m:35s</h3>
-                                <p className="text-success d-flex">
-                                  <i className="mdi mdi-menu-down" />
-                                  <span>+0.8%</span>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                         <div className="row"></div>
                       </div>
                     </div>

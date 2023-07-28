@@ -28,13 +28,13 @@ const Sidebar = () => {
             <div className="collapse" id="ui-basic">
               <ul className="nav flex-column sub-menu">
                 <li className="nav-item">
-                  {" "}
+                  
                   <a className="nav-link" href="pages/ui-features/buttons.html">
                     Buttons
                   </a>
                 </li>
                 <li className="nav-item">
-                  {" "}
+                  
                   <a
                     className="nav-link"
                     href="pages/ui-features/dropdowns.html"
@@ -43,7 +43,7 @@ const Sidebar = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                  {" "}
+                  
                   <a
                     className="nav-link"
                     href="pages/ui-features/typography.html"

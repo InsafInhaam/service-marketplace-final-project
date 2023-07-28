@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import Categorycard from "../components/Categorycard";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -17,7 +18,7 @@ const Categories = () => {
 
   return (
     <div className="page-wraper">
-      {" "}
+      
       {/* HEADER START */}
       <Navbar />
       {/* HEADER END */}
@@ -37,26 +38,7 @@ const Categories = () => {
             <div className="aon-all-categories-block2">
               <div className="row justify-content-center">
                 {categories?.map((category) => (
-                  <div className="col-lg-4 col-md-6">
-                    <div className="media-bg-animate mba-bdr-15">
-                      <div className="aon-categories-area2-iconbox aon-icon-effect">
-                        <div className="aon-cate-area2-icon">
-                          <span>
-                            <i className="aon-icon">
-                              <img src={category.image} alt={category.title} />
-                            </i>
-                          </span>
-                        </div>
-                        <div className="aon-cate-area2-content">
-                          <h4 className="aon-tilte">
-                          <a href={`/service-provider/${category._id}`}>{category.title}</a>
-
-                          </h4>
-                          <p>124 Listing</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <Categorycard category={category} key={category._id}/>
                 ))}
               </div>
             </div>

@@ -12,13 +12,13 @@ router.post("/login", async (req, res) => {
     const admin = await Admin.findOne({ email });
 
     if (!admin) {
-      return res.json({ success: false, message: "Admin not found" });
+      return res.json({ success: false, error: "Admin not found" });
     }
 
     const validPassword = await bcrypt.compare(password, admin.password);
 
     if (!validPassword) {
-      return res.json({ success: false, message: "Invalid password" });
+      return res.json({ success: false, error: "Invalid password" });
     }
 
     // Generate JWT token
@@ -52,7 +52,7 @@ router.get('/admins', async (req, res) => {
     res.json(admins);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -61,12 +61,12 @@ router.get('/admins/:id', async (req, res) => {
   try {
     const admin = await Admin.findById(req.params.id);
     if (!admin) {
-      return res.status(404).json({ message: 'Admin not found' });
+      return res.status(404).json({ error: 'Admin not found' });
     }
     res.json(admin);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -78,7 +78,7 @@ router.post('/admins', async (req, res) => {
     // Check if the admin already exists
     const existingAdmin = await Admin.findOne({ email });
     if (existingAdmin) {
-      return res.status(409).json({ message: 'Admin already exists' });
+      return res.status(409).json({ error: 'Admin already exists' });
     }
 
     // Hash the password
@@ -107,13 +107,13 @@ router.put('/admins/:id', async (req, res) => {
     );
 
     if (!admin) {
-      return res.status(404).json({ message: 'Admin not found' });
+      return res.status(404).json({ error: 'Admin not found' });
     }
 
     res.json(admin);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -123,13 +123,13 @@ router.delete('/admins/:id', async (req, res) => {
     const admin = await Admin.findByIdAndRemove(req.params.id);
 
     if (!admin) {
-      return res.status(404).json({ message: 'Admin not found' });
+      return res.status(404).json({ error: 'Admin not found' });
     }
 
     res.json({ message: 'Admin deleted successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

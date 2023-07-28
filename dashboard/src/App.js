@@ -12,6 +12,7 @@ import Popup from "./components/Popup";
 import Users from "./screens/Users";
 import Labours from "./screens/Labours";
 import Categories from "./screens/Categories";
+import Admins from "./screens/Admins";
 
 // Define the initial state
 const initialState = {
@@ -55,6 +56,13 @@ const Routing = () => {
         path="/category"
         element={user ? <Categories /> : <Navigate to="/login" />}
       />
+
+      <Route
+        exact
+        path="/admin"
+        element={user ? <Admins /> : <Navigate to="/login" />}
+      />
+
       <Route exact path="/login" element={<Login />} />
     </Routes>
   );

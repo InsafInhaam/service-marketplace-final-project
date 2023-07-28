@@ -47,7 +47,7 @@ const CategoriesDetail = () => {
                       cleaning circumstances. A 2000 square foot home will
                       typically cost $250. One-time deep cleanings will cost
                       more and signing up for regular cleaning usually will be
-                      more cost-effective.{" "}
+                      more cost-effective.
                     </p>
                   </div>
                 </div>
@@ -235,7 +235,7 @@ const CategoriesDetail = () => {
               {/*Showing results topbar Start*/}
               <div className="sf-search-result-top flex-wrap d-flex justify-content-between">
                 <div className="sf-search-result-title">
-                  {" "}
+                  
                   <h5>Showing 1 – 10 of 16 results</h5>
                 </div>
                 <div className="sf-search-result-option">
@@ -359,18 +359,18 @@ const CategoriesDetail = () => {
                           </button>
                           <ul className="dropdown-menu">
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-sliders" /> Display
                                 Services
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-save" /> 0 Review Comments
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-trash" /> Request A Quote
                               </a>
                             </li>
@@ -435,18 +435,18 @@ const CategoriesDetail = () => {
                           </button>
                           <ul className="dropdown-menu">
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-sliders" /> Display
                                 Services
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-save" /> 0 Review Comments
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-trash" /> Request A Quote
                               </a>
                             </li>
@@ -511,18 +511,18 @@ const CategoriesDetail = () => {
                           </button>
                           <ul className="dropdown-menu">
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-sliders" /> Display
                                 Services
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-save" /> 0 Review Comments
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-trash" /> Request A Quote
                               </a>
                             </li>
@@ -587,18 +587,18 @@ const CategoriesDetail = () => {
                           </button>
                           <ul className="dropdown-menu">
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-sliders" /> Display
                                 Services
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-save" /> 0 Review Comments
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-trash" /> Request A Quote
                               </a>
                             </li>
@@ -663,18 +663,18 @@ const CategoriesDetail = () => {
                           </button>
                           <ul className="dropdown-menu">
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-sliders" /> Display
                                 Services
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-save" /> 0 Review Comments
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-trash" /> Request A Quote
                               </a>
                             </li>
@@ -739,18 +739,18 @@ const CategoriesDetail = () => {
                           </button>
                           <ul className="dropdown-menu">
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-sliders" /> Display
                                 Services
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-save" /> 0 Review Comments
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-trash" /> Request A Quote
                               </a>
                             </li>
@@ -815,18 +815,18 @@ const CategoriesDetail = () => {
                           </button>
                           <ul className="dropdown-menu">
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-sliders" /> Display
                                 Services
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-save" /> 0 Review Comments
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-trash" /> Request A Quote
                               </a>
                             </li>
@@ -891,18 +891,18 @@ const CategoriesDetail = () => {
                           </button>
                           <ul className="dropdown-menu">
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-sliders" /> Display
                                 Services
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-save" /> 0 Review Comments
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:;">
+                              <a href="#">
                                 <i className="feather-trash" /> Request A Quote
                               </a>
                             </li>
@@ -1065,7 +1065,7 @@ const CategoriesDetail = () => {
           <div className="container">
             <div className="sf-footer-bottom-section">
               <div className="sf-f-logo">
-                <a href="javascript:void(0);">
+                <a href="#">
                   <img src="images/logo-dark.png" alt="" />
                 </a>
               </div>
@@ -1075,22 +1075,22 @@ const CategoriesDetail = () => {
               <div className="sf-f-social">
                 <ul className="socila-box">
                   <li>
-                    <a href="javascript:void(0);">
+                    <a href="#">
                       <i className="fa fa-twitter" />
                     </a>
                   </li>
                   <li>
-                    <a href="javascript:void(0);">
+                    <a href="#">
                       <i className="fa fa-facebook" />
                     </a>
                   </li>
                   <li>
-                    <a href="javascript:void(0);">
+                    <a href="#">
                       <i className="fa fa-linkedin" />
                     </a>
                   </li>
                   <li>
-                    <a href="javascript:void(0);">
+                    <a href="#">
                       <i className="fa fa-instagram" />
                     </a>
                   </li>

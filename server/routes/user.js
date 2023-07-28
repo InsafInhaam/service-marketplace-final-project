@@ -13,13 +13,13 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.json({ success: false, message: "User not found" });
+      return res.json({ success: false, error: "User not found" });
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
 
     if (!validPassword) {
-      return res.json({ success: false, message: "Invalid password" });
+      return res.json({ success: false, error: "Invalid password" });
     }
 
     // Generate JWT token
@@ -45,7 +45,7 @@ router.post("/login", async (req, res) => {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "An error occurred while logging",
+      error: "An error occurred while logging",
     });
   }
 });
@@ -63,12 +63,13 @@ router.post("/register", async (req, res) => {
       phone,
       profilePic,
       labourCategory,
+      hourlyPrice
     } = req.body;
 
     // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(409).json({ message: "User already exists" });
+      return res.status(409).json({ error: "User already exists" });
     }
 
     // Hash the password
@@ -85,6 +86,7 @@ router.post("/register", async (req, res) => {
       phone,
       image: profilePic,
       serviceProvided: labourCategory,
+      hourlyPrice
     });
 
     // Save the user to the database
@@ -93,7 +95,7 @@ router.post("/register", async (req, res) => {
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -103,7 +105,7 @@ router.post("/forgot-password", async (req, res) => {
   try {
     const olduser = await User.findOne({ email });
     if (!olduser) {
-      return res.json({ message: "User Not Exists" });
+      return res.json({ error: "User Not Exists" });
     }
     const secret = process.env.JWT_SECERT_KEY + olduser.password;
     const token = jwt.sign({ email: olduser.email, id: olduser._id }, secret, {
@@ -144,13 +146,13 @@ router.get("/reset-password/:id/:token", async (req, res) => {
   console.log(req.params);
   const oldUser = await User.findOne({ _id: id });
   if (!oldUser) {
-    return res.json({ status: "User Not Exists!!" });
+    return res.json({ error: "User Not Exists!!" });
   }
   const secret = process.env.JWT_SECERT_KEY + oldUser.password;
 
   try {
     const verify = jwt.verify(token, secret);
-    res.render("index", { email: verify.email, status: "Verified" });
+    res.render("index", { email: verify.email, message: "Verified" });
   } catch (error) {
     res.send("Not Verified");
   }
@@ -163,7 +165,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
   const oldUser = await User.findOne({ _id: id });
 
   if (!oldUser) {
-    return res.json({ status: "User Not Exists!" });
+    return res.json({ error: "User Not Exists!" });
   }
 
   const secret = process.env.JWT_SECERT_KEY + oldUser.password;
@@ -183,10 +185,10 @@ router.post("/reset-password/:id/:token", async (req, res) => {
       }
     );
 
-    res.render("index", { email: verify.email, status: "verified" });
+    res.render("index", { email: verify.email, message: "verified" });
   } catch (error) {
     console.log(error);
-    res.render("index", { status: "Something Went Wrong!" });
+    res.render("index", { error: "Something Went Wrong!" });
   }
 });
 
@@ -203,7 +205,7 @@ router.get(
       res.json(users);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 );
@@ -216,7 +218,7 @@ router.get("/users/customers", async (req, res) => {
     res.json(customers);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -228,7 +230,38 @@ router.get("/users/labourers", async (req, res) => {
     res.json(labourers);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+// Delete an user
+router.delete('/users/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndRemove(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Get users by ID
+router.get('/user/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

@@ -1,32 +1,38 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-const Categories = () => {
-  const [categories, setCategories] = useState([]);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+const Admins = () => {
+  const [admins, setAdmins] = useState([]);
+
   const [loading, setLoading] = useState(false);
-  const [categoryImage, setCategoryImage] = useState("");
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [image, setImage] = useState("");
+  const [profilePic, setProfilePic] = useState("");
   const [showModal, setShowModal] = useState(false); // State to track the modal visibility
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/api/categories/allcategories")
+    fetch(process.env.REACT_APP_API_URL + "/api/admin/admins")
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
-        setCategories(result);
+        setAdmins(result);
       });
-  }, [categories]);
-
-  console.log(categories);
+  }, [admins]);
 
   const handleFormSubmit = () => {
-    if (!title || !description || !image) {
+    if (!name ||
+        !email ||
+        !password ||
+        !image ||
+        !address ||
+        !phone) {
       return toast.error("Please fill all required fields");
     }
     setLoading(true);
@@ -35,8 +41,11 @@ const Categories = () => {
     setShowModal(false);
 
     // Reset the input fields and state variables once the form is submitted
-    setTitle("");
-    setDescription("");
+    setName("");
+    setEmail("");
+    setPhone("");
+    setAddress("");
+    setPassword("");
     setImage(null);
   };
 
@@ -45,16 +54,19 @@ const Categories = () => {
   };
 
   useEffect(() => {
-    if (categoryImage) {
+    if (profilePic) {
       let body = {
-        title,
-        description,
-        image: categoryImage,
+        name,
+        email,
+        password,
+        address,
+        phone,
+        image: profilePic,
       };
 
       console.log(body);
 
-      fetch(process.env.REACT_APP_API_URL + "/api/categories/categories", {
+      fetch(process.env.REACT_APP_API_URL + "/api/admin/admins", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +88,7 @@ const Categories = () => {
           console.log(err);
         });
     }
-  }, [categoryImage]);
+  }, [profilePic]);
 
 
   const handleImageUpload = () => {
@@ -91,7 +103,7 @@ const Categories = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          setCategoryImage(data.secure_url);
+            setProfilePic(data.secure_url);
           console.log(data.secure_url);
         })
         .catch((error) => console.log(error));
@@ -99,21 +111,17 @@ const Categories = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(
-      process.env.REACT_APP_API_URL + "/api/categories/deleteCategory/" + id,
-      {
-        method: "DELETE",
-        // headers: {
-        //   Authorization: "Bearer " + localStorage.getItem("jwt"),
-        // },
-      }
-    )
+    fetch(process.env.REACT_APP_API_URL + "/api/admin/admins/" + id, {
+      method: "DELETE",
+      // headers: {
+      //   Authorization: "Bearer " + localStorage.getItem("jwt"),
+      // },
+    })
       .then((res) => res.json())
       .then((result) => {
         toast.success(result.message);
       });
   };
-
 
   return (
     <>
@@ -132,7 +140,7 @@ const Categories = () => {
                     <div className="card-body">
                       <div className="d-flex align-items-start justify-content-between">
                         <div>
-                          <h4 className="card-title">Category Table</h4>
+                          <h4 className="card-title">Admin Table</h4>
                           <p className="card-description">
                             Lorem ipsum dolor sit amet
                           </p>
@@ -144,28 +152,33 @@ const Categories = () => {
                           data-toggle="modal"
                           data-target="#exampleModal"
                         >
-                          New Category
+                          New Admin
                         </button>
                       </div>
                       <div className="table-responsive">
                         <table className="table table-striped">
                           <thead>
                             <tr>
-                              <th>Image</th>
-                              <th>Title</th>
-                              <th>Description</th>
+                              <th>User</th>
+                              <th>Name</th>
+                              <th>Email</th>
+                              <th>Phone</th>
+                              <th>Address</th>
                               <th>Edit</th>
                               <th>Delete</th>
                             </tr>
                           </thead>
                           <tbody>
-                            {categories?.map((category) => (
-                              <tr key={category._id}>
+                            {admins?.map((admin) => (
+                              <tr key={admin._id}>
                                 <td className="py-1">
-                                  <img src={category.image} alt="image" />
+                                  <img src={admin.image} alt="image" />
                                 </td>
-                                <td>{category.title}</td>
-                                <td>{category.description}</td>
+                                <td>{admin.name}</td>
+                                <td>{admin.email}</td>
+                                <td>{admin.phone}</td>
+                                <td>{admin.city}</td>
+                                <td>{admin.address}</td>
                                 <td>
                                   <button
                                     type="button"
@@ -180,7 +193,7 @@ const Categories = () => {
                                   <button
                                     type="button"
                                     className="btn btn-danger"
-                                    onClick={() => handleDelete(category._id)}
+                                    onClick={() => handleDelete(admin._id)}
                                   >
                                     Delete
                                   </button>
@@ -211,7 +224,7 @@ const Categories = () => {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="exampleModalLabel">
-                    Add Category
+                    Add Admin
                   </h5>
                   <button
                     type="button"
@@ -225,28 +238,60 @@ const Categories = () => {
                 <div className="modal-body">
                   <form action="#" method="post">
                     <div className="form-group first">
-                      <label htmlFor="title">Title</label>
+                      <label htmlFor="name">Name</label>
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Enter ur title"
-                        id="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        placeholder="Enter ur name"
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                       />
                     </div>
                     <div className="form-group first">
-                      <label htmlFor="description">Description</label>
+                      <label htmlFor="email">Email</label>
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Enter ur description"
-                        id="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="Enter ur email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
-
+                    <div className="form-group first">
+                      <label htmlFor="phone">Phone</label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Enter ur phone"
+                        id="phone"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </div>
+                    <div className="form-group first">
+                      <label htmlFor="address">Address</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter ur address"
+                        id="address"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                      />
+                    </div>
+                    <div className="form-group last mb-3">
+                      <label htmlFor="password">Password</label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        placeholder="Your Password"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </div>
                     <div className="form-group last mb-3">
                       <label htmlFor="password">Image</label>
                       <input
@@ -284,4 +329,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default Admins;

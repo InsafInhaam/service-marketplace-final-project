@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -12,7 +13,24 @@ const Users = () => {
       .then((result) => {
         setUsers(result);
       });
-  }, []);
+  }, [users]);
+
+  const handleDelete = (id) => {
+    fetch(
+      process.env.REACT_APP_API_URL + "/api/user/users/" + id,
+      {
+        method: "DELETE",
+        // headers: {
+        //   Authorization: "Bearer " + localStorage.getItem("jwt"),
+        // },
+      }
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        toast.success(result.message);
+      });
+  };
+
   return (
     <>
       <div className="container-scroller">
@@ -30,7 +48,7 @@ const Users = () => {
                     <div className="card-body">
                       <h4 className="card-title">Users Table</h4>
                       <p className="card-description">
-                        Lorem ipsum dolor sit amet.{" "}
+                        Lorem ipsum dolor sit amet.
                       </p>
                       <div className="table-responsive">
                         <table className="table table-striped">
@@ -42,6 +60,8 @@ const Users = () => {
                               <th>Phone</th>
                               <th>City</th>
                               <th>Address</th>
+                              <th>Edit</th>
+                              <th>Delete</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -55,6 +75,25 @@ const Users = () => {
                                 <td>{user.phone}</td>
                                 <td>{user.city}</td>
                                 <td>{user.address}</td>
+                                <td>
+                                  <button
+                                    type="button"
+                                    className="btn btn-warning"
+                                    data-toggle="modal"
+                                    data-target="#exampleModal"
+                                  >
+                                    Edit
+                                  </button>
+                                </td>
+                                <td>
+                                  <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={() => handleDelete(user._id)}
+                                  >
+                                    Delete
+                                  </button>
+                                </td>
                               </tr>
                             ))}
                           </tbody>

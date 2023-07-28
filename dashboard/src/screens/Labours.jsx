@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import { toast } from "react-hot-toast";
 
 const Labours = () => {
   const [labours, setLabours] = useState([]);
@@ -11,7 +12,24 @@ const Labours = () => {
       .then((result) => {
         setLabours(result);
       });
-  }, []);
+  }, [labours]);
+
+  const handleDelete = (id) => {
+    fetch(
+      process.env.REACT_APP_API_URL + "/api/user/users/" + id,
+      {
+        method: "DELETE",
+        // headers: {
+        //   Authorization: "Bearer " + localStorage.getItem("jwt"),
+        // },
+      }
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        toast.success(result.message);
+      });
+  };
+
 
   return (
     <>
@@ -28,9 +46,9 @@ const Labours = () => {
                 <div className="col-lg-12 grid-margin stretch-card">
                   <div className="card">
                     <div className="card-body">
-                      <h4 className="card-title">Users Table</h4>
+                      <h4 className="card-title">Labour Table</h4>
                       <p className="card-description">
-                        Lorem ipsum dolor sit amet.{" "}
+                        Lorem ipsum dolor sit amet.
                       </p>
                       <div className="table-responsive">
                       <table className="table table-striped">
@@ -42,6 +60,10 @@ const Labours = () => {
                               <th>Phone</th>
                               <th>City</th>
                               <th>Address</th>
+                              <th>Service provided</th>
+                              <th>hourly Rate</th>
+                              <th>Edit</th>
+                              <th>Delete</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -55,6 +77,27 @@ const Labours = () => {
                                 <td>{labour.phone}</td>
                                 <td>{labour.city}</td>
                                 <td>{labour.address}</td>
+                                <td>{labour.serviceProvided}</td>
+                                <td>{labour.hourlyPrice}</td>
+                                <td>
+                                  <button
+                                    type="button"
+                                    className="btn btn-warning"
+                                    data-toggle="modal"
+                                    data-target="#exampleModal"
+                                  >
+                                    Edit
+                                  </button>
+                                </td>
+                                <td>
+                                  <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={() => handleDelete(labour._id)}
+                                  >
+                                    Delete
+                                  </button>
+                                </td>
                               </tr>
                             ))}
                           </tbody>

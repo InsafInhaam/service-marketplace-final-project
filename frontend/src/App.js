@@ -15,6 +15,8 @@ import CategoriesDetail from "./screens/CategoriesDetail";
 import CategoryServiceProvider from "./screens/CategoryServiceProvider";
 import LabourProfile from "./screens/LabourProfile";
 import ForgetPassword from "./screens/ForgetPassword";
+import Search from "./screens/Search";
+import Profile from "./screens/Profile";
 
 // Define the initial state
 const initialState = {
@@ -62,6 +64,18 @@ const Routing = () => {
         exact
         path="/labour-profile/:id"
         element={user ? <LabourProfile /> : <Navigate to="/login" />}
+      />
+
+      <Route
+        exact
+        path="/search"
+        element={user ? <Search /> : <Navigate to="/login" />}
+      />
+
+      <Route
+        exact
+        path="/profile"
+        element={user ? <Profile /> : <Navigate to="/login" />}
       />
 
       <Route exact path="/login" element={<Login />} />

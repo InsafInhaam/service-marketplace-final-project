@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ const Login = () => {
               <div className="col-lg-4 mx-auto">
                 <div className="auth-form-light text-left py-5 px-4 px-sm-5">
                   <div className="brand-logo">
-                    <img src="../../images/logo.svg" alt="logo" />
+                  <img src={logo} alt="logo" />
                   </div>
                   <h4>Hello! let's get started</h4>
                   <h6 className="fw-light">Sign in to continue.</h6>

@@ -1,9 +1,10 @@
 import React from "react";
+import logo from "../assets/logo.png";
 
 const Footer = () => {
   return (
     <div>
-      {" "}
+      
       <footer className="site-footer footer-light">
         {/* FOOTER NEWSLETTER START */}
         <div className="footer-top-newsletter">
@@ -94,10 +95,10 @@ const Footer = () => {
                 <div className="sf-site-link sf-widget-contact">
                   <h4 className="sf-f-title">Contact Info</h4>
                   <ul>
-                    <li>India</li>
-                    <li>+41 232 525 5257</li>
-                    <li>+41 856 525 5369</li>
-                    <li>hello@Servicefinder.com</li>
+                    <li>45A, Green Lane, Colombo-13, Srilanka</li>
+                    <li>9477 55 39978</li>
+                    <li>9477 30 77744</li>
+                    <li>contactus@servicewise.com</li>
                   </ul>
                 </div>
               </div>
@@ -109,33 +110,33 @@ const Footer = () => {
           <div className="container">
             <div className="sf-footer-bottom-section">
               <div className="sf-f-logo">
-                <a href="javascript:void(0);">
-                  <img src="../images/logo-dark.png" alt="" />
+                <a href="#">
+                  <img src={logo} alt="" style={{width: "150px"}}/>
                 </a>
               </div>
               <div className="sf-f-copyright">
-                <span>Copyright 2022 | Insaf Inhaam. All Rights Reserved</span>
+                <span>Copyright 2022 | Service Wise. All Rights Reserved</span>
               </div>
               <div className="sf-f-social">
                 <ul className="socila-box">
                   <li>
-                    <a href="javascript:void(0);">
-                      <i className="fa fa-twitter" />
+                    <a href="#">
+                      <i className="fab fa-twitter" />
                     </a>
                   </li>
                   <li>
-                    <a href="javascript:void(0);">
-                      <i className="fa fa-facebook" />
+                    <a href="#">
+                      <i className="fab fa-facebook" />
                     </a>
                   </li>
                   <li>
-                    <a href="javascript:void(0);">
-                      <i className="fa fa-linkedin" />
+                    <a href="#">
+                      <i className="fab fa-linkedin" />
                     </a>
                   </li>
                   <li>
-                    <a href="javascript:void(0);">
-                      <i className="fa fa-instagram" />
+                    <a href="#">
+                      <i className="fab fa-instagram" />
                     </a>
                   </li>
                 </ul>

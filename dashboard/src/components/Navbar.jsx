@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const user = useSelector((state) => state.user);
@@ -14,11 +15,11 @@ const Navbar = () => {
               </button>
             </div>
             <div>
-              <a className="navbar-brand brand-logo" href="index.html">
-                <img src="images/logo.svg" alt="logo" />
+              <a className="navbar-brand brand-logo" href="/">
+                <img src={logo} alt="logo" />
               </a>
-              <a className="navbar-brand brand-logo-mini" href="index.html">
-                <img src="images/logo-mini.svg" alt="logo" />
+              <a className="navbar-brand brand-logo-mini" href="/">
+                <img src={logo} alt="logo" />
               </a>
             </div>
           </div>

@@ -19,6 +19,7 @@ const Register = () => {
   const [image, setImage] = useState("");
   const [labourCategory, setLabourCategory] = useState("");
   const [profilePic, setProfilePic] = useState("");
+  const [hourlyPrice, setHourlyPrice] = useState("");
 
   const [categories, setCategories] = useState([]);
 
@@ -47,12 +48,17 @@ const Register = () => {
         body.labourCategory = labourCategory;
       }
 
+      if (hourlyPrice) {
+        body.hourlyPrice = hourlyPrice;
+      }
+
+
       console.log(body);
 
-      fetch(process.env.REACT_APP_API_URL + '/api/user/register', {
-        method: 'POST',
+      fetch(process.env.REACT_APP_API_URL + "/api/user/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
       })
@@ -61,10 +67,10 @@ const Register = () => {
           if (data.error) {
             toast.error(data.error);
           } else {
-            setLoading(false)
+            setLoading(false);
             toast.success(data.message);
             console.log(data.message);
-            history('/login');
+            history("/login");
           }
         })
         .catch((err) => {
@@ -76,11 +82,11 @@ const Register = () => {
   const handleImageUpload = () => {
     if (image) {
       const data = new FormData();
-      data.append('file', image);
-      data.append('upload_preset', 'surge-intern-test');
-      data.append('cloud_name', 'dp6yyczpu');
+      data.append("file", image);
+      data.append("upload_preset", "surge-intern-test");
+      data.append("cloud_name", "dp6yyczpu");
       fetch(process.env.REACT_APP_CLOUDINARY_URL, {
-        method: 'POST',
+        method: "POST",
         body: data,
       })
         .then((res) => res.json())
@@ -95,22 +101,31 @@ const Register = () => {
   const handleFormSubmit = () => {
     const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
-    if (!name || !email || !password || !role || !image || !address || !city || !phone) {
-      return toast.error('Please fill all required fields');
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !role ||
+      !image ||
+      !address ||
+      !city ||
+      !phone
+    ) {
+      return toast.error("Please fill all required fields");
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-      return toast.error('Invalid email address');
+      return toast.error("Invalid email address");
     } else if (password.length < 8) {
-      return toast.error('Password must be at least 8 characters');
+      return toast.error("Password must be at least 8 characters");
     } else if (!specialChars.test(password)) {
-      return toast.error('Password must have special characters');
+      return toast.error("Password must have special characters");
     }
 
-    if (role === 'labour') {
+    if (role === "labour") {
       if (!labourCategory) {
-        return toast.error('Please enter labour category');
+        return toast.error("Please enter labour category");
       }
     }
-    setLoading(true)
+    setLoading(true);
     handleImageUpload();
   };
 
@@ -190,7 +205,7 @@ const Register = () => {
   // };
 
   return (
-    <div className="d-lg-flex half">
+    <div className="d-lg-flex half register-section">
       <div
         className="bg order-1 order-md-2"
         style={{ backgroundImage: 'url("../images/workers-1.png")' }}
@@ -198,7 +213,7 @@ const Register = () => {
       <div className="contents order-2 order-md-1">
         <div className="container">
           <div className="row align-items-center justify-content-center">
-            <div className="col-md-7">
+            <div className="col-md-7 register-col">
               <h3>
                 Register to <strong>Service Finder</strong>
               </h3>
@@ -295,22 +310,37 @@ const Register = () => {
                   />
                 </div>
                 {role === "labour" && ( // Render the select field only if role is 'labour'
-                  <div className="form-group">
-                    <label htmlFor="selectField">Select Field for Labour</label>
-                    <select
-                      className="form-control"
-                      id="labourCategory"
-                      value={labourCategory}
-                      onChange={(e) => setLabourCategory(e.target.value)}
-                    >
-                      <option value="">Select a Service u provide</option>
-                      {categories.map((category) => (
-                        <option key={category._id} value={category.title}>
-                          {category.title}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                  <>
+                    <div className="form-group">
+                      <label htmlFor="selectField">
+                        Select Field for Labour
+                      </label>
+                      <select
+                        className="form-control"
+                        id="labourCategory"
+                        value={labourCategory}
+                        onChange={(e) => setLabourCategory(e.target.value)}
+                      >
+                        <option value="">Select a Service u provide</option>
+                        {categories.map((category) => (
+                          <option key={category._id} value={category.title}>
+                            {category.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="form-group last mb-3">
+                      <label htmlFor="hourlyPrice">Hourly Price</label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Your Hourly Price"
+                        id="hourlyPrice"
+                        value={hourlyPrice}
+                        onChange={(e) => setHourlyPrice(e.target.value)}
+                      />
+                    </div>
+                  </>
                 )}
                 <div className="form-group last mb-3">
                   <label htmlFor="password">Password</label>
@@ -341,7 +371,7 @@ const Register = () => {
                 </div>
                 <input
                   type="button"
-                  defaultValue={loading ? 'Registering...' : 'Register'}
+                  defaultValue={loading ? "Registering..." : "Register"}
                   className="btn btn-block btn-primary"
                   onClick={() => handleFormSubmit()}
                 />
