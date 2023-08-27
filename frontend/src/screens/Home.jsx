@@ -123,13 +123,7 @@ const Home = () => {
                     <h2 className="sf-title">Popular Categories</h2>
                   </div>
                   {/* COLUMNS RIGHT */}
-                  <div className="col-lg-6 col-md-12">
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do usmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </p>
-                  </div>
+                 
                 </div>
               </div>
               {/*Title Section End*/}
@@ -242,13 +236,7 @@ const Home = () => {
                     <span className="aon-sub-title">Vendor</span>
                     <h2 className="sf-title">Featured Providers</h2>
                   </div>
-                  <div className="col-lg-6 col-md-12">
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do usmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </p>
-                  </div>
+                 
                 </div>
               </div>
               {/*Title Section Start*/}

@@ -31,7 +31,7 @@ const Navbar = () => {
               </li>
             </ul>
             <ul className="navbar-nav ms-auto">
-              <li className="nav-item dropdown d-none d-lg-block">
+              {/* <li className="nav-item dropdown d-none d-lg-block">
                 <a className="nav-link dropdown-bordered dropdown-toggle dropdown-toggle-split" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false"> Select Category </a>
                 <div className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
                   <a className="dropdown-item py-3">
@@ -63,15 +63,15 @@ const Navbar = () => {
                     </div>
                   </a>
                 </div>
-              </li>
-              <li className="nav-item d-none d-lg-block">
+              </li> */}
+              {/* <li className="nav-item d-none d-lg-block">
                 <div id="datepicker-popup" className="input-group date datepicker navbar-date-picker">
                   <span className="input-group-addon input-group-prepend border-right">
                     <span className="icon-calendar input-group-text calendar-icon" />
                   </span>
                   <input type="text" className="form-control" />
                 </div>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <form className="search-form" action="#">
                   <i className="icon-search" />

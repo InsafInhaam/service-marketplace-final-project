@@ -202,7 +202,7 @@ const Categories = () => {
           <div
             className={`modal fade ${showModal ? "show" : ""}`}
             id="exampleModal"
-            tabindex="-1"
+            tabindex="-1"    
             role="dialog"
             aria-labelledby="exampleModalLabel"
             aria-hidden={!showModal} // Hide the modal from screen readers when it's closed

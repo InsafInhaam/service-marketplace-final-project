@@ -63,7 +63,7 @@ router.post("/register", async (req, res) => {
       phone,
       profilePic,
       labourCategory,
-      hourlyPrice
+      hourlyPrice,
     } = req.body;
 
     // Check if the user already exists
@@ -86,7 +86,7 @@ router.post("/register", async (req, res) => {
       phone,
       image: profilePic,
       serviceProvided: labourCategory,
-      hourlyPrice
+      hourlyPrice,
     });
 
     // Save the user to the database
@@ -113,12 +113,13 @@ router.post("/forgot-password", async (req, res) => {
     });
     const link = `http://localhost:5000/api/user/reset-password/${olduser._id}/${token}`;
     console.log(link);
-    const transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
+
+    var transporter = nodemailer.createTransport({
+      host: "sandbox.smtp.mailtrap.io",
+      port: 2525,
       auth: {
-        user: "westley.mosciski@ethereal.email",
-        pass: "mf3aRurpWy3zwP5N5F",
+        user: "cdb220c46b7ba4",
+        pass: "02f20cd955bee5",
       },
     });
 
@@ -134,6 +135,9 @@ router.post("/forgot-password", async (req, res) => {
         console.log(error);
       } else {
         console.log("Email sent: " + info.response);
+        return res.json({
+          message: "Reset Password link has been sent to your email!!",
+        });
       }
     });
   } catch (error) {
@@ -152,7 +156,8 @@ router.get("/reset-password/:id/:token", async (req, res) => {
 
   try {
     const verify = jwt.verify(token, secret);
-    res.render("index", { email: verify.email, message: "Verified" });
+
+    res.render("index", { email: verify.email, status: "Not Verified" });
   } catch (error) {
     res.send("Not Verified");
   }
@@ -185,12 +190,44 @@ router.post("/reset-password/:id/:token", async (req, res) => {
       }
     );
 
-    res.render("index", { email: verify.email, message: "verified" });
+    res.render("index", { email: verify.email, status: "verified" });
   } catch (error) {
     console.log(error);
     res.render("index", { error: "Something Went Wrong!" });
   }
 });
+
+router.post("/reset-password/:id/:token", async (req, res) => {
+  const { id, token } = req.params;
+  const { password } = req.body;
+
+  try {
+    const user = await User.findOne({
+      _id: id,
+      resetToken: token,
+      resetTokenExpiration: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ error: "Invalid or expired token" });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update the user's password in the database
+    user.password = hashedPassword;
+    user.resetToken = null;
+    user.resetTokenExpiration = null;
+    await user.save();
+
+    res.json({ message: "Password reset successful" });
+  } catch (err) {
+    console.error("Error resetting password:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 // Get users based on service provided
 router.get(
@@ -234,34 +271,33 @@ router.get("/users/labourers", async (req, res) => {
   }
 });
 
-
 // Delete an user
-router.delete('/users/:id', async (req, res) => {
+router.delete("/users/:id", async (req, res) => {
   try {
     const user = await User.findByIdAndRemove(req.params.id);
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
 
-    res.json({ message: 'User deleted successfully' });
+    res.json({ message: "User deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
 // Get users by ID
-router.get('/user/:id', async (req, res) => {
+router.get("/user/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
     res.json(user);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

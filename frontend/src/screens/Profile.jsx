@@ -5,6 +5,10 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { cityOptions } from "../utils/cities";
 import { toast } from "react-hot-toast";
+import UserDetails from "../components/UserDetails";
+import UserDetailsService from "../components/UserDetailsService";
+import UserDetailsReviews from "../components/UserDetailsReviews";
+import TopBanner from "../components/TopBanner";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
@@ -72,276 +76,20 @@ const Profile = () => {
         <Navbar />
         <div className="page-content">
           {/*Top Banner Section Start*/}
-          <div className="sf-profile-banner-full">
-            <div className="container sf-proBnrfull-container">
-              <div className="sf-proBnrfull-row">
-                {/*Top Banner Left*/}
-                <div className=" sf-proBnrfull-left"></div>
-                {/*Top Banner Right*/}
-                <div className=" sf-proBnrfull-right">
-                  <h2 className=" sf-proBnrfull-heading">
-                    Profile Information
-                  </h2>
-                  <div className=" sf-proBnrfull-tagline">
-                    lorem ipsum dolor sit amet, consectetur adipiscing el
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <TopBanner
+            bannerTitle={"Profile Information"}
+            bannerDescription={
+              "lorem ipsum dolor sit amet, consectetur adipiscing el"
+            }
+          />
+
           <div className="container pt-5">
             {/*About Provider*/}
-            <div className="sf-provi-bio-box cleafix margin-b-50 sf-provi-fullBox">
-              {/*Left*/}
-              <div className="sf-provi-bio-left">
-                <div className="sf-provi-bio-info">
-                  <div className="sf-provi-pic">
-                    <img src={userDetails.image} alt={userDetails.name} />
-                  </div>
-                  {userDetails.role === "labour" && (
-                    <div className="sf-ow-pro-rating">
-                      <span className="fa fa-star" />
-                      <span className="fa fa-star" />
-                      <span className="fa fa-star" />
-                      <span className="fa fa-star" />
-                      <span className="fa fa-star text-gray" />
-                    </div>
-                  )}
-                </div>
-              </div>
-              {/*Right*/}
-              <div className="sf-provi-bio-right">
-                <h3 className="sf-provi-title">{userDetails.name}</h3>
-                {userDetails.role === "labour" && (
-                  <div className="sf-provi-cat">
-                    <strong>Categories:</strong> {userDetails.serviceProvided}
-                  </div>
-                )}
+            <UserDetails userDetails={userDetails} />
 
-                <div className="sf-provi-bio-text">
-                  <p>{userDetails.description}</p>
-                  <p>
-                    <strong>Address</strong> {userDetails.address}
-                  </p>
-                  <p>
-                    <strong>City</strong> {userDetails.city}
-                  </p>
-                  <p>
-                    <strong>Phone</strong> {userDetails.phone}
-                  </p>
+            <UserDetailsService userDetails={userDetails} />
 
-                  <div className="sf-provi-btn">
-                    <button
-                      type="button"
-                      className="site-button"
-                      data-toggle="modal"
-                      data-target="#exampleModal"
-                    >
-                      <i className="fa fa-pencil" />
-                      Edit Profile Details
-                    </button>
-                  </div>
-                </div>
-                <div className="sf-provi-social-row d-flex flex-wrap justify-content-between">
-                  <div className="social-share-icon social-share-icon2">
-                    <div className="social-share-cell">
-                      <strong>Explore Us On Social Media</strong>
-                    </div>
-                    <div className="social-share-cell">
-                      <ul className="share-buttons">
-                        <li>
-                          <a
-                            className="fb-share"
-                            href="https://www.facebook.com/"
-                            target="_blank"
-                            rel="nofollow"
-                          >
-                            <i className="fab fa-facebook" />
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="twitter-share"
-                            href="https://twitter.com/"
-                            target="_blank"
-                            rel="nofollow"
-                          >
-                            <i className="fab fa-twitter" />
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="linkedin-share"
-                            href="https://linkedin.com/"
-                            target="_blank"
-                            rel="nofollow"
-                          >
-                            <i className="fab fa-linkedin" />
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="pinterest-share"
-                            href="https://in.pinterest.com/"
-                            target="_blank"
-                            rel="nofollow"
-                          >
-                            <i className="fab fa-pinterest" />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {userDetails.role === "labour" && (
-              <div
-                id="aon-provider-services"
-                className="sf-provi-service-box m-b50 sf-provi-fullBox"
-              >
-                <h3 className="sf-provi-title">Service</h3>
-                <div className="sf-divider-line" />
-                <ul className="sf-provi-service-list">
-                  <li className="sf-provi-service-box">
-                    <div className="sf-provi-service-top">
-                      <div className="sf-provi-service-left">
-                        <h4 className="sf-provi-service-ttle">
-                          <span className="sf-provi-toggle-btn">+</span> 3
-                          bedroom or a house <span>Offer</span>
-                        </h4>
-                        <div className="sf-provi-service-price">$124.00</div>
-                        <div className="sf-provi-service-hour">
-                          <i className="fa fa-clock-o" />
-                          Hour
-                        </div>
-                      </div>
-                      <div className="sf-provi-service-right">
-                        <button className="site-button btn-schedules">
-                          Schedule
-                        </button>
-                      </div>
-                    </div>
-                    <div className="sf-provi-service-bottom">
-                      <div className="sf-provi-descriptio">
-                        Many serives have a wide spectrum of expertise in web
-                        solutions within these industries, giving us the
-                        necessary skills and knowledge.
-                      </div>
-                    </div>
-                  </li>
-                  <li className="sf-provi-service-box">
-                    <div className="sf-provi-service-top">
-                      <div className="sf-provi-service-left">
-                        <h4 className="sf-provi-service-ttle">
-                          <span className="sf-provi-toggle-btn">+</span> 3
-                          bedroom or a house <span>Offer</span>
-                        </h4>
-                        <div className="sf-provi-service-price">$124.00</div>
-                        <div className="sf-provi-service-hour">
-                          <i className="fa fa-clock-o" />
-                          Hour
-                        </div>
-                      </div>
-                      <div className="sf-provi-service-right">
-                        <button className="site-button btn-schedules">
-                          Schedule
-                        </button>
-                      </div>
-                    </div>
-                    <div className="sf-provi-service-bottom">
-                      <div className="sf-provi-descriptio">
-                        Many serives have a wide spectrum of expertise in web
-                        solutions within these industries, giving us the
-                        necessary skills and knowledge.
-                      </div>
-                    </div>
-                  </li>
-                  <li className="sf-provi-service-box">
-                    <div className="sf-provi-service-top">
-                      <div className="sf-provi-service-left">
-                        <h4 className="sf-provi-service-ttle">
-                          <span className="sf-provi-toggle-btn">+</span> 3
-                          bedroom or a house <span>Offer</span>
-                        </h4>
-                        <div className="sf-provi-service-price">
-                          $ 12.00/Hour
-                        </div>
-                      </div>
-                      <div className="sf-provi-service-right">
-                        <div className="sf-provi-service-count">
-                          <input
-                            id="demo1"
-                            type="text"
-                            defaultValue={55}
-                            name="demo1"
-                          />
-                        </div>
-                        <button className="site-button btn-schedules">
-                          Schedule
-                        </button>
-                      </div>
-                    </div>
-                    <div className="sf-provi-service-bottom">
-                      <div className="sf-provi-descriptio">
-                        Many serives have a wide spectrum of expertise in web
-                        solutions within these industries, giving us the
-                        necessary skills and knowledge.
-                      </div>
-                    </div>
-                  </li>
-                  <li className="sf-provi-service-box">
-                    <div className="sf-provi-service-top">
-                      <div className="sf-provi-service-left">
-                        <h4 className="sf-provi-service-ttle">
-                          <span className="sf-provi-toggle-btn">+</span> 3
-                          bedroom or a house <span>Offer</span>
-                        </h4>
-                        <div className="sf-provi-service-price">
-                          $ 10.00/Hour
-                        </div>
-                      </div>
-                      <div className="sf-provi-service-right">
-                        <div className="sf-provi-service-count">
-                          <input
-                            id="demo2"
-                            type="text"
-                            defaultValue={55}
-                            name="demo1"
-                          />
-                        </div>
-                        <button className="site-button btn-schedules">
-                          Schedule
-                        </button>
-                      </div>
-                    </div>
-                    <div className="sf-provi-service-bottom">
-                      <div className="sf-provi-descriptio">
-                        Many serives have a wide spectrum of expertise in web
-                        solutions within these industries, giving us the
-                        necessary skills and knowledge.
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-                <div className="servi-leRi-btn d-flex flex-wrap justify-content-between">
-                  <div className="servi-le-btn">
-                    <button className="btn btn-custom">
-                      <i className="feather-chevron-up" />
-                    </button>
-                    <button className="btn btn-custom">
-                      <i className="feather-chevron-down" />
-                    </button>
-                  </div>
-                  <div className="servi-Ri-btn">
-                    <button className="btn btn-custom aon-sm-btn-dark">
-                      Continue
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-           
+            <UserDetailsReviews />
           </div>
         </div>
         <Footer />

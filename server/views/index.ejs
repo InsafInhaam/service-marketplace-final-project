@@ -10,14 +10,14 @@
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
-    <script>
-      var status = '<%- JSON.stringify(status) %>';
-      if(JSON.parse(status) == "verified"){
-        if(confirm("Do u want to login?")){
-          window.location.href = "http://localhost:3000/"
+    <!-- <script>
+      var status = "<%- JSON.stringify(status) %>";
+      if (JSON.parse(status) == "verified") {
+        if (confirm("Do u want to login?")) {
+          window.location.href = "http://localhost:3000/";
         }
       }
-    </script>
+    </script> -->
   </head>
 
   <style>
@@ -191,7 +191,6 @@
                 consectetur adipisicing.
               </p>
               <form action="#" method="post">
-                
                 <div class="form-group last mb-3">
                   <label for="password">Password</label>
                   <input
@@ -203,14 +202,14 @@
                 </div>
 
                 <div class="form-group last mb-3">
-                    <label for="re-password">Repeat Password</label>
-                    <input
-                      type="password"
-                      class="form-control"
-                      placeholder="Your Password"
-                      id="re-password"
-                    />
-                  </div>
+                  <label for="re-password">Repeat Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Your Password"
+                    id="re-password"
+                  />
+                </div>
 
                 <div class="d-flex mb-5 align-items-center">
                   <span class="ml-auto"
@@ -220,7 +219,7 @@
 
                 <input
                   type="submit"
-                  value="Log In"
+                  value="Reset Password"
                   class="btn btn-block btn-primary"
                 />
               </form>

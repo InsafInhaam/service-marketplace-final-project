@@ -76,7 +76,7 @@ const ForgetPassword = () => {
                 </div>
                 <input
                   type="button"
-                  defaultValue="Log In"
+                  defaultValue="Reset Password"
                   className="btn btn-block btn-primary"
                   onClick={() => handleSubmit()}
                 />
