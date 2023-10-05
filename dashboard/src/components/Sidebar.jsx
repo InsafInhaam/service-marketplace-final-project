@@ -95,6 +95,24 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="nav-item">
+            <a className="nav-link" href="/subcategory">
+              <i className="mdi mdi-grid-large menu-icon" />
+              <span className="menu-title">Sub Categories</span>
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/services">
+              <i className="mdi mdi-grid-large menu-icon" />
+              <span className="menu-title">Services</span>
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/orders">
+              <i className="mdi mdi-grid-large menu-icon" />
+              <span className="menu-title">Orders</span>
+            </a>
+          </li>
+          <li className="nav-item">
             <a className="nav-link" href="/admin">
               <i className="mdi mdi-grid-large menu-icon" />
               <span className="menu-title">Admins</span>

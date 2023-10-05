@@ -18,6 +18,8 @@ import Search from "./screens/Search";
 import Profile from "./screens/Profile";
 import ResetPassword from "./screens/ResetPassword";
 import TestComp from "./components/TestComp";
+import CityPage from "./screens/CityPage";
+import ServiceListing from "./screens/ServiceListing";
 
 // Define the initial state
 const initialState = {
@@ -79,15 +81,21 @@ const Routing = () => {
         element={user ? <Profile /> : <Navigate to="/login" />}
       />
 
+      <Route exact path="/city/:cityName" element={<CityPage/>} />
+      <Route exact path="/service-list/:id" element={<ServiceListing/>} />
+
+
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
       <Route exact path="/forgot-password" element={<ForgetPassword />} />
 
-      <Route exact path="/reset-password/:id/:token" element={<ResetPassword />} />
-
+      <Route
+        exact
+        path="/reset-password/:id/:token"
+        element={<ResetPassword />}
+      />
 
       <Route exact path="/test/:id/:token" element={<TestComp />} />
-
     </Routes>
   );
 };

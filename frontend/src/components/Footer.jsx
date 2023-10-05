@@ -7,7 +7,7 @@ const Footer = () => {
       
       <footer className="site-footer footer-light">
         {/* FOOTER NEWSLETTER START */}
-        <div className="footer-top-newsletter">
+        {/* <div className="footer-top-newsletter">
           <div className="container">
             <div className="sf-news-letter">
               <span>Subscribe Our Newsletter</span>
@@ -25,7 +25,7 @@ const Footer = () => {
               </form>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* FOOTER BLOCKES START */}
         <div className="footer-top">
           <div className="container">

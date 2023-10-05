@@ -21,6 +21,7 @@ app.use("/api/ratingReviews", require('./routes/ratingReviews'));
 app.use("/api/services", require('./routes/services'));
 app.use("/api/admin", require('./routes/admin'));
 app.use("/api/categories", require('./routes/categories'));
+app.use("/api/subcategories", require('./routes/subcategories'));
 
 app.listen(PORT, () => {
   console.log("listening on port", PORT);

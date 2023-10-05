@@ -7,10 +7,14 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import LabourCard from "../components/LabourCard";
+import { cityOptions } from "./../utils/cities";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
   const [labours, setLabours] = useState([]);
+  const [city, setCity] = useState("");
+  const history = useNavigate();
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "/api/categories/categories")
@@ -40,13 +44,20 @@ const Home = () => {
     },
   };
 
+  const handleCityChange = (e) => {
+    const selectedCity = e.target.value;
+    setCity(selectedCity);
+
+    // Programmatically navigate to the selected city's page
+    history(`/city/${selectedCity}`);
+  };
+
   return (
     <div>
       {/* LOADING AREA START ===== */}
       <Loader />
       {/* LOADING AREA  END ====== */}
       <div className="page-wraper">
-        
         {/* HEADER START */}
         <Navbar />
         {/* HEADER END */}
@@ -72,10 +83,33 @@ const Home = () => {
                       {/*Banner Text End*/}
                       {/*Seach Bar*/}
                       <div className="aon-bnr2-search-bar">
-                        <a href="/search" className="btn btn-warning">
-                          <i className="fas fa-search"></i> &nbsp; FIND YOUR
-                          LABOUR
-                        </a>
+                        <div>
+                          <div className="sf-search-title">
+                            <label>Where do you need a service?</label>
+                          </div>
+                          <div className="sf-search-feild">
+                            <select
+                              className="sf-select-box form-control sf-form-control bs-select-hidden"
+                              data-live-search="true"
+                              name="city"
+                              id="city"
+                              title="City"
+                              data-header="Select a City"
+                              value={city}
+                              onChange={handleCityChange}
+                            >
+                              <option value="">Select a city</option>
+                              {cityOptions.map((cityOption) => (
+                                <option
+                                  key={cityOption.id}
+                                  value={cityOption.name}
+                                >
+                                  {cityOption.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
                       </div>
                       {/*Seach Bar End*/}
                     </div>
@@ -123,7 +157,6 @@ const Home = () => {
                     <h2 className="sf-title">Popular Categories</h2>
                   </div>
                   {/* COLUMNS RIGHT */}
-                 
                 </div>
               </div>
               {/*Title Section End*/}
@@ -143,22 +176,18 @@ const Home = () => {
               </div>
             </div>
           </section>
-          {/* Services Finder categories END */}
-          {/* How It Work */}
-          <section className="aon-howit-area2">
+
+          {/* <section className="aon-howit-area2">
             <div className="container">
               <div className="aon-howit-area2-section">
                 <div className="aon-howit-area2-bg">
-                  {/*Title Section Start*/}
                   <div className="section-head aon-title-center white">
                     <span className="aon-sub-title">Stpes</span>
                     <h2 className="sf-title">How It Work</h2>
                   </div>
-                  {/*Title Section Start End*/}
                   <div className="section-content">
                     <div className="aon-categories-area2-section">
                       <div className="row justify-content-center">
-                        {/* Block 1*/}
                         <div className="col-lg-4 col-md-6">
                           <div className="aon-howit-area2-iconbox aon-icon-effect">
                             <div className="aone-howit-number">01</div>
@@ -178,7 +207,6 @@ const Home = () => {
                             </div>
                           </div>
                         </div>
-                        {/* Block 2*/}
                         <div className="col-lg-4 col-md-6">
                           <div className="aon-howit-area2-iconbox aon-howit-arrow aon-icon-effect">
                             <div className="aone-howit-number">02</div>
@@ -198,7 +226,6 @@ const Home = () => {
                             </div>
                           </div>
                         </div>
-                        {/* Block 3*/}
                         <div className="col-lg-4 col-md-6">
                           <div className="aon-howit-area2-iconbox aon-icon-effect">
                             <div className="aone-howit-number">03</div>
@@ -224,22 +251,18 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </section>
-          {/* How It Work END */}
-          {/* Featued Vender */}
-          <section className="section-full aon-feature-vender-area2">
+          </section> */}
+          
+          {/* <section className="section-full aon-feature-vender-area2">
             <div className="container">
-              {/*Title Section Start*/}
               <div className="section-head">
                 <div className="row">
                   <div className="col-lg-6 col-md-12">
                     <span className="aon-sub-title">Vendor</span>
                     <h2 className="sf-title">Featured Providers</h2>
                   </div>
-                 
                 </div>
               </div>
-              {/*Title Section Start*/}
               <div className="section-content labour-home-section">
                 <OwlCarousel
                   className="owl-theme"
@@ -249,7 +272,6 @@ const Home = () => {
                   items={2}
                   responsive={responsiveOptions}
                 >
-                  {/* COLUMNS 1 */}
                   {labours?.map((labour) => (
                     <div className="item" key={labour._id}>
                       <LabourCard key={labour._id} labour={labour} />
@@ -258,7 +280,8 @@ const Home = () => {
                 </OwlCarousel>
               </div>
             </div>
-          </section>
+          </section> */}
+          
         </div>
         <Footer />
       </div>

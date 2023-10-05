@@ -13,6 +13,8 @@ import Users from "./screens/Users";
 import Labours from "./screens/Labours";
 import Categories from "./screens/Categories";
 import Admins from "./screens/Admins";
+import Services from "./screens/Services";
+import SubCategories from "./screens/SubCategories";
 
 // Define the initial state
 const initialState = {
@@ -59,10 +61,20 @@ const Routing = () => {
 
       <Route
         exact
+        path="/subcategory"
+        element={user ? <SubCategories /> : <Navigate to="/login" />}
+      />
+
+      <Route
+        exact
         path="/admin"
         element={user ? <Admins /> : <Navigate to="/login" />}
       />
-
+      <Route
+        exact
+        path="/services"
+        element={user ? <Services /> : <Navigate to="/login" />}
+      />
       <Route exact path="/login" element={<Login />} />
     </Routes>
   );
