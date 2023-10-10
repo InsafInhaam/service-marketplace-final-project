@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { cityOptions } from "./../utils/cities";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+
   const history = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [city, setCity] = useState("");
@@ -47,23 +49,7 @@ const Navbar = () => {
             </button>
             {/* MAIN Vav */}
             <div className="nav-animation header-nav navbar-collapse collapse d-flex justify-content-center">
-              {/* <ul className=" nav navbar-nav">
-                <li className="has-child current-menu-item">
-                  <a href="/">Home</a>
-                </li>
-                <li className="has-child">
-                  <a href="/about">About us</a>
-                </li>
-                <li className="has-child">
-                  <a href="/all-categories">Categories</a>
-                </li>
-                <li className="has-child">
-                  <a href="/search">Find Experts</a>
-                </li>
-                <li className="has-child">
-                  <a href="/contact">Contact</a>
-                </li>
-              </ul> */}
+            
               <div className="search-bar">
                 <input
                   type="text"
@@ -96,19 +82,24 @@ const Navbar = () => {
             {/* Header Right Section*/}
             <div className="extra-nav header-2-nav">
               <div className="extra-cell">
-                <a href="/profile" className="site-button aon-btn-signup m-l20">
+                <a className="site-button aon-btn-signup m-l20" href="/cart">
+                  <i className="fa-solid fa-cart-shopping"></i>
+                  <span className="badge badge-light">{cart.cartItems && cart.cartItems.length}</span>
+                </a>
+
+                <a href="/profile" className="m-l20">
                   <i className="fa fa-user" /> Profile
                 </a>
                 <a
                   href="#"
-                  className="site-button aon-btn-signup m-l20"
+                  className=" m-l20"
                   onClick={() => {
                     localStorage.clear();
                     dispatch({ type: "LOGOUT" });
                     history("/login");
                   }}
                 >
-                  <i className="fa fa-sign-out" /> logout
+                  <i className="fa fa-sign-out" /> Logout
                 </a>
               </div>
             </div>

@@ -22,6 +22,7 @@ app.use("/api/services", require('./routes/services'));
 app.use("/api/admin", require('./routes/admin'));
 app.use("/api/categories", require('./routes/categories'));
 app.use("/api/subcategories", require('./routes/subcategories'));
+app.use("/promo", require('./routes/promo'));
 
 app.listen(PORT, () => {
   console.log("listening on port", PORT);

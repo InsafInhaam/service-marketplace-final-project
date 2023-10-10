@@ -86,7 +86,28 @@ router.get("/subcategories/category/:categoryId", async (req, res) => {
   }
 });
 
+// Get services by subcategory ID
+router.get('/relatedsubcategory/:id', async (req, res) => {
+  try {
+    const subcategoryId = req.params.id;
+    
+    // Find the subcategory by ID
+    const subcategory = await SubCategory.findById(subcategoryId);
 
+    if (!subcategory) {
+      return res.status(404).json({ error: 'SubCategory not found' });
+    }
+
+    // Find all subcategories under the same category
+    const categoryId = subcategory.category;
+    const relatedSubcategories = await SubCategory.find({ category: categoryId });
+
+    res.status(200).json({ relatedSubcategories });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 // Update a category
 router.put("/subcategories/:id", async (req, res) => {

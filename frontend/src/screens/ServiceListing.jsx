@@ -1,8 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useLocation } from "react-router-dom";
+import ServiceItem from "../components/ServiceItem";
 
 const ServiceListing = () => {
+  const location = useLocation();
+  const category_id = location.pathname.split("/")[2];
+  const [services, setServices] = useState([]);
+  const [relatedSubcategories, setRelatedSubcategories] = useState([]);
+
+  // const handleAddToCart = (service) => {
+  //   // Dispatch the action
+  //   dispatch({ type: "ADD_TO_CART", payload: service });
+
+  //   // Optionally, update local storage
+  //   const updatedCart = [...cart, { ...service, quantity: 1 }];
+  //   localStorage.setItem("cart", JSON.stringify(updatedCart));
+  // };
+
+  // const handleAddToCart = (item) => {
+  //   dispatch(addToCart(item));
+  // };
+
+  useEffect(() => {
+    const fetchRelatedSubcategories = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/subcategories/relatedsubcategory/${category_id}`
+        );
+        const result = await response.json();
+        setRelatedSubcategories(result.relatedSubcategories);
+      } catch (error) {
+        console.error("Error fetching related subcategories:", error);
+      }
+    };
+
+    fetchRelatedSubcategories();
+  }, [category_id]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/services/subcategory/${category_id}`
+        );
+        const result = await response.json();
+        setServices(result);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
+
+    fetchServices();
+  }, [category_id]);
+
   return (
     <div className="page-wraper">
       <Navbar />
@@ -21,137 +73,44 @@ const ServiceListing = () => {
                 <aside className="side-bar sf-rounded-sidebar">
                   {/*Find a Job*/}
                   <div className="sf-job-sidebar-blocks">
-                    <h4 className="sf-title">Find a Job</h4>
+                    <h4 className="sf-title">Related Services</h4>
+                  </div>
+                  <div className="row p-3">
+                    {relatedSubcategories?.map((subcategory) => (
+                      <div className="col-md-6" key={subcategory?._id}>
+                        <div className="media-bg-animate mba-bdr-15">
+                          <div className="aon-categories-area2-iconbox aon-icon-effect sub-categories">
+                            <div className="aon-cate-area2-icon">
+                              <span>
+                                <i className="aon-icon">
+                                  <img
+                                    src={subcategory?.image}
+                                    alt={subcategory?.title}
+                                  />
+                                </i>
+                              </span>
+                            </div>
+                            <div className="aon-cate-area2-content">
+                              <a href={`/service-list/${subcategory?._id}`}>
+                                <p className="aon-tilte text-center">
+                                  {subcategory?.title}
+                                </p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </aside>
               </div>
-              {/* Side bar END */}
-              {/* Right part start */}
+
               <div className="col-lg-8 col-md-12">
-                {/* <div className="aon-search-result-top flex-wrap d-flex justify-content-between">
-                  <div className="aon-search-result-title">  
-                    <h5>
-                      <span>(16)</span> Jobs &amp; Vacancies
-                    </h5>
-                  </div>
-                  <div className="aon-search-result-option">
-                    <ul className="aon-search-sortby">
-                      <li className="aon-select-sort-by">
-                        <select
-                          className="sf-select-box form-control sf-form-control bs-select-hidden"
-                          title="SORT BY"
-                          name="setorderby"
-                          id="setorderby"
-                        >
-                          <option className="bs-title-option" value>
-                            SORT BY
-                          </option>
-                          <option value="rating">Rating</option>
-                          <option value="title">Title</option>
-                          <option value="distance">Distance</option>
-                        </select>
-                      </li>
-                    </ul>
-                    <ul className="aon-search-grid-option" id="viewTypes">
-                      <li data-view="grid-3">
-                        <button
-                          type="button"
-                          className="btn btn-border btn-icon"
-                        >
-                          <i className="fa fa-th" />
-                        </button>
-                      </li>
-                      <li data-view="listview" className="active">
-                        <button
-                          type="button"
-                          className="btn btn-border btn-icon"
-                        >
-                          <i className="fa fa-th-list" />
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </div> */}
                 <ul className="job_listings job_listings-two">
-                  {/* COLUMNS 1 */}
-                  <li className="job_listing type-job_listing job-type-hourly">
-                    <a className="job-clickable-box" href="job-detail.html" />
-                    <div className="job-comapny-logo">
-                      <img
-                        className="company_logo"
-                        src="images/jobs/1.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="job-comapny-info">
-                      <div className="position">
-                        <h3>Web Designer Required in Brooklyn</h3>
-                        <div className="company">
-                          <strong>Blue Hills Pvt. Ltd.</strong>
-                        </div>
-                      </div>
-                      <ul className="meta">
-                        <li className="job-type hourly">
-                          <i className="fa fa-circle" />
-                          Hourly
-                        </li>
-                        <li className="date">
-                          <span>3 years ago</span>
-                        </li>
-                      </ul>
-                      <div className="job-location">
-                        <i className="fa fa-map-marker" /> Brooklyn
-                      </div>
-                      <div className="job-amount">
-                        <i className="fa fa-money" />
-                        <span>$1,200 - $1,500</span>
-                      </div>
-                      <div className="job-label">
-                        <img src="images/label.html" alt="" />
-                      </div>
-                    </div>
-                  </li>
+                  {services.map((service) => (
+                    <ServiceItem service={service} key={service.id} />
+                  ))}
                 </ul>
-                {/* Pagination Start*/}
-                {/* <div className="site-pagination s-p-center">
-                  <ul className="pagination">
-                    <li className="page-item disabled">
-                      <a className="page-link" href="#" tabIndex={-1}>
-                        <i className="fa fa-chevron-left" />
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        1
-                      </a>
-                    </li>
-                    <li className="page-item active">
-                      <a className="page-link" href="#">
-                        2 <span className="sr-only">(current)</span>
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        3
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        <i className="fa fa-ellipsis-h" />
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        11
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        <i className="fa fa-chevron-right" />
-                      </a>
-                    </li>
-                  </ul>
-                </div> */}
               </div>
             </div>
           </div>

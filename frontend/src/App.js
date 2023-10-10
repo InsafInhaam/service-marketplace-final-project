@@ -20,22 +20,7 @@ import ResetPassword from "./screens/ResetPassword";
 import TestComp from "./components/TestComp";
 import CityPage from "./screens/CityPage";
 import ServiceListing from "./screens/ServiceListing";
-
-// Define the initial state
-const initialState = {
-  user: JSON.parse(localStorage.getItem("user")),
-};
-
-export const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "LOGIN":
-      return { ...state, user: action.payload };
-    case "LOGOUT":
-      return { ...state, user: null };
-    default:
-      return state;
-  }
-};
+import Cart from "./screens/Cart";
 
 const Routing = () => {
   const user = useSelector((state) => state.user);
@@ -81,9 +66,9 @@ const Routing = () => {
         element={user ? <Profile /> : <Navigate to="/login" />}
       />
 
-      <Route exact path="/city/:cityName" element={<CityPage/>} />
-      <Route exact path="/service-list/:id" element={<ServiceListing/>} />
-
+      <Route exact path="/city/:cityName" element={<CityPage />} />
+      <Route exact path="/service-list/:id" element={<ServiceListing />} />
+      <Route exact path="/cart" element={<Cart />} />
 
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />

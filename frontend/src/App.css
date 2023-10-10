@@ -241,11 +241,16 @@
   padding-top: 10px;
 }
 
-
-.navbar-city-field{
+.navbar-city-field {
   width: 250px !important;
 }
 
-.navbar-search-field{
+.navbar-search-field {
   width: 400px !important;
+}
+
+@media (min-width: 1025px) {
+  .h-custom {
+    height: 100vh !important;
+  }
 }
