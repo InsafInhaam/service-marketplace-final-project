@@ -36,9 +36,9 @@ const Login = () => {
         if (data.error) {
           toast.error(data.error);
         } else {
-          localStorage.setItem("jwt", data.token); //localstorage
-          localStorage.setItem("user", JSON.stringify(data.user)); //localstorage
-          dispatch({ type: "LOGIN", payload: data.user }); //reduce
+          localStorage.setItem("jwt", data.accessToken); // Store access token
+          localStorage.setItem("user", JSON.stringify(data.user));
+          dispatch({ type: "LOGIN", payload: data.user });
           toast.success(data.message); //success message
           history("/"); // redirection to home page
         }

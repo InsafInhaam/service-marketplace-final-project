@@ -7,6 +7,8 @@ const adminSchema = new mongoose.Schema({
   phone: { type: String },
   address: { type: String },
   image: { type: String },
+}, {
+  timestamps: true,
 });
 
 const Admin = mongoose.model('Admin', adminSchema);

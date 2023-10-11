@@ -5,6 +5,8 @@ const bookingSchema = new mongoose.Schema({
   customer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   date: { type: Date, required: true },
   status: { type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending' },
+}, {
+  timestamps: true,
 });
 
 const Booking = mongoose.model('Booking', bookingSchema);

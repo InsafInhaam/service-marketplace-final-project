@@ -3,19 +3,40 @@ import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CartItem from "../components/CartItem";
+import { getTotals } from "../redux/slice/cartSlice";
+import CheckoutOrder from "../components/CheckoutOrder";
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user);
+  const [userDetails, setUserDetails] = useState([]);
   const [promoCode, setPromoCode] = useState("");
   const [promoMessage, setPromoMessage] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState(0);
+
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
+
+  // useEffect(() => {
+  //   fetch(process.env.REACT_APP_API_URL + "/api/user/user/" + user?._id)
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       setUserDetails(result);
+  //     });
+  // }, [userDetails]);
+
+  const totalPrice = cart.cartTotalAmount;
+
+  const discountedPrice = totalPrice * (1 - discountPercentage / 100);
 
   const handleApplyPromo = async (e) => {
     e.preventDefault();
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/promo/validate-promo`,
+        `${process.env.REACT_APP_API_URL}/api/promo/validate-promo`,
         {
           method: "POST",
           headers: {
@@ -90,8 +111,7 @@ const Cart = () => {
                           <div className="card">
                             <div className="card-body">
                               <p>
-                                If passanger have <strong> promo-code</strong>?
-                                use it
+                                If you have <strong> promo-code</strong>? use it
                               </p>
                               <div className="">
                                 <strong>Promo Code</strong>
@@ -119,7 +139,7 @@ const Cart = () => {
                                   </button>
                                 </form>
                                 {promoMessage && (
-                                  <p className="text-success py-2">
+                                  <p className="text-secondary py-2">
                                     {promoMessage}
                                   </p>
                                 )}
@@ -131,22 +151,32 @@ const Cart = () => {
                           <div className="card-body">
                             <div className="d-flex justify-content-between">
                               <p className="mb-2">Subtotal</p>
-                              <p className="mb-2">$4798.00</p>
+                              <p className="mb-2">LKR {cart.cartTotalAmount}</p>
                             </div>
-                            <div className="d-flex justify-content-between">
-                              <p className="mb-2">Shipping</p>
-                              <p className="mb-2">$20.00</p>
-                            </div>
+                            {discountPercentage > 0 && (
+                              <div className="d-flex justify-content-between">
+                                <p className="mb-2">Discount</p>
+                                <p className="mb-2">
+                                  -&nbsp; {discountPercentage}% &nbsp;
+                                </p>
+                              </div>
+                            )}
                             <div className="d-flex justify-content-between mb-4">
                               <p className="mb-2">Total(Incl. taxes)</p>
-                              <p className="mb-2">$4818.00</p>
+                              <p className="mb-2">
+                                LKR {discountedPrice.toFixed(2)}
+                              </p>
                             </div>
                             <button
                               type="button"
                               className="btn btn-info btn-block btn-lg"
                             >
-                              <div className="d-flex justify-content-between">
-                                <span>$4818.00</span>
+                              <div
+                                className="d-flex justify-content-between"
+                                data-toggle="modal"
+                                data-target="#checkoutorder"
+                              >
+                                <span>LKR {discountedPrice.toFixed(2)}</span>
                                 <span>
                                   Checkout
                                   <i className="fas fa-long-arrow-alt-right ms-2 ml-2" />
@@ -164,6 +194,10 @@ const Cart = () => {
           </div>
         </div>
       </div>
+
+      <>
+       <CheckoutOrder contactDetails={userDetails} cartItems={cart.cartItems} subTotal={cart.cartTotalAmount} discountPercentage={discountPercentage} totalPrice={discountedPrice}/>
+      </>
       <Footer />
     </div>
   );

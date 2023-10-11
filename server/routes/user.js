@@ -5,6 +5,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { authenticateToken } = require("../middleware/requireLogin");
 var nodemailer = require("nodemailer");
+const {
+  generateAccessToken,
+  generateRefreshToken,
+} = require("../helpers/token");
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -23,7 +27,10 @@ router.post("/login", async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECERT_KEY);
+    const accessToken = generateAccessToken({ id: user._id });
+    const refreshToken = generateRefreshToken({ id: user._id });
+
+    // const token = jwt.sign({ id: user._id }, process.env.JWT_SECERT_KEY);
 
     const { _id, name, image, address, phone, city, role } = user;
 
@@ -39,7 +46,8 @@ router.post("/login", async (req, res) => {
         city,
         role,
       },
-      token,
+      accessToken,
+      refreshToken,
     });
   } catch (error) {
     console.error(error);
@@ -48,6 +56,38 @@ router.post("/login", async (req, res) => {
       error: "An error occurred while logging",
     });
   }
+});
+
+// Middleware to authenticate the refresh token
+const authenticateRefreshToken = (req, res, next) => {
+  const refreshToken = req.body.refreshToken;
+
+  if (!refreshToken) {
+    return res.status(401).json({ error: 'Refresh token not provided' });
+  }
+
+  try {
+    // Verify the refresh token
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+    // Attach the user ID to the request for further processing
+    req.userId = decoded.id;
+
+    next();
+  } catch (error) {
+    console.error('Error verifying refresh token:', error);
+    return res.status(403).json({ error: 'Invalid refresh token' });
+  }
+};
+
+// Route to refresh the access token
+router.post('/refresh-token', authenticateRefreshToken, (req, res) => {
+  // In this route, you would generate a new access token and send it back to the client
+  const accessToken = jwt.sign({ id: req.userId }, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: '15m', // Set an appropriate expiration time
+  });
+
+  res.json({ accessToken });
 });
 
 // User registration
@@ -227,7 +267,6 @@ router.post("/reset-password/:id/:token", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 // Get users based on service provided
 router.get(

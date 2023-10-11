@@ -15,6 +15,8 @@ const UserSchema = new mongoose.Schema({
   },
   hourlyPrice: { type: String },
   description: { type: String },
+}, {
+  timestamps: true,
 });
 
 const User = mongoose.model("User", UserSchema);

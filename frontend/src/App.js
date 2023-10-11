@@ -8,7 +8,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Popup from "./components/Popup";
 import Categories from "./screens/Categories";
 import CategoryServiceProvider from "./screens/CategoryServiceProvider";
@@ -21,6 +21,9 @@ import TestComp from "./components/TestComp";
 import CityPage from "./screens/CityPage";
 import ServiceListing from "./screens/ServiceListing";
 import Cart from "./screens/Cart";
+import { useEffect } from "react";
+import { logout } from "./redux/slice/userActions";
+// import jwt from "jsonwebtoken"; // Import jwt module
 
 const Routing = () => {
   const user = useSelector((state) => state.user);
@@ -86,6 +89,57 @@ const Routing = () => {
 };
 
 function App() {
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   const checkTokenValidity = () => {
+  //     const accessToken = localStorage.getItem("jwt");
+  //     if (!accessToken) {
+  //       return;
+  //     }
+
+  //     try {
+  //       const decodedToken = jwt.decode(accessToken);
+  //       if (decodedToken.exp * 1000 < Date.now()) {
+  //         // Access token expired, attempt refresh
+  //         const refreshToken = localStorage.getItem("refreshToken");
+  //         if (!refreshToken) {
+  //           // No refresh token, perform logout
+  //           dispatch(logout());
+  //         } else {
+  //           // Attempt to refresh token
+  //           fetch(process.env.REACT_APP_API_URL + "/api/user/refresh-token", {
+  //             method: "POST",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //             },
+  //             body: JSON.stringify({ refreshToken }),
+  //           })
+  //             .then((res) => res.json())
+  //             .then((data) => {
+  //               if (data.accessToken) {
+  //                 // Refresh successful, update access token
+  //                 localStorage.setItem("jwt", data.accessToken);
+  //               } else {
+  //                 // Refresh failed, perform logout
+  //                 dispatch(logout());
+  //               }
+  //             })
+  //             .catch((err) => {
+  //               console.error("Error refreshing token:", err);
+  //               dispatch(logout());
+  //             });
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error("Error decoding token:", error);
+  //       dispatch(logout());
+  //     }
+  //   };
+
+  //   checkTokenValidity();
+  // }, [dispatch]);
+
   return (
     <>
       <Router>
