@@ -55,7 +55,7 @@ const Home = () => {
   return (
     <div>
       {/* LOADING AREA START ===== */}
-      <Loader />
+      {/* <Loader /> */}
       {/* LOADING AREA  END ====== */}
       <div className="page-wraper">
         {/* HEADER START */}

@@ -29,7 +29,7 @@ router.post("/add-order", async (req, res) => {
     // Save the order to the database
     const savedOrder = await order.save();
 
-    res.status(201).json({ success: true, order: savedOrder });
+    res.status(201).json({ success: true, order: savedOrder, message: "Order added successfully"  });
   } catch (error) {
     console.error("Error saving order:", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
@@ -64,7 +64,7 @@ router.get('/orders/:orderId', async (req, res) => {
 });
 
 // Get orders by user ID
-router.get('/orders/user/:userId', async (req, res) => {
+router.get('/user/:userId', async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.params.userId });
     res.status(200).json(orders);

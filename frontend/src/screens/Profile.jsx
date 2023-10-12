@@ -11,7 +11,7 @@ import UserDetailsReviews from "../components/UserDetailsReviews";
 import TopBanner from "../components/TopBanner";
 
 const Profile = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
 
   const [userDetails, setUserDetails] = useState([]);
   const [loading, setLoading] = useState(false);

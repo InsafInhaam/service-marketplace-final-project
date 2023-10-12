@@ -7,6 +7,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Popup from "./components/Popup";
@@ -17,16 +18,24 @@ import ForgetPassword from "./screens/ForgetPassword";
 import Search from "./screens/Search";
 import Profile from "./screens/Profile";
 import ResetPassword from "./screens/ResetPassword";
-import TestComp from "./components/TestComp";
 import CityPage from "./screens/CityPage";
 import ServiceListing from "./screens/ServiceListing";
 import Cart from "./screens/Cart";
 import { useEffect } from "react";
 import { logout } from "./redux/slice/userActions";
-// import jwt from "jsonwebtoken"; // Import jwt module
+import Orders from "./screens/Orders";
 
 const Routing = () => {
   const user = useSelector((state) => state.user);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if the user is not authenticated, then navigate to the login page
+    if (!user || user == undefined || user == null) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   return (
     <Routes>
@@ -69,9 +78,27 @@ const Routing = () => {
         element={user ? <Profile /> : <Navigate to="/login" />}
       />
 
-      <Route exact path="/city/:cityName" element={<CityPage />} />
-      <Route exact path="/service-list/:id" element={<ServiceListing />} />
-      <Route exact path="/cart" element={<Cart />} />
+      <Route
+        exact
+        path="/city/:cityName"
+        element={user ? <CityPage /> : <Navigate to="/login" />}
+      />
+      <Route
+        exact
+        path="/service-list/:id"
+        element={user ? <ServiceListing /> : <Navigate to="/login" />}
+      />
+      <Route
+        exact
+        path="/cart"
+        element={user ? <Cart /> : <Navigate to="/login" />}
+      />
+
+<Route
+        exact
+        path="/order"
+        element={user ? <Orders /> : <Navigate to="/login" />}
+      />
 
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
@@ -83,7 +110,7 @@ const Routing = () => {
         element={<ResetPassword />}
       />
 
-      <Route exact path="/test/:id/:token" element={<TestComp />} />
+      {/* <Route exact path="/test/:id/:token" element={<TestComp />} /> */}
     </Routes>
   );
 };
@@ -91,54 +118,54 @@ const Routing = () => {
 function App() {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const checkTokenValidity = () => {
-  //     const accessToken = localStorage.getItem("jwt");
-  //     if (!accessToken) {
-  //       return;
-  //     }
+  useEffect(() => {
+    const checkTokenValidity = () => {
+      const accessToken = localStorage.getItem("jwt");
+      if (!accessToken) {
+        return;
+      }
 
-  //     try {
-  //       const decodedToken = jwt.decode(accessToken);
-  //       if (decodedToken.exp * 1000 < Date.now()) {
-  //         // Access token expired, attempt refresh
-  //         const refreshToken = localStorage.getItem("refreshToken");
-  //         if (!refreshToken) {
-  //           // No refresh token, perform logout
-  //           dispatch(logout());
-  //         } else {
-  //           // Attempt to refresh token
-  //           fetch(process.env.REACT_APP_API_URL + "/api/user/refresh-token", {
-  //             method: "POST",
-  //             headers: {
-  //               "Content-Type": "application/json",
-  //             },
-  //             body: JSON.stringify({ refreshToken }),
-  //           })
-  //             .then((res) => res.json())
-  //             .then((data) => {
-  //               if (data.accessToken) {
-  //                 // Refresh successful, update access token
-  //                 localStorage.setItem("jwt", data.accessToken);
-  //               } else {
-  //                 // Refresh failed, perform logout
-  //                 dispatch(logout());
-  //               }
-  //             })
-  //             .catch((err) => {
-  //               console.error("Error refreshing token:", err);
-  //               dispatch(logout());
-  //             });
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.error("Error decoding token:", error);
-  //       dispatch(logout());
-  //     }
-  //   };
+      try {
+        // const decodedToken = jwt.decode(accessToken);
+        // if (decodedToken.exp * 1000 < Date.now()) {
+        // Access token expired, attempt refresh
+        const refreshToken = localStorage.getItem("refreshToken");
+        if (!refreshToken) {
+          // No refresh token, perform logout
+          dispatch(logout());
+        } else {
+          // Attempt to refresh token
+          fetch(process.env.REACT_APP_API_URL + "/api/user/refresh-token", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ refreshToken }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.accessToken) {
+                // Refresh successful, update access token
+                localStorage.setItem("jwt", data.accessToken);
+              } else {
+                // Refresh failed, perform logout
+                dispatch(logout());
+              }
+            })
+            .catch((err) => {
+              console.error("Error refreshing token:", err);
+              dispatch(logout());
+            });
+        }
+        // }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        dispatch(logout());
+      }
+    };
 
-  //   checkTokenValidity();
-  // }, [dispatch]);
+    checkTokenValidity();
+  }, [dispatch]);
 
   return (
     <>

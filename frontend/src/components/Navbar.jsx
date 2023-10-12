@@ -49,7 +49,6 @@ const Navbar = () => {
             </button>
             {/* MAIN Vav */}
             <div className="nav-animation header-nav navbar-collapse collapse d-flex justify-content-center">
-            
               <div className="search-bar">
                 <input
                   type="text"
@@ -84,7 +83,9 @@ const Navbar = () => {
               <div className="extra-cell">
                 <a className="site-button aon-btn-signup m-l20" href="/cart">
                   <i className="fa-solid fa-cart-shopping"></i>
-                  <span className="badge badge-light">{cart.cartItems && cart.cartItems.length}</span>
+                  <span className="badge badge-light">
+                    {cart.cartItems && cart.cartItems.length}
+                  </span>
                 </a>
 
                 <a href="/profile" className="m-l20">

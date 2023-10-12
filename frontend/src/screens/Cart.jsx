@@ -9,23 +9,15 @@ import CheckoutOrder from "../components/CheckoutOrder";
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const user = useSelector((state) => state.user);
-  const [userDetails, setUserDetails] = useState([]);
+  const user = useSelector((state) => state.user.user);
   const [promoCode, setPromoCode] = useState("");
   const [promoMessage, setPromoMessage] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState(0);
 
+  console.log(user)
   useEffect(() => {
     dispatch(getTotals());
   }, [cart, dispatch]);
-
-  // useEffect(() => {
-  //   fetch(process.env.REACT_APP_API_URL + "/api/user/user/" + user?._id)
-  //     .then((res) => res.json())
-  //     .then((result) => {
-  //       setUserDetails(result);
-  //     });
-  // }, [userDetails]);
 
   const totalPrice = cart.cartTotalAmount;
 
@@ -196,7 +188,7 @@ const Cart = () => {
       </div>
 
       <>
-       <CheckoutOrder contactDetails={userDetails} cartItems={cart.cartItems} subTotal={cart.cartTotalAmount} discountPercentage={discountPercentage} totalPrice={discountedPrice}/>
+       <CheckoutOrder contactDetails={user} cartItems={cart.cartItems} subTotal={cart.cartTotalAmount} discountPercentage={discountPercentage} totalPrice={discountedPrice}/>
       </>
       <Footer />
     </div>
