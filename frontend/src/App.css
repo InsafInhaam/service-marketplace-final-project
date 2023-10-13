@@ -242,7 +242,7 @@
 }
 
 .navbar-city-field {
-  width: 250px !important;
+  width: 300px !important;
 }
 
 .navbar-search-field {
@@ -255,41 +255,78 @@
   }
 }
 
-
 /* orders tracker */
 
 .track-line {
   height: 2px !important;
-  background-color: #488978;
+  background-color: #ff0000;
   opacity: 1;
-  }
-  
-  .dot {
+}
+
+.dot {
   height: 10px;
   width: 10px;
   margin-left: 3px;
   margin-right: 3px;
   margin-top: 0px;
-  background-color: #488978;
+  background-color: #ff0000;
   border-radius: 50%;
-  display: inline-block
-  }
-  
-  .big-dot {
+  display: inline-block;
+}
+
+.big-dot {
   height: 25px;
   width: 25px;
   margin-left: 0px;
   margin-right: 0px;
   margin-top: 0px;
-  background-color: #488978;
+  background-color: #ff0000;
   border-radius: 50%;
   display: inline-block;
-  }
-  
-  .big-dot i {
+}
+
+.green-color {
+  background-color: #488978;
+}
+
+.big-dot i {
   font-size: 12px;
-  }
-  
-  .card-stepper {
-  z-index: 0
-  }
+}
+
+.card-stepper {
+  z-index: 0;
+}
+
+.navbar-profile-img-btn-dropdown {
+  background: none !important;
+  border: none !important;
+  padding: 0px !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.navbar-profile-img-btn-dropdown:after {
+  display: none !important;
+}
+
+.navbar-profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+ul.search-results {
+  background: #fff;
+  position: absolute;
+  width: 300px;
+  margin-top: 10px;
+  padding: 5px;
+  box-shadow: 1px 10px 30px -7px rgba(0, 0, 0, 0.75);
+  border-radius: 12px;
+  list-style: none;
+}
+
+.search-results li {
+  border-bottom: 1px solid #737272;
+}

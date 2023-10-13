@@ -37,7 +37,7 @@ const Profile = () => {
       });
   }, [userDetails]);
 
-  console.log(userDetails);
+  // console.log(userDetails);
 
   const handleFormSubmit = () => {
     const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;

@@ -53,7 +53,7 @@ const Register = () => {
       }
 
 
-      console.log(body);
+      // console.log(body);
 
       fetch(process.env.REACT_APP_API_URL + "/api/user/register", {
         method: "POST",
@@ -69,7 +69,7 @@ const Register = () => {
           } else {
             setLoading(false);
             toast.success(data.message);
-            console.log(data.message);
+            // console.log(data.message);
             history("/login");
           }
         })
@@ -92,7 +92,7 @@ const Register = () => {
         .then((res) => res.json())
         .then((data) => {
           setProfilePic(data.secure_url);
-          console.log(data.secure_url);
+          // console.log(data.secure_url);
         })
         .catch((error) => console.log(error));
     }

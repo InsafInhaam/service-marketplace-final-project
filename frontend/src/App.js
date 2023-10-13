@@ -24,25 +24,31 @@ import Cart from "./screens/Cart";
 import { useEffect } from "react";
 import { logout } from "./redux/slice/userActions";
 import Orders from "./screens/Orders";
+import LabourerRegistration from "./screens/LabourerRegistration";
 
 const Routing = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Check if the user is not authenticated, then navigate to the login page
-    if (!user || user == undefined || user == null) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   // Check if the user is not authenticated, then navigate to the login page
+  //   if (!user || user == undefined || user == null) {
+  //     navigate("/login");
+  //   }
+  // }, [user, navigate]);
 
   return (
     <Routes>
-      <Route
+      {/* <Route
         exact
         path="/"
         element={user ? <Home /> : <Navigate to="/login" />}
+      /> */}
+      <Route
+        exact
+        path="/"
+        element={<Home />}
       />
       <Route
         exact
@@ -94,10 +100,16 @@ const Routing = () => {
         element={user ? <Cart /> : <Navigate to="/login" />}
       />
 
-<Route
+      <Route
         exact
         path="/order"
         element={user ? <Orders /> : <Navigate to="/login" />}
+      />
+
+      <Route
+        exact
+        path="/LabourerRegistration"
+        element={<LabourerRegistration />}
       />
 
       <Route exact path="/login" element={<Login />} />

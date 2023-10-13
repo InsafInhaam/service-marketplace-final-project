@@ -39,7 +39,7 @@ router.post("/add-order", async (req, res) => {
 // Get all orders
 router.get('/orders', async (req, res) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find().populate('service');
     res.status(200).json(orders);
   } catch (error) {
     console.error('Error getting orders:', error);
@@ -66,7 +66,7 @@ router.get('/orders/:orderId', async (req, res) => {
 // Get orders by user ID
 router.get('/user/:userId', async (req, res) => {
   try {
-    const orders = await Order.find({ userId: req.params.userId });
+    const orders = await Order.find({ userId: req.params.userId }).populate('cartItems.itemId');
     res.status(200).json(orders);
   } catch (error) {
     console.error('Error getting orders by user ID:', error);

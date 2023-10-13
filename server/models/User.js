@@ -10,6 +10,8 @@ const UserSchema = new mongoose.Schema({
   phone: { type: String },
   city: { type: String },
   address: { type: String },
+  latitude: { type: Number },
+  longitude: { type: Number },
   serviceProvided: {
     type: String,
   },

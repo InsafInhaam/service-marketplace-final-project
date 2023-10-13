@@ -19,7 +19,7 @@ const LabourProfile = () => {
       });
   }, [userDetails]);
 
-  console.log(userDetails);
+  // console.log(userDetails);
 
   return (
     <div>

@@ -341,4 +341,20 @@ router.get("/user/:id", async (req, res) => {
   }
 });
 
+// Update user's latitude and longitude and address
+router.put('/updateLocation/:userId', async (req, res) => {
+  const { address, latitude, longitude } = req.body;
+  const userId = req.params.userId;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(userId, { address, latitude, longitude }, { new: true });
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error('Error updating user location:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+
 module.exports = router;
