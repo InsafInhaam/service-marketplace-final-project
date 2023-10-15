@@ -241,14 +241,6 @@
   padding-top: 10px;
 }
 
-.navbar-city-field {
-  width: 300px !important;
-}
-
-.navbar-search-field {
-  width: 400px !important;
-}
-
 @media (min-width: 1025px) {
   .h-custom {
     height: 100vh !important;
@@ -316,10 +308,18 @@
   padding: 5px;
 }
 
+.navbar-city-field {
+  width: 100%;
+}
+
+.navbar-search-field {
+  width: 460px !important;
+}
+
 ul.search-results {
   background: #fff;
   position: absolute;
-  width: 300px;
+  width: 92%;
   margin-top: 10px;
   padding: 5px;
   box-shadow: 1px 10px 30px -7px rgba(0, 0, 0, 0.75);
@@ -329,4 +329,39 @@ ul.search-results {
 
 .search-results li {
   border-bottom: 1px solid #737272;
+  color: #000;
+}
+
+
+.location-input-get-location{
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Add this to your CSS */
+/* #reviewModal,
+#complainModal {
+  z-index: 1051; 
+  display: block;ds
+  opacity: 1;
+} */
+
+/* .modal-backdrop.show {
+  opacity: 0;
+} */
+
+/*  Open Modal  */
+.modal {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  opacity: 1 !important;
+  background: #00000073;
+}
+
+.modal .modal-dialog {
+  width: 100%;
+  margin: 0;
 }

@@ -2,19 +2,29 @@ import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useSelector } from "react-redux";
-import OrderStatus from "../components/OrderStatus";
+// import OrderStatus from "../components/OrderStatus";
 import OrderStatusIndicate from "../components/OrderStatusIndicate";
+import toast from "react-hot-toast";
+import axios from "axios";
+import ReviewModal from "../components/ReviewModal";
+import ComplainModal from "../components/ComplainModal";
+import OrderDetails from "../components/OrderDetails";
 
 const Orders = () => {
   const user = useSelector((state) => state.user.user);
 
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showComplainModal, setShowComplainModal] = useState(false);
+  const [showSelectedOrderModal, setShowSelectedOrderModal] = useState(false);
 
   useEffect(() => {
     // Fetch orders when the component mounts
     fetchOrders();
   }, [orders]);
+
+  console.log(selectedOrder)
 
   const fetchOrders = async () => {
     try {
@@ -44,20 +54,48 @@ const Orders = () => {
 
   const handleTrackOrder = (order) => {
     setSelectedOrder(order);
-    // Open the modal when the "Track Order Details" button is clicked
-    // You can use a modal library or create your own modal logic here
-    // For simplicity, I'll just log the order details for now
-    console.log("Track Order Details:", order);
+    setShowSelectedOrderModal(true); // Show the selectedOrder modal
+    // setSelectedReview(null); // Close the review modal
+    // setSelectedComplain(null); // Close the complain modal
   };
 
-  const handleCancelOrder = () => {
-    // Handle cancel order logic here
-    console.log("Cancel Order:", selectedOrder);
+  const handleCancelOrder = async () => {
+    try {
+      const response = await axios.put(
+        process.env.REACT_APP_API_URL +
+          `/api/orders/cancelOrder/${selectedOrder._id}`
+      );
+      const updatedOrder = response.data;
+
+      console.log("Order cancelled:", updatedOrder);
+      toast.success("Order cancelled successfully");
+
+      // Manually remove the modal backdrop with fade and show classes
+      const modalBackdrop = document.querySelector(".modal-backdrop");
+      modalBackdrop.parentNode.removeChild(modalBackdrop);
+
+      // Close the modal after canceling the order
+      const orderDetailsModal = new window.bootstrap.Modal(
+        document.getElementById("orderDetailsModal")
+      );
+      orderDetailsModal.hide();
+
+      // Optionally, you can reset the selectedOrder state
+      setSelectedOrder(null);
+    } catch (error) {
+      console.error("Error cancelling order:", error);
+      toast.error("Error cancelling order");
+    }
+  };
+
+  const handleReview = () => {
+    setShowSelectedOrderModal(false);
+    setShowReviewModal(true);
   };
 
   const handleComplain = () => {
-    // Handle complain logic here
-    console.log("Complain:", selectedOrder);
+    setShowSelectedOrderModal(false);
+    setShowComplainModal(true);
   };
 
   return (
@@ -136,96 +174,37 @@ const Orders = () => {
       </div>
 
       {/* Modal for complete order details */}
-      {selectedOrder && (
-        <div
-          className="modal fade"
-          id="orderDetailsModal"
-          tabIndex={-1}
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">
-                  Order Details
-                </h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  onClick={() => setSelectedOrder(null)}
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <p>
-                  <strong>Status:</strong> {selectedOrder.status}
-                </p>
-                <p>
-                  <strong>Order Date:</strong> {selectedOrder.createdAt}
-                </p>
-                <p>
-                  <strong>Delivery Address:</strong> {user.address}
-                </p>
-                <p>
-                  <strong>Total Price:</strong> ${selectedOrder.totalPrice}
-                </p>
-                <h4>Items:</h4>
-                <ul className="px-0">
-                  {selectedOrder?.cartItems.map((item) => (
-                    <li
-                      key={item?.itemId}
-                      className="d-flex align-itens-center justify-content-between"
-                    >
-                      <div>{item?.itemId?.name}</div>
-                      <div>
-                        - <strong> Quantity: </strong>
-                        {item?.quantity}
-                      </div>
-                      <div>
-                        - <strong> Price: </strong>
-                        LKR {item?.itemId?.price}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="modal-footer">
-                {selectedOrder.status === "order_placed" && (
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={handleCancelOrder}
-                  >
-                    Cancel Order
-                  </button>
-                )}
-                {selectedOrder.status === "completed" && (
-                  <button
-                    type="button"
-                    className="btn btn-warning"
-                    onClick={handleComplain}
-                  >
-                    Complain
-                  </button>
-                )}
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-dismiss="modal"
-                  onClick={() => setSelectedOrder(null)}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      {selectedOrder && showSelectedOrderModal && (
+        <OrderDetails
+          onClose={() => setSelectedOrder(null)}
+          selectedOrder={selectedOrder}
+          handleReview={handleReview}
+          handleComplain={handleComplain}
+          user={user}
+          handleCancelOrder={handleCancelOrder}
+        />
       )}
+
+      {/* Review Modal */}
+      {showReviewModal && (
+        <ReviewModal
+          userId={user._id}
+          orderId={selectedOrder._id}
+          // labourerId={selectedOrder.labourer}
+          labourerId={`466437hw7hwew8832`} // once labour is complete pass his id
+          onClose={() => setShowReviewModal(false)}
+        />
+      )}
+
+      {/* Complain Modal */}
+      {showComplainModal && (
+        <ComplainModal
+          userId={user._id}
+          orderId={selectedOrder._id}
+          onClose={() => setShowComplainModal(false)}
+        />
+      )}
+
       <Footer />
     </div>
   );

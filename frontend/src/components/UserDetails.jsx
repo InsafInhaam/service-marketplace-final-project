@@ -33,7 +33,7 @@ const UserDetails = ({ userDetails }) => {
               <strong>Categories:</strong> {userDetails.serviceProvided}
             </div>
           )}
-          
+
           <div className="sf-provi-bio-text">
             <p>{userDetails.description}</p>
             <p>
@@ -47,6 +47,12 @@ const UserDetails = ({ userDetails }) => {
             </p>
             <p>
               <strong>Horuly Rate</strong> {userDetails.hourlyPrice}
+            </p>
+            <p>
+              <strong>Latitude</strong> {userDetails.latitude}
+            </p>
+            <p>
+              <strong>Longitude</strong> {userDetails.longitude}
             </p>
             {userDetails._id === user._id && (
               <div className="sf-provi-btn">

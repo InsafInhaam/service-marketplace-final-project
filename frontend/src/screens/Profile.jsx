@@ -76,12 +76,15 @@ const Profile = () => {
         <Navbar />
         <div className="page-content">
           {/*Top Banner Section Start*/}
-          <TopBanner
+          {/* <TopBanner
             bannerTitle={"Profile Information"}
             bannerDescription={
               "lorem ipsum dolor sit amet, consectetur adipiscing el"
             }
-          />
+          /> */}
+          <div className="aon-page-benner-area2">
+            <div className="aon-banner-large2-title">Profile Information</div>
+          </div>
 
           <div className="container pt-5">
             {/*About Provider*/}

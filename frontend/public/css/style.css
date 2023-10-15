@@ -12580,10 +12580,10 @@ ul.job_listings .job_listing .job-comapny-logo img {
 
 .sf-provi-pic img {
   width: 100%;
-
   height: 100%;
-
   border-radius: 100%;
+  object-fit: cover;
+
 }
 
 .sf-provi-name {

@@ -74,4 +74,26 @@ router.get('/user/:userId', async (req, res) => {
   }
 });
 
+// Route to cancel an order
+router.put('/cancelOrder/:orderId', async (req, res) => {
+  const orderId = req.params.orderId;
+
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { status: 'canceled' },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    res.status(200).json({updatedOrder, message: 'Order Cancelled successfully'});
+  } catch (error) {
+    console.error('Error cancelling order:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 module.exports = router;

@@ -17,13 +17,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/labour", require('./routes/labour'));
 app.use("/api/user", require('./routes/user'));
 app.use("/api/booking", require('./routes/booking'));
-app.use("/api/ratingReviews", require('./routes/ratingReviews'));
 app.use("/api/services", require('./routes/services'));
 app.use("/api/admin", require('./routes/admin'));
 app.use("/api/categories", require('./routes/categories'));
 app.use("/api/subcategories", require('./routes/subcategories'));
 app.use("/api/promo", require('./routes/promo'));
 app.use("/api/orders", require('./routes/orderRoute'));
+app.use("/api/complain", require('./routes/complain'));
+app.use("/api/reviews", require('./routes/reviews'));
 
 app.listen(PORT, () => {
   console.log("listening on port", PORT);

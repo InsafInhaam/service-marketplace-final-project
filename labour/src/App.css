@@ -1,0 +1,39 @@
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+  font-size: 1rem;
+  line-height: 2.15;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+}
+.card-registration .select-arrow {
+  top: 13px;
+}
+
+ul.search-results {
+  background: #fff;
+  position: absolute;
+  width: 557px;
+  margin-top: 10px;
+  padding: 5px;
+  box-shadow: 1px 10px 30px -7px rgba(0, 0, 0, 0.75);
+  border-radius: 12px;
+  list-style: none;
+}
+
+.search-results li {
+  border-bottom: 1px solid #737272;
+  padding-bottom: 2px;
+}
+
+.search-results li a {
+  color: #424242;
+}
+
+div#carouselMaterialStyle {
+  height: 500px;
+}
+
+div#carouselMaterialStyle img{
+  height: 500px;
+  object-fit: cover;
+  object-position: top center;
+}

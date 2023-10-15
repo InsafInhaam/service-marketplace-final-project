@@ -7,13 +7,12 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import LabourCard from "../components/LabourCard";
-import { cityOptions } from "./../utils/cities";
 import { Link, useNavigate } from "react-router-dom";
+import ChangeLocation from "../components/ChangeLocation";
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
   const [labours, setLabours] = useState([]);
-  const [city, setCity] = useState("");
   const history = useNavigate();
 
   useEffect(() => {
@@ -44,24 +43,11 @@ const Home = () => {
     },
   };
 
-  const handleCityChange = (e) => {
-    const selectedCity = e.target.value;
-    setCity(selectedCity);
-
-    // Programmatically navigate to the selected city's page
-    history(`/city/${selectedCity}`);
-  };
-
   return (
     <div>
-      {/* LOADING AREA START ===== */}
       {/* <Loader /> */}
-      {/* LOADING AREA  END ====== */}
       <div className="page-wraper">
-        {/* HEADER START */}
         <Navbar />
-        {/* HEADER END */}
-        {/* CONTENT START */}
         <div className="page-content">
           {/* BANNER SECTION START */}
           <section className="aon-banner-area2">
@@ -88,26 +74,7 @@ const Home = () => {
                             <label>Where do you need a service?</label>
                           </div>
                           <div className="sf-search-feild">
-                            <select
-                              className="sf-select-box form-control sf-form-control bs-select-hidden"
-                              data-live-search="true"
-                              name="city"
-                              id="city"
-                              title="City"
-                              data-header="Select a City"
-                              value={city}
-                              onChange={handleCityChange}
-                            >
-                              <option value="">Select a city</option>
-                              {cityOptions.map((cityOption) => (
-                                <option
-                                  key={cityOption.id}
-                                  value={cityOption.name}
-                                >
-                                  {cityOption.name}
-                                </option>
-                              ))}
-                            </select>
+                           <ChangeLocation/>
                           </div>
                         </div>
                       </div>
