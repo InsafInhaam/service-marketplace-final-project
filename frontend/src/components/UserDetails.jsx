@@ -1,12 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-const UserDetails = ({ userDetails }) => {
+const UserDetails = ({ userDetails, onShowModal }) => {
   const user = useSelector((state) => state.user.user);
 
   return (
     <div>
-      {" "}
       <div className="sf-provi-bio-box cleafix margin-b-50 sf-provi-fullBox">
         {/*Left*/}
         <div className="sf-provi-bio-left">
@@ -14,7 +13,7 @@ const UserDetails = ({ userDetails }) => {
             <div className="sf-provi-pic">
               <img src={userDetails.image} alt={userDetails.name} />
             </div>
-            {userDetails.role === "labour" && (
+            {/* {userDetails.role === "labour" && (
               <div className="sf-ow-pro-rating">
                 <span className="fa fa-star" />
                 <span className="fa fa-star" />
@@ -22,17 +21,17 @@ const UserDetails = ({ userDetails }) => {
                 <span className="fa fa-star" />
                 <span className="fa fa-star text-gray" />
               </div>
-            )}
+            )} */}
           </div>
         </div>
         {/*Right*/}
         <div className="sf-provi-bio-right">
           <h3 className="sf-provi-title">{userDetails.name}</h3>
-          {userDetails.role === "labour" && (
+          {/* {userDetails.role === "labour" && (
             <div className="sf-provi-cat">
               <strong>Categories:</strong> {userDetails.serviceProvided}
             </div>
-          )}
+          )} */}
 
           <div className="sf-provi-bio-text">
             <p>{userDetails.description}</p>
@@ -59,8 +58,7 @@ const UserDetails = ({ userDetails }) => {
                 <button
                   type="button"
                   className="site-button"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
+                  onClick={onShowModal}
                 >
                   <i className="fa fa-pencil" />
                   Edit Profile Details

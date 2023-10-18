@@ -77,9 +77,9 @@ const Navbar = () => {
                       aria-expanded="false"
                     >
                       <img
-                        src={user.profile ? user.profile : profileImg}
+                        src={user.image ? user.image : profileImg}
                         className="rounded-circle navbar-profile-img"
-                        alt="Black and White Portrait of a Man"
+                        alt={user.name}
                         loading="lazy"
                       />
                     </button>

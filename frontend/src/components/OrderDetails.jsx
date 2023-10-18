@@ -76,56 +76,62 @@ const OrderDetails = ({
             </button>
           </div>
           <div className="modal-body">
-            <p>
-              <strong>Status:</strong> {selectedOrder.status}
-            </p>
-            <p>
-              <strong>Order Date:</strong> {selectedOrder.createdAt}
-            </p>
-            <p>
-              <strong>Delivery Address:</strong> {user.address}
-            </p>
-            <p>
-              <strong>Total Price:</strong> ${selectedOrder.totalPrice}
-            </p>
-            <h4>Items:</h4>
-            <ul className="px-0">
-              {selectedOrder?.cartItems.map((item) => (
-                <li
-                  key={item?.itemId}
-                  className="d-flex align-itens-center justify-content-between"
-                >
-                  <div>{item?.itemId?.name}</div>
-                  <div>
-                    - <strong> Quantity: </strong>
-                    {item?.quantity}
-                  </div>
-                  <div>
-                    - <strong> Price: </strong>
-                    LKR {item?.itemId?.price}
-                  </div>
-                </li>
-              ))}
-            </ul>
-            {/* Render reviews */}
             <div>
-              <h4>Reviews</h4>
-              {reviews.map((review) => (
-                <div key={review._id}>
-                  <p>Rating: {review.rating}</p>
-                  <p>Comment: {review.review}</p>
-                </div>
-              ))}
+              <p>
+                <strong>Status:</strong> {selectedOrder.status}
+              </p>
+              <p>
+                <strong>Order Date:</strong> {selectedOrder.createdAt}
+              </p>
+              <p>
+                <strong>Delivery Address:</strong> {user.address}
+              </p>
+              <p>
+                <strong>Total Price:</strong> ${selectedOrder.totalPrice}
+              </p>
             </div>
-
-            {/* Render complaints */}
             <div>
-              <h4>Complaints</h4>
-              {complaints.map((complaint) => (
-                <div key={complaint._id}>
-                  <p>Reason: {complaint.reason}</p>
-                </div>
-              ))}
+              <h4>Items:</h4>
+              <ul className="px-0">
+                {selectedOrder?.cartItems.map((item) => (
+                  <li
+                    key={item?.itemId}
+                    className="d-flex align-itens-center justify-content-between"
+                  >
+                    <div>{item?.itemId?.name}</div>
+                    <div>
+                      - <strong> Quantity: </strong>
+                      {item?.quantity}
+                    </div>
+                    <div>
+                      - <strong> Price: </strong>
+                      LKR {item?.itemId?.price}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              {/* Render reviews */}
+              <div>
+                <h4>Reviews</h4>
+                {reviews.map((review) => (
+                  <div key={review._id}>
+                    <p>Rating: {review.rating}</p>
+                    <p>Comment: {review.review}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Render complaints */}
+              <div>
+                <h4>Complaints</h4>
+                {complaints.map((complaint) => (
+                  <div key={complaint._id}>
+                    <p>Reason: {complaint.reason}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div className="modal-footer">

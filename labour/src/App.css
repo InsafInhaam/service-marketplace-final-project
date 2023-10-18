@@ -1,3 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+:root {
+  --primary: #022278;
+  --secondary: #86acd1;
+}
+
 .card-registration .select-input.form-control[readonly]:not([disabled]) {
   font-size: 1rem;
   line-height: 2.15;
@@ -32,8 +44,263 @@ div#carouselMaterialStyle {
   height: 500px;
 }
 
-div#carouselMaterialStyle img{
+div#carouselMaterialStyle img {
   height: 500px;
   object-fit: cover;
   object-position: top center;
+}
+
+/*  */
+
+#home {
+  width: 100%;
+  padding: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.home-left {
+  height: 300px;
+  position: relative;
+}
+
+.home-left img {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.home-right {
+  width: 50%;
+}
+
+.home-heading {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.home-para {
+  margin-bottom: 20px;
+}
+
+.btn {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  position: relative;
+  width: auto;
+}
+
+.btn:hover::after {
+  content: "";
+  height: 4px;
+  position: absolute;
+  background-color: var(--primary);
+  left: 0;
+  bottom: -10px;
+  animation: width;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  border-radius: 5px;
+}
+
+@keyframes width {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+#workFlow {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.heading {
+  margin: 1rem auto;
+  text-align: center;
+}
+
+.para {
+  margin: 1rem auto;
+}
+
+.num-container {
+  width: 70%;
+  margin: 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.num-item {
+  font-size: 1.5rem;
+  line-height: 1.4rem;
+  color: var(--primary);
+}
+
+/* Our Goal */
+#goal {
+  width: 80%;
+  margin: 2rem auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.goal-left {
+  width: 60%;
+  line-height: 2rem;
+}
+
+.goal-left h2 {
+  font-size: 2.4rem;
+}
+
+.goal-left p {
+  line-height: 1.5rem;
+  margin: 1rem 0;
+}
+
+.goal-left ul {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
+.goal-left ul li::before {
+  line-height: 1.5rem;
+  content: "✓";
+  color: red;
+  padding-right: 3px;
+}
+
+.goal-right {
+  position: relative;
+  width: 35%;
+}
+
+.goal-right img {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 10px;
+  filter: drop-shadow(3px 4px 5px black);
+  transition: all 0.2s linear;
+}
+
+.goal-right img:hover {
+  transform: translateY(-5px);
+  filter: drop-shadow(5px 6px 7px black);
+}
+
+/* Our Team */
+#our-Team {
+  width: 80%;
+  margin: 4rem auto 1rem;
+}
+
+#our-Team h2 {
+  text-align: center;
+  margin: 1rem auto 4rem;
+  position: relative;
+}
+
+#our-Team h2::after {
+  content: "";
+  height: 4px;
+  margin: 0 auto;
+  text-align: center;
+  width: 15%;
+  background-color: var(--primary);
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  border-radius: 5px;
+  transform: translate(-50%);
+}
+
+.teamContainer {
+  width: 70%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.team-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem;
+}
+
+.team-item h5 {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+.team-item span {
+  margin-top: 0.4rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.team-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  object-position: top left;
+}
+
+.navbar {
+  z-index: 999;
+}
+
+/* sidebaer dashboard */
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding: 58px 0 0; /* Height of navbar */
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+  width: 240px;
+  z-index: 600;
+}
+
+@media (max-width: 991.98px) {
+  .sidebar {
+    width: 100%;
+  }
+}
+.sidebar .active {
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+main {
+  margin-left: 240px;
 }

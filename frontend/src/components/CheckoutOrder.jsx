@@ -7,6 +7,7 @@ const CheckoutOrder = ({
   subTotal,
   discountPercentage,
   totalPrice,
+  onClose,
 }) => {
   const [serviceDate, setServiceDate] = useState("");
   const [serviceTime, setServiceTime] = useState("");
@@ -16,13 +17,13 @@ const CheckoutOrder = ({
       toast.error("Please provide a service date and time");
       return;
     }
-  
+
     // Assuming cartItems is an array of items with an itemId property
     const formattedCartItems = cartItems.map((item) => ({
       itemId: item._id, // or item.itemId, depending on your data structure
       quantity: item.cartQuantity,
     }));
-  
+
     try {
       const orderDetails = {
         userId: contactDetails._id,
@@ -32,10 +33,12 @@ const CheckoutOrder = ({
         totalPrice,
         serviceDate,
         serviceTime,
+        latitude: contactDetails.latitude,
+        longitude: contactDetails.longitude,
       };
-  
+
       console.log(orderDetails);
-  
+
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/api/orders/add-order`,
         {
@@ -47,9 +50,9 @@ const CheckoutOrder = ({
           body: JSON.stringify(orderDetails),
         }
       );
-  
+
       const data = await response.json();
-  
+
       if (response.status === 201) {
         // Success handling
         // closeModal();
@@ -63,29 +66,16 @@ const CheckoutOrder = ({
       toast.error("An error occurred while saving the order.");
     }
   };
-  
 
   return (
-    <div
-      className="modal fade"
-      id="checkoutorder"
-      tabIndex={-1}
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div className="modal fade">
       <div className="modal-dialog" role="document">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">
               Complete Order
             </h5>
-            <button
-              type="button"
-              className="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
+            <button type="button" className="close" onClick={onClose}>
               <span aria-hidden="true">×</span>
             </button>
           </div>
@@ -138,7 +128,11 @@ const CheckoutOrder = ({
             </div>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-primary" onClick={() => handleSaveOrder()}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => handleSaveOrder()}
+            >
               Checkout Order
             </button>
           </div>

@@ -98,13 +98,13 @@ router.post("/register", async (req, res) => {
       name,
       email,
       password,
-      role,
-      address,
-      city,
-      phone,
-      profilePic,
-      labourCategory,
-      hourlyPrice,
+      // role,
+      // address,
+      // city,
+      // phone,
+      // profilePic,
+      // labourCategory,
+      // hourlyPrice,
     } = req.body;
 
     // Check if the user already exists
@@ -121,13 +121,13 @@ router.post("/register", async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      role,
-      address,
-      city,
-      phone,
-      image: profilePic,
-      serviceProvided: labourCategory,
-      hourlyPrice,
+      // role,
+      // address,
+      // city,
+      // phone,
+      // image: profilePic,
+      // serviceProvided: labourCategory,
+      // hourlyPrice,
     });
 
     // Save the user to the database

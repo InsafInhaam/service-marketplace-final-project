@@ -44,6 +44,10 @@ router.post("/register", async (req, res) => {
       hourlyPrice,
       latitude,
       longitude,
+      location: {
+        type: "Point",
+        coordinates: [longitude, latitude],
+      },
     });
 
     // Save the new labour to the database
@@ -78,14 +82,14 @@ router.post("/login", async (req, res) => {
 
     // const token = jwt.sign({ id: labour._id }, process.env.JWT_SECERT_KEY);
 
-    const { _id, name, image, address, phone, city, role } = labour;
+    const { _id, firstname, image, address, phone, city, role } = labour;
 
     return res.status(200).json({
       message: "Successfully logged in",
       labour: {
         email: labour.email,
         _id,
-        name,
+        firstname,
         image,
         address,
         phone,

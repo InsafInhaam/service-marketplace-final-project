@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { logout } from "./redux/slice/userActions";
 import Popup from "./components/Popup";
+import Dashboard from "./screens/Dashboard";
+import Order from "./screens/Order";
 
 const Routing = () => {
   const user = useSelector((state) => state.user.user);
@@ -19,7 +21,16 @@ const Routing = () => {
   return (
     <Routes>
       <Route exact path="/" element={<Home />} />
-
+      <Route
+        exact
+        path="/dashboard"
+        element={user ? <Dashboard /> : <Navigate to="/login" />}
+      />
+      <Route
+        exact
+        path="/orders"
+        element={user ? <Order /> : <Navigate to="/login" />}
+      />
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
     </Routes>

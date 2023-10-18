@@ -29,7 +29,7 @@ import LabourerRegistration from "./screens/LabourerRegistration";
 const Routing = () => {
   const user = useSelector((state) => state.user.user);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // useEffect(() => {
   //   // Check if the user is not authenticated, then navigate to the login page

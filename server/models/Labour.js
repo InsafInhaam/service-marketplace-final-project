@@ -35,10 +35,23 @@ const LabourSchema = new mongoose.Schema(
     hourlyPrice: { type: String, required: true },
     description: { type: String },
     ApprovedStatus: { type: Boolean, default: false },
-    // Add more properties as needed
+    // location: {
+    //   type: {
+    //     type: String, 
+    //     enum: ["Point"],
+    //     required: true,
+    //   },
+    //   coordinates: {
+    //     type: [Number],
+    //     required: true,
+    //   },
+    // },
   },
   { timestamps: true }
 );
+
+// Index the location field for geospatial queries
+LabourSchema.index({ location: "2dsphere" });
 
 const Labour = mongoose.model("Labour", LabourSchema);
 

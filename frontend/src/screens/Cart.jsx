@@ -9,12 +9,24 @@ import CheckoutOrder from "../components/CheckoutOrder";
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const user = useSelector((state) => state.user.user);
+  const user_id = useSelector((state) => state.user.user._id);
   const [promoCode, setPromoCode] = useState("");
   const [promoMessage, setPromoMessage] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [showCheckout, setShowCheckout] = useState(false);
 
-  console.log(user)
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API_URL + "/api/user/user/" + user_id)
+      .then((res) => res.json())
+      .then((result) => {
+        setUser(result);
+      });
+  }, [user]);
+
+  console.log(user);
+
   useEffect(() => {
     dispatch(getTotals());
   }, [cart, dispatch]);
@@ -54,6 +66,10 @@ const Cart = () => {
       setDiscountPercentage(0);
       setPromoMessage("An error occurred while applying the promo code.");
     }
+  };
+
+  const openCheckout = () => {
+    setShowCheckout(true);
   };
 
   return (
@@ -167,6 +183,7 @@ const Cart = () => {
                                 className="d-flex justify-content-between"
                                 data-toggle="modal"
                                 data-target="#checkoutorder"
+                                onClick={() => setShowCheckout(true)}
                               >
                                 <span>LKR {discountedPrice.toFixed(2)}</span>
                                 <span>
@@ -187,9 +204,16 @@ const Cart = () => {
         </div>
       </div>
 
-      <>
-       <CheckoutOrder contactDetails={user} cartItems={cart.cartItems} subTotal={cart.cartTotalAmount} discountPercentage={discountPercentage} totalPrice={discountedPrice}/>
-      </>
+      {showCheckout && (
+        <CheckoutOrder
+          contactDetails={user}
+          cartItems={cart.cartItems}
+          subTotal={cart.cartTotalAmount}
+          discountPercentage={discountPercentage}
+          totalPrice={discountedPrice}
+          onClose={() => setShowCheckout(false)}
+        />
+      )}
       <Footer />
     </div>
   );
