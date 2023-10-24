@@ -3,7 +3,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useLocation } from "react-router-dom";
 import UserDetails from "../components/UserDetails";
-import UserDetailsReviews from "../components/UserDetailsReviews";
+import UserDetailsReviews from "../unused/UserDetailsReviews";
 import TopBanner from "../components/TopBanner";
 
 const LabourProfile = () => {

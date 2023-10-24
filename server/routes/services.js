@@ -50,7 +50,7 @@ router.get("/services/:id", async (req, res) => {
 router.get('/subcategory/:id', async (req, res) => {
   try {
     const subcategoryId = req.params.id;
-    const services = await Service.find({ subcategory: subcategoryId });
+    const services = await Service.find({ subcategory: subcategoryId }).populate('subcategory');
 
     res.status(200).json(services);
   } catch (error) {

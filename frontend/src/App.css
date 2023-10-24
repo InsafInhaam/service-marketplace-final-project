@@ -325,6 +325,7 @@ ul.search-results {
   box-shadow: 1px 10px 30px -7px rgba(0, 0, 0, 0.75);
   border-radius: 12px;
   list-style: none;
+  z-index: 999;
 }
 
 .search-results li {
@@ -332,8 +333,7 @@ ul.search-results {
   color: #000;
 }
 
-
-.location-input-get-location{
+.location-input-get-location {
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -364,4 +364,12 @@ ul.search-results {
 .modal .modal-dialog {
   width: 100%;
   margin: 0;
+}
+
+#carouselExampleIndicators .carousel-inner .carousel-item img {
+  border-radius: 12px;
+}
+
+.gallery-image {
+  border-radius: 12px;
 }

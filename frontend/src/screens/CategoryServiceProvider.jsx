@@ -23,7 +23,7 @@ const CategoryServiceProvider = () => {
       });
   }, [category]);
 
-  console.log(category.title);
+  // console.log(category.title);
 
   useEffect(() => {
     fetch(

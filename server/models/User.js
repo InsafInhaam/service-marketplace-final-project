@@ -17,6 +17,7 @@ const UserSchema = new mongoose.Schema({
   // },
   // hourlyPrice: { type: String },
   description: { type: String },
+  points: { type: Number, default: 0 },
 }, {
   timestamps: true,
 });

@@ -66,7 +66,7 @@ const UserDetails = ({ userDetails, onShowModal }) => {
               </div>
             )}
           </div>
-          <div className="sf-provi-social-row d-flex flex-wrap justify-content-between">
+          {/* <div className="sf-provi-social-row d-flex flex-wrap justify-content-between">
             <div className="social-share-icon social-share-icon2">
               <div className="social-share-cell">
                 <strong>Explore Us On Social Media</strong>
@@ -116,7 +116,7 @@ const UserDetails = ({ userDetails, onShowModal }) => {
                 </ul>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

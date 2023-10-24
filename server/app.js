@@ -37,43 +37,44 @@ app.use("/api/promo", require("./routes/promo"));
 app.use("/api/complain", require("./routes/complain"));
 app.use("/api/reviews", require("./routes/reviews"));
 app.use("/api/orders", orderRoute);
+app.use("/api/wallet", require("./routes/wallet"));
 
 // Socket.IO handling
-io.on("connection", (socket) => {
-  console.log("A user connected");
+// io.on("connection", (socket) => {
+//   console.log("A user connected");
 
-  // Inside your 'newOrder' event handler
-  socket.on("newOrder", async (order) => {
-    try {
-      // Assuming the order has customerLatitude and customerLongitude properties
-      const { customerLatitude, customerLongitude } = order;
+//   // Inside your 'newOrder' event handler
+//   socket.on("newOrder", async (order) => {
+//     try {
+//       // Assuming the order has customerLatitude and customerLongitude properties
+//       const { customerLatitude, customerLongitude } = order;
 
-      // Find labor within a certain radius (e.g., 10 kilometers)
-      const labor = await Labour.findOne({
-        location: {
-          $near: {
-            $geometry: {
-              type: "Point",
-              coordinates: [customerLongitude, customerLatitude],
-            },
-            $maxDistance: 10000, // 10 kilometers in meters
-          },
-        },
-      });
+//       // Find labor within a certain radius (e.g., 10 kilometers)
+//       const labor = await Labour.findOne({
+//         location: {
+//           $near: {
+//             $geometry: {
+//               type: "Point",
+//               coordinates: [customerLongitude, customerLatitude],
+//             },
+//             $maxDistance: 10000, // 10 kilometers in meters
+//           },
+//         },
+//       });
 
-      if (labor) {
-        // Emit an event to the specific labor
-        io.to(labor.socketId).emit("newOrderNotification", order);
-      }
-    } catch (error) {
-      console.error("Error handling new order:", error);
-    }
-  });
+//       if (labor) {
+//         // Emit an event to the specific labor
+//         io.to(labor.socketId).emit("newOrderNotification", order);
+//       }
+//     } catch (error) {
+//       console.error("Error handling new order:", error);
+//     }
+//   });
 
-  socket.on("disconnect", () => {
-    console.log("A user disconnected");
-  });
-});
+//   socket.on("disconnect", () => {
+//     console.log("A user disconnected");
+//   });
+// });
 
 app.listen(PORT, () => {
   console.log("listening on port", PORT);

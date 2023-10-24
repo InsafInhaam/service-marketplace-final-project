@@ -32,7 +32,7 @@ const Home = () => {
       });
   }, []);
 
-  console.log(categories);
+  // console.log(categories);
 
   const responsiveOptions = {
     0: {
@@ -74,7 +74,7 @@ const Home = () => {
                             <label>Where do you need a service?</label>
                           </div>
                           <div className="sf-search-feild">
-                           <ChangeLocation/>
+                            <ChangeLocation />
                           </div>
                         </div>
                       </div>
@@ -138,6 +138,183 @@ const Home = () => {
                     <a className="site-button" href="/all-categories">
                       View All
                     </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div className="container mt-5">
+              {/*Title Section Start*/}
+              <div className="section-head">
+                <div className="row">
+                  {/* COLUMNS LEFT */}
+                  <div className="col-lg-6 col-md-12">
+                    <span className="aon-sub-title">services</span>
+                    <h2 className="sf-title">New and Popular Services</h2>
+                  </div>
+                  {/* COLUMNS RIGHT */}
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-3">
+                  <img
+                    src="https://via.placeholder.com/150"
+                    alt="Image 1"
+                    className="img-fluid gallery-image w-100"
+                  />
+                  <h4 className="text-left py-2">Title 1</h4>
+                </div>
+                <div className="col-md-3">
+                  <img
+                    src="https://via.placeholder.com/150"
+                    alt="Image 2"
+                    className="img-fluid gallery-image w-100"
+                  />
+                  <h4 className="text-left py-2">Title 2</h4>
+                </div>
+                <div className="col-md-3">
+                  <img
+                    src="https://via.placeholder.com/150"
+                    alt="Image 3"
+                    className="img-fluid gallery-image w-100"
+                  />
+                  <h4 className="text-left py-2">Title 3</h4>
+                </div>
+                <div className="col-md-3">
+                  <img
+                    src="https://via.placeholder.com/150"
+                    alt="Image 4"
+                    className="img-fluid gallery-image w-100"
+                  />
+                  <h4 className="text-left py-2">Title 4</h4>
+                </div>
+                <div className="col-md-3">
+                  <img
+                    src="https://via.placeholder.com/150"
+                    alt="Image 5"
+                    className="img-fluid gallery-image w-100"
+                  />
+                  <h4 className="text-left py-2">Title 5</h4>
+                </div>
+                <div className="col-md-3">
+                  <img
+                    src="https://via.placeholder.com/150"
+                    alt="Image 3"
+                    className="img-fluid gallery-image w-100"
+                  />
+                  <h4 className="text-left py-2">Title 3</h4>
+                </div>
+                <div className="col-md-3">
+                  <img
+                    src="https://via.placeholder.com/150"
+                    alt="Image 4"
+                    className="img-fluid gallery-image w-100"
+                  />
+                  <h4 className="text-left py-2">Title 4</h4>
+                </div>
+                <div className="col-md-3">
+                  <img
+                    src="https://via.placeholder.com/150"
+                    alt="Image 5"
+                    className="img-fluid gallery-image w-100"
+                  />
+                  <h4 className="text-left py-2">Title 5</h4>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div className="container mt-5">
+              {/*Title Section Start*/}
+              <div className="section-head">
+                <div className="row">
+                  {/* COLUMNS LEFT */}
+                  <div className="col-lg-6 col-md-12">
+                    <span className="aon-sub-title">services</span>
+                    <h2 className="sf-title">New and Popular Services</h2>
+                  </div>
+                  {/* COLUMNS RIGHT */}
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div
+                    id="carouselExampleIndicators"
+                    className="carousel slide mb-5"
+                    data-mdb-ride="carousel"
+                  >
+                    <div className="carousel-indicators">
+                      <button
+                        type="button"
+                        data-mdb-target="#carouselExampleIndicators"
+                        data-mdb-slide-to={0}
+                        className="active"
+                        aria-current="true"
+                        aria-label="Slide 1"
+                      />
+                      <button
+                        type="button"
+                        data-mdb-target="#carouselExampleIndicators"
+                        data-mdb-slide-to={1}
+                        aria-label="Slide 2"
+                      />
+                      <button
+                        type="button"
+                        data-mdb-target="#carouselExampleIndicators"
+                        data-mdb-slide-to={2}
+                        aria-label="Slide 3"
+                      />
+                    </div>
+                    <div className="carousel-inner">
+                      <div className="carousel-item active">
+                        <img
+                          src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp"
+                          className="d-block w-100"
+                          alt="Wild Landscape"
+                        />
+                      </div>
+                      <div className="carousel-item">
+                        <img
+                          src="https://mdbcdn.b-cdn.net/img/new/slides/042.webp"
+                          className="d-block w-100"
+                          alt="Camera"
+                        />
+                      </div>
+                      <div className="carousel-item">
+                        <img
+                          src="https://mdbcdn.b-cdn.net/img/new/slides/043.webp"
+                          className="d-block w-100"
+                          alt="Exotic Fruits"
+                        />
+                      </div>
+                    </div>
+                    <button
+                      className="carousel-control-prev"
+                      type="button"
+                      data-mdb-target="#carouselExampleIndicators"
+                      data-mdb-slide="prev"
+                    >
+                      <span
+                        className="carousel-control-prev-icon"
+                        aria-hidden="true"
+                      />
+                      <span className="visually-hidden">Previous</span>
+                    </button>
+                    <button
+                      className="carousel-control-next"
+                      type="button"
+                      data-mdb-target="#carouselExampleIndicators"
+                      data-mdb-slide="next"
+                    >
+                      <span
+                        className="carousel-control-next-icon"
+                        aria-hidden="true"
+                      />
+                      <span className="visually-hidden">Next</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -219,7 +396,7 @@ const Home = () => {
               </div>
             </div>
           </section> */}
-          
+
           {/* <section className="section-full aon-feature-vender-area2">
             <div className="container">
               <div className="section-head">
@@ -248,7 +425,6 @@ const Home = () => {
               </div>
             </div>
           </section> */}
-          
         </div>
         <Footer />
       </div>

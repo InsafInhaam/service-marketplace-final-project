@@ -3290,6 +3290,8 @@ THEMEFOREST REQUIRED CLASSES
   position: relative;
 
   z-index: 13;
+  margin-left: auto;
+
 }
 
 .extra-nav .extra-cell {
@@ -12233,15 +12235,17 @@ ul.job_listings .job_listing .job-comapny-logo img {
 .job_listings.job_listings-two li.job_listing {
   border-radius: 10px;
 
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
 
-  border-left: 3px solid #022278;
+  /* border-left: 3px solid #022278; */
 
   padding: 30px;
 
   font-size: 16px;
 
   margin-bottom: 30px;
+  box-shadow: 0 0 20px rgba(52, 69, 113, 0.16);
+    border: none;
 }
 
 .job_listings.job_listings-two li.job_listing .job-comapny-logo {

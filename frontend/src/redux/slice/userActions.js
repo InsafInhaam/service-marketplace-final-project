@@ -18,3 +18,10 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem("user");
   dispatch({ type: "LOGOUT" });
 };
+
+export const updateUser = (updatedUserDetails) => {
+  return {
+    type: 'UPDATE_USER',
+    payload: updatedUserDetails,
+  };
+};

@@ -6,9 +6,11 @@ import { useState } from "react";
 import { cityOptions } from "../utils/cities";
 import { toast } from "react-hot-toast";
 import UserDetails from "../components/UserDetails";
-import UserDetailsService from "../components/UserDetailsService";
-import UserDetailsReviews from "../components/UserDetailsReviews";
+import UserDetailsService from "../unused/UserDetailsService";
+import UserDetailsReviews from "../unused/UserDetailsReviews";
 import TopBanner from "../components/TopBanner";
+import Wallet from "../components/Wallet";
+import ReferralCode from "../components/ReferralCode";
 
 const Profile = () => {
   const user = useSelector((state) => state.user.user);
@@ -94,6 +96,98 @@ const Profile = () => {
               userDetails={userDetails}
               onShowModal={() => setShowModal(true)}
             />
+            {/*  */}
+            <section>
+              <div className="container">
+                <div className="row">
+                  <div className="col-lg-4">
+                    <div className="card mb-4">
+                      <div className="card-body text-center">
+                        <img
+                          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                          alt="avatar"
+                          className="rounded-circle img-fluid"
+                          style={{ width: "150px" }}
+                        />
+                        <h5 className="my-3">John Smith</h5>
+                        <p className="text-muted mb-1">Full Stack Developer</p>
+                        <p className="text-muted mb-4">
+                          Bay Area, San Francisco, CA
+                        </p>
+                        <div className="d-flex justify-content-center mb-2">
+                          <button type="button" className="btn btn-primary">
+                            Follow
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-outline-primary ms-1"
+                          >
+                            Message
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-8">
+                    <div className="card mb-4">
+                      <div className="card-body">
+                        <div className="row">
+                          <div className="col-sm-3">
+                            <p className="mb-0">Full Name</p>
+                          </div>
+                          <div className="col-sm-9">
+                            <p className="text-muted mb-0">Johnatan Smith</p>
+                          </div>
+                        </div>
+                        <hr />
+                        <div className="row">
+                          <div className="col-sm-3">
+                            <p className="mb-0">Email</p>
+                          </div>
+                          <div className="col-sm-9">
+                            <p className="text-muted mb-0">
+                              example@example.com
+                            </p>
+                          </div>
+                        </div>
+                        <hr />
+                        <div className="row">
+                          <div className="col-sm-3">
+                            <p className="mb-0">Phone</p>
+                          </div>
+                          <div className="col-sm-9">
+                            <p className="text-muted mb-0">(097) 234-5678</p>
+                          </div>
+                        </div>
+                        <hr />
+                        <div className="row">
+                          <div className="col-sm-3">
+                            <p className="mb-0">Mobile</p>
+                          </div>
+                          <div className="col-sm-9">
+                            <p className="text-muted mb-0">(098) 765-4321</p>
+                          </div>
+                        </div>
+                        <hr />
+                        <div className="row">
+                          <div className="col-sm-3">
+                            <p className="mb-0">Address</p>
+                          </div>
+                          <div className="col-sm-9">
+                            <p className="text-muted mb-0">
+                              Bay Area, San Francisco, CA
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            {/*  */}
+            <Wallet />
+            <ReferralCode />
           </div>
         </div>
         <Footer />
@@ -109,10 +203,10 @@ const Profile = () => {
                 </h5>
                 <button
                   type="button"
-                  className="close"
+                  className="close btn btn-danger btn-sm"
                   onClick={() => setShowModal(true)}
                 >
-                  <span aria-hidden="true">×</span>
+                  X
                 </button>
               </div>
               <div className="modal-body">
@@ -260,7 +354,6 @@ const Profile = () => {
                 </form>
               </div>
               <div className="modal-footer">
-               
                 <button
                   type="button"
                   className="btn btn-warning"

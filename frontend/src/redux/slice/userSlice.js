@@ -8,16 +8,35 @@ export const initialState = {
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case "LOGIN":
-      const { user, accessToken, refreshToken } = action.payload;
+      const { user, accessToken, refreshToken, expirationTime } =
+        action.payload;
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-      return { ...state, user, accessToken, refreshToken };
+      localStorage.setItem("expirationTime", expirationTime);
+      return { ...state, user, accessToken, refreshToken, expirationTime };
     case "LOGOUT":
       localStorage.removeItem("user");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
-      return { ...state, user: null, accessToken: null, refreshToken: null };
+      localStorage.removeItem("expirationTime");
+      return {
+        ...state,
+        user: null,
+        accessToken: null,
+        refreshToken: null,
+        expirationTime: null,
+      };
+    case "UPDATE_USER":
+      const updatedUserDetails = action.payload;
+      // Merge the updated user details into the existing user state
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...updatedUserDetails,
+        },
+      };
     default:
       return state;
   }

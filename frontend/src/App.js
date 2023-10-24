@@ -21,10 +21,11 @@ import ResetPassword from "./screens/ResetPassword";
 import CityPage from "./screens/CityPage";
 import ServiceListing from "./screens/ServiceListing";
 import Cart from "./screens/Cart";
-import { useEffect } from "react";
-import { logout } from "./redux/slice/userActions";
+import { useEffect, useState } from "react";
+import { logout, updateUser } from "./redux/slice/userActions";
 import Orders from "./screens/Orders";
-import LabourerRegistration from "./screens/LabourerRegistration";
+import LabourerRegistration from "./unused/LabourerRegistration";
+// import jwt from 'jsonwebtoken';
 
 const Routing = () => {
   const user = useSelector((state) => state.user.user);
@@ -45,11 +46,7 @@ const Routing = () => {
         path="/"
         element={user ? <Home /> : <Navigate to="/login" />}
       /> */}
-      <Route
-        exact
-        path="/"
-        element={<Home />}
-      />
+      <Route exact path="/" element={<Home />} />
       <Route
         exact
         path="/all-categories"
@@ -129,6 +126,53 @@ const Routing = () => {
 
 function App() {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+
+  // const [updateUser, setUpdateUser] = useState([]);
+
+  // console.log(user._id)
+  useEffect(() => {
+    const fetchUpdatedUserDetails = async () => {
+      try {
+        // Fetch updated user details from the server
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/user/user/${user._id}`
+        );
+
+        if (response.ok) {
+          const updatedUserDetails = await response.json();
+
+          // Update user details in the Redux store
+          dispatch(updateUser(updatedUserDetails));
+          // setUpdateUser(updatedUserDetails);
+          // console.log(updatedUserDetails);
+        }
+      } catch (error) {
+        console.error("Error fetching updated user details:", error);
+      }
+    };
+
+    // Fetch updated user details every second
+    const intervalId = setInterval(fetchUpdatedUserDetails, 1000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [dispatch, user._id]);
+
+  // console.log(updateUser);
+
+  // Check the token validity based on the stored expiration time
+  const isTokenValid = () => {
+    const accessToken = localStorage.getItem("jwt");
+    const expirationTime = localStorage.getItem("expirationTime");
+
+    if (!accessToken || !expirationTime) {
+      return false;
+    }
+
+    // Check if the current time is before the stored expiration time
+    return Date.now() < parseInt(expirationTime, 10);
+  };
 
   useEffect(() => {
     const checkTokenValidity = () => {
@@ -138,38 +182,37 @@ function App() {
       }
 
       try {
-        // const decodedToken = jwt.decode(accessToken);
-        // if (decodedToken.exp * 1000 < Date.now()) {
-        // Access token expired, attempt refresh
-        const refreshToken = localStorage.getItem("refreshToken");
-        if (!refreshToken) {
-          // No refresh token, perform logout
-          dispatch(logout());
-        } else {
-          // Attempt to refresh token
-          fetch(process.env.REACT_APP_API_URL + "/api/user/refresh-token", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ refreshToken }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.accessToken) {
-                // Refresh successful, update access token
-                localStorage.setItem("jwt", data.accessToken);
-              } else {
-                // Refresh failed, perform logout
-                dispatch(logout());
-              }
+        if (!isTokenValid()) {
+          const refreshToken = localStorage.getItem("refreshToken");
+          console.log(`Refresh token is being checked everytime`);
+          if (!refreshToken) {
+            // No refresh token, perform logout
+            dispatch(logout());
+          } else {
+            // Attempt to refresh token
+            fetch(process.env.REACT_APP_API_URL + "/api/user/refresh-token", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ refreshToken }),
             })
-            .catch((err) => {
-              console.error("Error refreshing token:", err);
-              dispatch(logout());
-            });
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.accessToken) {
+                  // Refresh successful, update access token
+                  localStorage.setItem("jwt", data.accessToken);
+                } else {
+                  // Refresh failed, perform logout
+                  dispatch(logout());
+                }
+              })
+              .catch((err) => {
+                console.error("Error refreshing token:", err);
+                dispatch(logout());
+              });
+          }
         }
-        // }
       } catch (error) {
         console.error("Error decoding token:", error);
         dispatch(logout());

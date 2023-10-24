@@ -14,7 +14,7 @@ const Categories = () => {
       });
   }, []);
 
-  console.log(categories);
+  // console.log(categories);
 
   return (
     <div className="page-wraper">

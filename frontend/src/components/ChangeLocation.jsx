@@ -138,9 +138,16 @@ const ChangeLocation = () => {
     }
   };
 
+  const handleSearchMouseOut = () => {
+    // Hide search results when mouse is out of the input field
+    setSearchResults([]);
+  };
+
   return (
     <div className="location-search-div">
-      <div className="location-input-get-location">
+      <div className="location-input-get-location" 
+      // onMouseOut={handleSearchMouseOut}
+      >
         <input
           type="text"
           placeholder="Choose your location"
@@ -148,7 +155,8 @@ const ChangeLocation = () => {
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <button onClick={getCurrentLocation} className="site-button py-1 px-3"><i className="fa-solid fa-location-crosshairs"></i> Get Current Location</button>
+        <button onClick={getCurrentLocation} className="site-button py-1 px-3">
+          <i className="fa-solid fa-location-crosshairs"></i> Get Current Location</button>
       </div>
       {searchResults.length > 0 && (
         <ul className="search-results shadow-5">
@@ -156,6 +164,7 @@ const ChangeLocation = () => {
             <li
               key={result.display_name}
               onClick={() => handleAddressSelect(result)}
+              style={{cursor: 'pointer'}}
             >
               {result.display_name}
             </li>

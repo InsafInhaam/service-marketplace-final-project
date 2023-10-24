@@ -30,6 +30,9 @@ router.post("/login", async (req, res) => {
     const accessToken = generateAccessToken({ id: user._id });
     const refreshToken = generateRefreshToken({ id: user._id });
 
+    const decodedToken = jwt.decode(accessToken);
+    const expirationTime = decodedToken.exp * 1000; // Convert seconds to milliseconds
+  
     // const token = jwt.sign({ id: user._id }, process.env.JWT_SECERT_KEY);
 
     const { _id, name, image, address, phone, city, role } = user;
@@ -48,6 +51,7 @@ router.post("/login", async (req, res) => {
       },
       accessToken,
       refreshToken,
+      expirationTime
     });
   } catch (error) {
     console.error(error);

@@ -67,12 +67,12 @@ const OrderDetails = ({
             </h5>
             <button
               type="button"
-              className="close"
+              className="close btn btn-danger btn-sm"
               data-dismiss="modal"
               aria-label="Close"
               onClick={onClose}
             >
-              <span aria-hidden="true">×</span>
+              X
             </button>
           </div>
           <div className="modal-body">

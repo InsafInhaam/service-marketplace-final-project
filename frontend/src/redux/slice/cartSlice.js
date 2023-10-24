@@ -13,16 +13,40 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    // addToCart(state, action) {
+    //   const existingIndex = state.cartItems.findIndex(
+    //     (item) => item.id === action.payload.id
+    //   );
+
+    //   if (existingIndex >= 0) {
+    //     state.cartItems[existingIndex] = {
+    //       ...state.cartItems[existingIndex],
+    //       cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
+    //     };
+    //     toast.info("Increased product quantity", {
+    //       position: "bottom-left",
+    //     });
+    //   } else {
+    //     let tempProductItem = { ...action.payload, cartQuantity: 1 };
+    //     state.cartItems.push(tempProductItem);
+    //     toast.success("Product added to cart", {
+    //       position: "bottom-left",
+    //     });
+    //   }
+    //   localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    // },
     addToCart(state, action) {
       const existingIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item._id === action.payload._id
       );
 
       if (existingIndex >= 0) {
-        state.cartItems[existingIndex] = {
-          ...state.cartItems[existingIndex],
-          cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
+        const updatedCartItems = [...state.cartItems];
+        updatedCartItems[existingIndex] = {
+          ...updatedCartItems[existingIndex],
+          cartQuantity: updatedCartItems[existingIndex].cartQuantity + 1,
         };
+        state.cartItems = updatedCartItems;
         toast.info("Increased product quantity", {
           position: "bottom-left",
         });
@@ -35,36 +59,49 @@ const cartSlice = createSlice({
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
+    // decreaseCart(state, action) {
+    //   const itemIndex = state.cartItems.findIndex(
+    //     (item) => item.id === action.payload.id
+    //   );
+
+    //   if (state.cartItems[itemIndex].cartQuantity > 1) {
+    //     state.cartItems[itemIndex].cartQuantity -= 1;
+
+    //     toast.info("Decreased product quantity", {
+    //       position: "bottom-left",
+    //     });
+    //   } else if (state.cartItems[itemIndex].cartQuantity === 1) {
+    //     const nextCartItems = state.cartItems.filter(
+    //       (item) => item.id !== action.payload.id
+    //     );
+
+    //     state.cartItems = nextCartItems;
+
+    //     toast.error("Product removed from cart", {
+    //       position: "bottom-left",
+    //     });
+    //   }
+
+    //   localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    // },
     decreaseCart(state, action) {
       const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item._id === action.payload._id
       );
 
-      if (state.cartItems[itemIndex].cartQuantity > 1) {
-        state.cartItems[itemIndex].cartQuantity -= 1;
+      if (itemIndex >= 0) {
+        if (state.cartItems[itemIndex].cartQuantity > 1) {
+          const updatedCartItems = [...state.cartItems];
+          updatedCartItems[itemIndex].cartQuantity -= 1;
 
-        toast.info("Decreased product quantity", {
-          position: "bottom-left",
-        });
-      } else if (state.cartItems[itemIndex].cartQuantity === 1) {
-        const nextCartItems = state.cartItems.filter(
-          (item) => item.id !== action.payload.id
-        );
+          state.cartItems = updatedCartItems;
 
-        state.cartItems = nextCartItems;
-
-        toast.error("Product removed from cart", {
-          position: "bottom-left",
-        });
-      }
-
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
-    },
-    removeFromCart(state, action) {
-      state.cartItems.map((cartItem) => {
-        if (cartItem.id === action.payload.id) {
+          toast.info("Decreased product quantity", {
+            position: "bottom-left",
+          });
+        } else if (state.cartItems[itemIndex].cartQuantity === 1) {
           const nextCartItems = state.cartItems.filter(
-            (item) => item.id !== cartItem.id
+            (item) => item._id !== action.payload._id
           );
 
           state.cartItems = nextCartItems;
@@ -73,10 +110,30 @@ const cartSlice = createSlice({
             position: "bottom-left",
           });
         }
+
         localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
-        return state;
-      });
+      }
     },
+    removeFromCart(state, action) {
+      const itemIndex = state.cartItems.findIndex(
+        (item) => item._id === action.payload._id
+      );
+    
+      if (itemIndex >= 0) {
+        const nextCartItems = state.cartItems.filter(
+          (item) => item._id !== action.payload._id
+        );
+    
+        state.cartItems = nextCartItems;
+    
+        toast.error("Product removed from cart", {
+          position: "bottom-left",
+        });
+    
+        localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      }
+    },
+    
     getTotals(state, action) {
       let { total, quantity } = state.cartItems.reduce(
         (cartTotal, cartItem) => {

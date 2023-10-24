@@ -10,11 +10,11 @@ const Navbar = () => {
   const user = useSelector((state) => state.user.user);
 
   const history = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
+  // const handleSearchChange = (e) => {
+  //   setSearchQuery(e.target.value);
+  // };
 
   return (
     <header className="site-header header-style-2 mobile-sider-drawer-menu header-full-width">
@@ -31,7 +31,7 @@ const Navbar = () => {
             </div>
             {/*Logo section End*/}
             {/* NAV Toggle Button */}
-            <button
+            {/* <button
               id="mobile-side-drawer"
               data-target=".header-nav"
               data-toggle="collapse"
@@ -42,9 +42,9 @@ const Navbar = () => {
               <span className="icon-bar icon-bar-first" />
               <span className="icon-bar icon-bar-two" />
               <span className="icon-bar icon-bar-three" />
-            </button>
+            </button> */}
             {/* MAIN Vav */}
-            <div className="nav-animation header-nav navbar-collapse collapse d-flex justify-content-center">
+            {/* <div className="nav-animation header-nav navbar-collapse collapse d-flex justify-content-center">
               <div className="search-bar">
                 <input
                   type="text"
@@ -54,10 +54,13 @@ const Navbar = () => {
                   className="form-control navbar-search-field mr-4"
                 />
               </div>
-            </div>
+            </div> */}
             {/* Header Right Section*/}
             <div className="extra-nav header-2-nav">
               <div className="extra-cell">
+                <Link className="m-l20 mr-3" to="/search">
+                  <i className="fa-solid fa-search"></i>
+                </Link>
                 <Link
                   className="site-button aon-btn-signup m-l20 mr-3"
                   to="/cart"
@@ -69,7 +72,7 @@ const Navbar = () => {
                 </Link>
 
                 {user ? (
-                  <div className="btn-group mr-4">
+                  <div className="btn-group mr-4 shadow-none ml-5">
                     <button
                       type="button"
                       className="btn btn-primary dropdown-toggle dropdown-toggle-split navbar-profile-img-btn-dropdown"

@@ -42,6 +42,7 @@ const Login = () => {
               user: data.user,
               accessToken: data.accessToken,
               refreshToken: data.refreshToken,
+              expirationTime: data.expirationTime
             },
           });
           toast.success(data.message); //success message

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import LabourCard from "../components/LabourCard";
 import { useSelector } from "react-redux";
+import ServiceItem from "../components/ServiceItem";
 
 // const ITEMS_PER_PAGE = 10; // Number of labor cards per page
 
@@ -107,7 +108,7 @@ const Search = () => {
                       </div>
                     </li>
 
-                    <li>
+                    {/* <li>
                       <div className="sf-search-title">
                         <label>City</label>
                        
@@ -131,7 +132,8 @@ const Search = () => {
                           ))}
                         </select>
                       </div>
-                    </li>
+                    </li> */}
+                    
                     <li>
                       <div className="sf-search-title">
                         <label>Filter by price interval:</label>
@@ -175,16 +177,15 @@ const Search = () => {
           </div>
           <div className="aon-search-result-area">
             <div className="aon-vender-list-wrap-outer">
-              <div className="row">
+              {/* <div className="row">
                 {isFiltered && filteredLabours.length === 0 ? (
                   <div className="col-12">No Results Found</div>
                 ) : (
-                  // Show labours if filteredLabours is empty or not filtered
                   (isFiltered ? filteredLabours : labours).map((labour) => (
-                    <LabourCard key={labour._id} labour={labour} />
+                    <ServiceItem service={labour} key={labour.id} />
                   ))
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

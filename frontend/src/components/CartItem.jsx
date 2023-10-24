@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart, clearCart, decreaseCart, removeFromCart } from "../redux/slice/cartSlice";
+import {
+  addToCart,
+  clearCart,
+  decreaseCart,
+  removeFromCart,
+} from "../redux/slice/cartSlice";
 
 const CartItem = ({ cartItem }) => {
   const dispatch = useDispatch();
@@ -25,7 +30,10 @@ const CartItem = ({ cartItem }) => {
   return (
     <div className="card mb-3">
       <div className="card-body">
-        <div className="d-flex justify-content-between">
+        <div
+          className="d-flex justify-content-between align-items-center"
+          // style={{ width: "575px" }}
+        >
           <div className="d-flex flex-row align-items-center">
             <div>
               <img
@@ -44,19 +52,32 @@ const CartItem = ({ cartItem }) => {
               </p>
             </div>
           </div>
-          <div className="d-flex flex-row align-items-center">
-            <div style={{ width: "50px" }} className="cart-cartItem-quantity d-flex align-items-center justify-content-between">
-                <button onClick={() => handleDecreaseCart(cartItem)} className="btn btn-danger">-</button>
-                <div className="count px-2">{cartItem?.cartQuantity}</div>
-                <button onClick={() => handleAddToCart(cartItem)} className="btn btn-primary">+</button>
+          <div style={{ width: "80px" }}>
+            <h5 className="mb-0">LKR {cartItem?.price * cartItem?.cartQuantity}</h5>
+          </div>
+          <div className="d-flex flex-row align-items-center justify-content-between">
+            <div
+              style={{ width: "50px" }}
+              className="cart-cartItem-quantity d-flex align-items-center justify-content-between"
+            >
+              <button
+                onClick={() => handleDecreaseCart(cartItem)}
+                className="btn btn-danger"
+              >
+                -
+              </button>
+              <div className="count px-2">{cartItem?.cartQuantity}</div>
+              <button
+                onClick={() => handleAddToCart(cartItem)}
+                className="btn btn-primary"
+              >
+                +
+              </button>
             </div>
 
-            <div style={{ width: "80px" }}>
-              {/* <h5 className="mb-0">LKR {totalPrice}</h5> */}
-            </div>
             <a
               href="#"
-              style={{ color: "#cecece" }}
+              style={{ color: "#cecece", marginLeft: "100px" }}
               onClick={() => handleRemoveFromCart(cartItem)}
             >
               <i className="fas fa-trash-alt" />
