@@ -5,7 +5,7 @@ const Service = require("../models/Service");
 // Get all services
 router.get("/services", async (req, res) => {
   try {
-    const services = await Service.find();
+    const services = await Service.find().populate('subcategory');
     res.json(services);
   } catch (error) {
     console.error(error);

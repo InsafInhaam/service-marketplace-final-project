@@ -29,12 +29,7 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           {/* Navbar brand */}
           <a className="navbar-brand mt-2 mt-lg-0" href="#">
-            <img
-             src={logo} 
-              height={50}
-              alt="MDB Logo"
-              loading="lazy"
-            />
+            <img src={logo} height={50} alt="MDB Logo" loading="lazy" />
           </a>
           {/* Left links */}
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">

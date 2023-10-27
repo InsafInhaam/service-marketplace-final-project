@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
-import { cityOptions } from "../utils/cities";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
-import LabourCard from "../components/LabourCard";
-import { useSelector } from "react-redux";
 import ServiceItem from "../components/ServiceItem";
 
 // const ITEMS_PER_PAGE = 10; // Number of labor cards per page
@@ -14,44 +11,42 @@ const Search = () => {
   const [keyword, setKeyword] = useState("");
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
-  const [city, setCity] = useState("");
   const [category, setCategory] = useState("");
-  const [labours, setLabours] = useState([]);
+  const [services, setServices] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false); // New state to track if filters are applied
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/api/categories/categories")
+    fetch(process.env.REACT_APP_API_URL + "/api/subcategories/allsubcategories")
       .then((res) => res.json())
       .then((result) => {
         setCategories(result);
       });
-  }, []);
+  }, [categories]);
 
   useEffect(() => {
-    // Fetch labours from the backend API and store them in the state
-    fetch(process.env.REACT_APP_API_URL + "/api/user/users/labourers")
+    // Fetch services from the backend API and store them in the state
+    fetch(process.env.REACT_APP_API_URL + "/api/services/services")
       .then((res) => res.json())
       .then((result) => {
-        setLabours(result);
+        setServices(result);
       });
-  }, []);
+  }, [services]);
 
   const handleFilter = () => {
-    // Filter labours based on the selected filters
-    const filtered = labours.filter((labour) => {
+    // Filter services based on the selected filters
+    const filtered = services.filter((service) => {
       const keywordMatch =
-        !keyword || labour.name.toLowerCase().includes(keyword.toLowerCase());
-      const categoryMatch = !category || labour.serviceProvided === category;
-      const cityMatch = !city || labour.city === city;
+        !keyword || service.name.toLowerCase().includes(keyword.toLowerCase());
+      const categoryMatch = !category || service.subcategory.title === category;
       const priceMatch =
-        (!priceMin || labour.hourlyPrice >= parseInt(priceMin)) &&
-        (!priceMax || labour.hourlyPrice <= parseInt(priceMax));
+        (!priceMin || service.price >= parseInt(priceMin)) &&
+        (!priceMax || service.price <= parseInt(priceMax));
 
       // Combine the filter conditions using the AND (&&) operator
-      return keywordMatch && categoryMatch && cityMatch && priceMatch;
+      return keywordMatch && categoryMatch  && priceMatch;
     });
 
-    setFilteredLabours(filtered); // Update the filtered labours in the state
+    setFilteredLabours(filtered); // Update the filtered services in the state
     setIsFiltered(true); // Set isFiltered to true after applying filters
   };
 
@@ -63,7 +58,7 @@ const Search = () => {
         <Navbar />
         <div className="page-content">
           <div className="sf-seach-vertical sf-search-bar-panel">
-            <div className="search-form ">
+            <div className="search-form">
               <form className="clearfix search-providers">
                 <div className="sf-searchbar-box">
                   <ul className="sf-searchbar-area">
@@ -107,32 +102,6 @@ const Search = () => {
                         </select>
                       </div>
                     </li>
-
-                    {/* <li>
-                      <div className="sf-search-title">
-                        <label>City</label>
-                       
-                      </div>
-                      <div className="sf-search-feild">
-                        <select
-                          className="sf-select-box form-control sf-form-control bs-select-hidden"
-                          data-live-search="true"
-                          name="city"
-                          id="city"
-                          title="City"
-                          data-header="Select a City"
-                          value={city}
-                          onChange={(e) => setCity(e.target.value)}
-                        >
-                          <option value="">Select a city</option>
-                          {cityOptions.map((cityOption) => (
-                            <option key={cityOption.id} value={cityOption.name}>
-                              {cityOption.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </li> */}
                     
                     <li>
                       <div className="sf-search-title">
@@ -177,15 +146,13 @@ const Search = () => {
           </div>
           <div className="aon-search-result-area">
             <div className="aon-vender-list-wrap-outer">
-              {/* <div className="row">
                 {isFiltered && filteredLabours.length === 0 ? (
                   <div className="col-12">No Results Found</div>
                 ) : (
-                  (isFiltered ? filteredLabours : labours).map((labour) => (
-                    <ServiceItem service={labour} key={labour.id} />
+                  (isFiltered ? filteredLabours : services).map((service) => (
+                    <ServiceItem service={service} key={service.id} />
                   ))
                 )}
-              </div> */}
             </div>
           </div>
         </div>

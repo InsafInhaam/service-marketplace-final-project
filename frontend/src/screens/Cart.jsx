@@ -4,7 +4,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CartItem from "../components/CartItem";
 import { getTotals } from "../redux/slice/cartSlice";
-import CheckoutOrder from "../components/CheckoutOrder";
 import ChangeLocation from "../components/ChangeLocation";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -14,11 +13,10 @@ import md5 from "crypto-js/md5";
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const user_id = useSelector((state) => state.user.user._id);
+  const user = useSelector((state) => state.user.user);
   const [promoCode, setPromoCode] = useState("");
   const [promoMessage, setPromoMessage] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState(0);
-  const [showCheckout, setShowCheckout] = useState(false);
 
   const [serviceDate, setServiceDate] = useState("");
   const [serviceTime, setServiceTime] = useState("");
@@ -29,21 +27,6 @@ const Cart = () => {
 
   const [balance, setBalance] = useState(0);
   const [walletPointsChecked, setWalletPointsChecked] = useState(false);
-
-  const [selectedPaymentMethod, setSelectedPaymentMethod] =
-    useState("debitcard");
-
-  const [user, setUser] = useState([]);
-
-  useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/api/user/user/" + user_id)
-      .then((res) => res.json())
-      .then((result) => {
-        setUser(result);
-      });
-  }, [user]);
-
-  // console.log(user);
 
   useEffect(() => {
     dispatch(getTotals());
@@ -84,10 +67,6 @@ const Cart = () => {
       setDiscountPercentage(0);
       setPromoMessage("An error occurred while applying the promo code.");
     }
-  };
-
-  const openCheckout = () => {
-    setShowCheckout(true);
   };
 
   useEffect(() => {
@@ -267,9 +246,6 @@ const Cart = () => {
                                 <strong>Promo Code</strong>
                                 <form onSubmit={handleApplyPromo}>
                                   <div className="form-group mt-2">
-                                    {/* <label htmlFor="promoCode">
-                                      Enter Promo Code:
-                                    </label> */}
                                     <input
                                       type="text"
                                       placeholder="Use Valid Promo code here"
@@ -283,7 +259,7 @@ const Cart = () => {
                                   </div>
                                   <button
                                     type="submit"
-                                    className="btn btn-primary"
+                                    className="btn btn-primary mt-2"
                                   >
                                     Apply
                                   </button>
@@ -443,21 +419,6 @@ const Cart = () => {
                                 </div>
                               </button>
                             ) : (
-                              // <button
-                              //   type="button"
-                              //   className="btn btn-info btn-block btn-lg"
-                              //   data-toggle="modal"
-                              //   data-target="#checkoutorder"
-                              //   onClick={() => setShowCheckout(true)}
-                              // >
-                              //   <div className="d-flex justify-content-between">
-                              //     <span>LKR {discountedPrice.toFixed(2)}</span>
-                              //     <span>
-                              //       Checkout
-                              //       <i className="fas fa-long-arrow-alt-right ms-2 ml-2" />
-                              //     </span>
-                              //   </div>
-                              // </button>
                               <PaymentModal
                                 discountedPrice={discountedPrice.toFixed(2)}
                                 userId={user._id}
@@ -491,17 +452,6 @@ const Cart = () => {
           </div>
         </div>
       </div>
-
-      {/* {showCheckout && (
-        <CheckoutOrder
-          contactDetails={user}
-          cartItems={cart.cartItems}
-          subTotal={cart.cartTotalAmount}
-          discountPercentage={discountPercentage}
-          totalPrice={discountedPrice}
-          onClose={() => setShowCheckout(false)}
-        />
-      )} */}
       <Footer />
     </div>
   );

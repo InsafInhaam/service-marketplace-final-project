@@ -27,10 +27,7 @@ const SubCategory = ({ category, setShowModal, categoryId, catgeoryName }) => {
     <div
       className="modal fade"
       id="subcategories"
-      tabIndex={-1}
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
+     
     >
       <div className="modal-dialog" role="document">
         <div className="modal-content">
@@ -41,8 +38,7 @@ const SubCategory = ({ category, setShowModal, categoryId, catgeoryName }) => {
             <button
               type="button"
               className="close btn btn-danger btn-sm"
-              data-dismiss="modal"
-              aria-label="Close"
+              onClick={closeModal}
             >
               X
             </button>

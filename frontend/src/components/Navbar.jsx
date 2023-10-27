@@ -29,50 +29,29 @@ const Navbar = () => {
                 </Link>
               </div>
             </div>
-            {/*Logo section End*/}
-            {/* NAV Toggle Button */}
-            {/* <button
-              id="mobile-side-drawer"
-              data-target=".header-nav"
-              data-toggle="collapse"
-              type="button"
-              className="navbar-toggler collapsed"
-            >
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar icon-bar-first" />
-              <span className="icon-bar icon-bar-two" />
-              <span className="icon-bar icon-bar-three" />
-            </button> */}
-            {/* MAIN Vav */}
-            {/* <div className="nav-animation header-nav navbar-collapse collapse d-flex justify-content-center">
-              <div className="search-bar">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  className="form-control navbar-search-field mr-4"
-                />
-              </div>
-            </div> */}
-            {/* Header Right Section*/}
-            <div className="extra-nav header-2-nav">
-              <div className="extra-cell">
-                <Link className="m-l20 mr-3" to="/search">
+
+            <div className="extra-nav header-2-nav d-flex align-items-center justify-content-center">
+              {/* <div className="extra-cell"> */}
+                <Link
+                  className="mx-3"
+                  to="/search"
+                  style={{ fontSize: "20px" }}
+                >
                   <i className="fa-solid fa-search"></i>
                 </Link>
                 <Link
-                  className="site-button aon-btn-signup m-l20 mr-3"
+                  className="mx-3 d-flex align-items-center justify-content-center"
                   to="/cart"
+                  style={{ fontSize: "20px" }}
                 >
-                  <i className="fa-solid fa-cart-shopping"></i>
-                  <span className="badge badge-light">
+                  <i className="fa-solid fa-cart-shopping m-1"></i>
+                  <span className="badge badge-light m-1">
                     {cart.cartItems && cart.cartItems.length}
                   </span>
                 </Link>
 
                 {user ? (
-                  <div className="btn-group mr-4 shadow-none ml-5">
+                  <div className="btn-group shadow-none mx-3">
                     <button
                       type="button"
                       className="btn btn-primary dropdown-toggle dropdown-toggle-split navbar-profile-img-btn-dropdown"
@@ -120,7 +99,7 @@ const Navbar = () => {
                     Login
                   </Link>
                 )}
-              </div>
+              {/* </div> */}
             </div>
           </div>
         </div>

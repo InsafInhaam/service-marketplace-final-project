@@ -5,118 +5,84 @@ const UserDetails = ({ userDetails, onShowModal }) => {
   const user = useSelector((state) => state.user.user);
 
   return (
-    <div>
-      <div className="sf-provi-bio-box cleafix margin-b-50 sf-provi-fullBox">
-        {/*Left*/}
-        <div className="sf-provi-bio-left">
-          <div className="sf-provi-bio-info">
-            <div className="sf-provi-pic">
-              <img src={userDetails.image} alt={userDetails.name} />
-            </div>
-            {/* {userDetails.role === "labour" && (
-              <div className="sf-ow-pro-rating">
-                <span className="fa fa-star" />
-                <span className="fa fa-star" />
-                <span className="fa fa-star" />
-                <span className="fa fa-star" />
-                <span className="fa fa-star text-gray" />
-              </div>
-            )} */}
-          </div>
-        </div>
-        {/*Right*/}
-        <div className="sf-provi-bio-right">
-          <h3 className="sf-provi-title">{userDetails.name}</h3>
-          {/* {userDetails.role === "labour" && (
-            <div className="sf-provi-cat">
-              <strong>Categories:</strong> {userDetails.serviceProvided}
-            </div>
-          )} */}
-
-          <div className="sf-provi-bio-text">
-            <p>{userDetails.description}</p>
-            <p>
-              <strong>Address</strong> {userDetails.address}
-            </p>
-            <p>
-              <strong>City</strong> {userDetails.city}
-            </p>
-            <p>
-              <strong>Phone</strong> {userDetails.phone}
-            </p>
-            <p>
-              <strong>Horuly Rate</strong> {userDetails.hourlyPrice}
-            </p>
-            <p>
-              <strong>Latitude</strong> {userDetails.latitude}
-            </p>
-            <p>
-              <strong>Longitude</strong> {userDetails.longitude}
-            </p>
-            {userDetails._id === user._id && (
-              <div className="sf-provi-btn">
+    <div className="row">
+      <div className="col-lg-4">
+        <div className="card mb-4">
+          <div className="card-body text-center">
+            <img
+              src={userDetails.image}
+              alt={userDetails.name}
+              className="rounded-circle img-fluid"
+              style={{ width: "150px", height: "150px", objectFit: "cover" }}
+            />
+            <h5 className="my-3">{userDetails.name}</h5>
+            <p className="text-muted mb-1">{userDetails.description}</p>
+            <p className="text-muted mb-4">{userDetails.city}</p>
+            <div className="d-flex justify-content-center mb-2">
+              {userDetails._id === user._id && (
                 <button
                   type="button"
-                  className="site-button"
+                  className="btn btn-primary"
                   onClick={onShowModal}
                 >
-                  <i className="fa fa-pencil" />
-                  Edit Profile Details
+                  Edit Profile
                 </button>
-              </div>
-            )}
+              )}
+              {/* <button type="button" className="btn btn-outline-primary ms-1">
+                  Message
+                </button> */}
+            </div>
           </div>
-          {/* <div className="sf-provi-social-row d-flex flex-wrap justify-content-between">
-            <div className="social-share-icon social-share-icon2">
-              <div className="social-share-cell">
-                <strong>Explore Us On Social Media</strong>
+        </div>
+      </div>
+      <div className="col-lg-8">
+        <div className="card mb-4">
+          <div className="card-body">
+            <div className="row">
+              <div className="col-sm-3">
+                <p className="mb-0">Full Name</p>
               </div>
-              <div className="social-share-cell">
-                <ul className="share-buttons">
-                  <li>
-                    <a
-                      className="fb-share"
-                      href="https://www.facebook.com/"
-                      target="_blank"
-                      rel="nofollow"
-                    >
-                      <i className="fab fa-facebook" />
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="twitter-share"
-                      href="https://twitter.com/"
-                      target="_blank"
-                      rel="nofollow"
-                    >
-                      <i className="fab fa-twitter" />
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="linkedin-share"
-                      href="https://linkedin.com/"
-                      target="_blank"
-                      rel="nofollow"
-                    >
-                      <i className="fab fa-linkedin" />
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="pinterest-share"
-                      href="https://in.pinterest.com/"
-                      target="_blank"
-                      rel="nofollow"
-                    >
-                      <i className="fab fa-pinterest" />
-                    </a>
-                  </li>
-                </ul>
+              <div className="col-sm-9">
+                <p className="text-muted mb-0">{userDetails.name}</p>
               </div>
             </div>
-          </div> */}
+            <hr />
+            <div className="row">
+              <div className="col-sm-3">
+                <p className="mb-0">Email</p>
+              </div>
+              <div className="col-sm-9">
+                <p className="text-muted mb-0">{userDetails.email}</p>
+              </div>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="col-sm-3">
+                <p className="mb-0">Phone</p>
+              </div>
+              <div className="col-sm-9">
+                <p className="text-muted mb-0">{userDetails.phone}</p>
+              </div>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="col-sm-3">
+                <p className="mb-0">Password</p>
+              </div>
+              <div className="col-sm-9">
+                <p className="text-muted mb-0">***************</p>
+              </div>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="col-sm-3">
+                <p className="mb-0">Address</p>
+              </div>
+              <div className="col-sm-9">
+                <p className="text-muted mb-0">{userDetails.address}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

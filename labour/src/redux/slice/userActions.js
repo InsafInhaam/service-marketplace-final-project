@@ -1,4 +1,3 @@
-// userActions.js
 import axios from "axios";
 
 export const login = (userData) => async (dispatch) => {
@@ -17,4 +16,11 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem("jwt"); // Remove access token
   localStorage.removeItem("user");
   dispatch({ type: "LOGOUT" });
+};
+
+export const updateUser = (updatedUserDetails) => {
+  return {
+    type: 'UPDATE_USER',
+    payload: updatedUserDetails,
+  };
 };

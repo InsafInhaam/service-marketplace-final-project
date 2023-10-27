@@ -9,7 +9,7 @@ const Sidebar = () => {
       <div className="position-sticky">
         <div className="list-group list-group-flush mx-3 mt-4">
           <a
-            href="#"
+            href="/dashboard"
             className="list-group-item list-group-item-action py-2 ripple"
             aria-current="true"
           >
@@ -26,7 +26,7 @@ const Sidebar = () => {
           </a>
 
           <a
-            href="#"
+            href="/orders"
             className="list-group-item list-group-item-action py-2 ripple"
           >
             <i className="fas fa-chart-bar fa-fw me-3" />
@@ -47,3 +47,8 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+
+
+
+

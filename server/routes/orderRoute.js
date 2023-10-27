@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../models/Order");
 const Labour = require("../models/Labour");
+const { authenticateTokenLabour } = require("../middleware/requireLogin");
 
 router.post("/add-order", async (req, res) => {
   try {
@@ -137,7 +138,10 @@ router.get("/eligible-labourers", async (req, res) => {
     if (!orders || orders.length === 0) {
       return res
         .status(404)
-        .json({ success: false, message: "No orders with status 'order_placed' found" });
+        .json({
+          success: false,
+          message: "No orders with status 'order_placed' found",
+        });
     }
 
     // Find all labourers
@@ -145,10 +149,13 @@ router.get("/eligible-labourers", async (req, res) => {
 
     // Filter eligible labourers based on the distance
     const eligibleLabourers = [];
-    
+
     orders.forEach((order) => {
       if (order.latitude && order.longitude) {
-        const userLocation = { latitude: order.latitude, longitude: order.longitude };
+        const userLocation = {
+          latitude: order.latitude,
+          longitude: order.longitude,
+        };
         const filteredLabourers = labourers.filter((labourer) =>
           isWithinRadius(
             userLocation,
@@ -168,7 +175,7 @@ router.get("/eligible-labourers", async (req, res) => {
 });
 
 // Get eligible orders for a specific laborer within a radius
-router.get('/eligible-orders/:labourerId', async (req, res) => {
+router.get("/eligible-orders/:labourerId", async (req, res) => {
   try {
     const radius = 50; // Set the radius to 50 kilometers
 
@@ -177,25 +184,45 @@ router.get('/eligible-orders/:labourerId', async (req, res) => {
 
     // Check if the laborer exists
     if (!labourer) {
-      return res.status(404).json({ success: false, message: 'Laborer not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: "Laborer not found" });
     }
 
     // Get the laborer's location
-    const laborerLocation = { latitude: labourer.latitude, longitude: labourer.longitude };
+    const laborerLocation = {
+      latitude: labourer.latitude,
+      longitude: labourer.longitude,
+    };
 
     // Find all orders with status "order_placed"
-    const orders = await Order.find({ status: 'order_placed' });
+    const orders = await Order.find({ status: "order_placed" })
+      .populate({
+        path: "userId",
+      })
+      .populate({
+        path: "cartItems.itemId",
+        model: "Service",
+      });
 
     // Check if there are no orders
     if (orders.length === 0) {
-      return res.status(404).json({ success: false, message: 'No orders with status "order_placed" found' });
+      return res
+        .status(404)
+        .json({
+          success: false,
+          message: 'No orders with status "order_placed" found',
+        });
     }
 
     // Filter eligible orders manually
     const eligibleOrders = [];
     orders.forEach((order) => {
       if (order.latitude && order.longitude) {
-        const userLocation = { latitude: order.latitude, longitude: order.longitude };
+        const userLocation = {
+          latitude: order.latitude,
+          longitude: order.longitude,
+        };
         const distance = calculateDistance(
           userLocation.latitude,
           userLocation.longitude,
@@ -211,8 +238,33 @@ router.get('/eligible-orders/:labourerId', async (req, res) => {
 
     res.status(200).json({ success: true, eligibleOrders });
   } catch (error) {
-    console.error('Error getting eligible orders:', error);
-    res.status(500).json({ success: false, message: 'Internal Server Error' });
+    console.error("Error getting eligible orders:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
+// labouror to accept an order
+router.put("/accept/:orderId", authenticateTokenLabour, async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+
+    // Update the order status to 'assigned_to_labourer' and set the labourer field
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { status: "assigned_to_labourer", labourer: req.user._id }, // Assuming req.user._id contains the labourer's ID
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Order not found" });
+    }
+
+    res.status(200).json({ success: true, updatedOrder });
+  } catch (error) {
+    console.error("Error accepting order:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
 
@@ -269,4 +321,44 @@ router.put("/cancelOrder/:orderId", async (req, res) => {
   }
 });
 
+// Endpoint to get orders with status 'assigned_to_labourer' or 'in_progress'
+router.get("/in-progress/:labourerId", async (req, res) => {
+  try {
+    const labourerId = req.params.labourerId;
+
+    // Find orders with status 'assigned_to_labourer' or 'in_progress'
+    const ordersInProgress = await Order.find({
+      labourer: labourerId,
+      status: { $in: ["assigned_to_labourer", "in_progress"] },
+    });
+
+    res.status(200).json({ success: true, orders: ordersInProgress });
+  } catch (error) {
+    console.error("Error getting in-progress orders:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
+// Endpoint to get completed orders
+router.get("/completed/:labourerId", async (req, res) => {
+  try {
+    const labourerId = req.params.labourerId;
+
+    // Find orders with status 'completed'
+    const completedOrders = await Order.find({
+      labourer: labourerId,
+      status: "completed",
+    });
+
+    res.status(200).json({ success: true, orders: completedOrders });
+  } catch (error) {
+    console.error("Error getting completed orders:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
+
+
+
+

@@ -1,4 +1,3 @@
-// userActions.js
 import axios from "axios";
 
 export const login = (userData) => async (dispatch) => {
