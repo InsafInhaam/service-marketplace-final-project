@@ -57,6 +57,7 @@ router.get("/orders", async (req, res) => {
 });
 
 // Get eligible labourers within a default radius for all orders with status "order_placed"
+
 // router.get('/eligible-labourers', async (req, res) => {
 //   try {
 //     const defaultRadius = 10000; // Set the default radius to 10000 meters
@@ -91,6 +92,8 @@ router.get("/orders", async (req, res) => {
 //     res.status(500).json({ success: false, message: 'Internal Server Error' });
 //   }
 // });
+
+
 
 // Function to calculate distance between two points on Earth
 function calculateDistance(lat1, lon1, lat2, lon2) {
@@ -136,12 +139,10 @@ router.get("/eligible-labourers", async (req, res) => {
 
     // Check if there are no orders
     if (!orders || orders.length === 0) {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          message: "No orders with status 'order_placed' found",
-        });
+      return res.status(404).json({
+        success: false,
+        message: "No orders with status 'order_placed' found",
+      });
     }
 
     // Find all labourers
@@ -207,12 +208,10 @@ router.get("/eligible-orders/:labourerId", async (req, res) => {
 
     // Check if there are no orders
     if (orders.length === 0) {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          message: 'No orders with status "order_placed" found',
-        });
+      return res.status(404).json({
+        success: false,
+        message: 'No orders with status "order_placed" found',
+      });
     }
 
     // Filter eligible orders manually
@@ -330,7 +329,14 @@ router.get("/in-progress/:labourerId", async (req, res) => {
     const ordersInProgress = await Order.find({
       labourer: labourerId,
       status: { $in: ["assigned_to_labourer", "in_progress"] },
-    });
+    })
+      .populate({
+        path: "userId",
+      })
+      .populate({
+        path: "cartItems.itemId",
+        model: "Service",
+      });
 
     res.status(200).json({ success: true, orders: ordersInProgress });
   } catch (error) {
@@ -348,7 +354,14 @@ router.get("/completed/:labourerId", async (req, res) => {
     const completedOrders = await Order.find({
       labourer: labourerId,
       status: "completed",
-    });
+    })
+      .populate({
+        path: "userId",
+      })
+      .populate({
+        path: "cartItems.itemId",
+        model: "Service",
+      });
 
     res.status(200).json({ success: true, orders: completedOrders });
   } catch (error) {
@@ -357,8 +370,75 @@ router.get("/completed/:labourerId", async (req, res) => {
   }
 });
 
+// Get scheduled jobs or appointments for a specific labourer
+router.get("/calendar/:labourerId", async (req, res) => {
+  try {
+    const labourerId = req.params.labourerId;
+
+    // Find orders with status 'assigned_to_labourer' or 'in_progress'
+    const scheduledJobs = await Order.find({
+      labourer: labourerId,
+      status: { $in: ["assigned_to_labourer", "in_progress"] },
+    })
+      .populate({
+        path: "userId",
+      })
+      .populate({
+        path: "cartItems.itemId",
+        model: "Service",
+      });
+
+    // Transform the data to include only relevant information for the calendar
+    const calendarData = scheduledJobs.map((job) => {
+      const cartItem = job.cartItems[0]; // Assuming there's only one cart item per job
+      const service = cartItem ? cartItem.itemId : null;
+
+      if (service) {
+        return {
+          id: job._id,
+          title: service.name,
+          date: job.serviceDate,
+          time: job.serviceTime,
+        };
+      } else {
+        console.error("Invalid cartItem structure:", cartItem);
+        return null;
+      }
+    });
+
+    // Filter out null values from the map operation
+    const filteredCalendarData = calendarData.filter((data) => data !== null);
+
+    res.status(200).json({ success: true, calendarData: filteredCalendarData });
+  } catch (error) {
+    console.error("Error getting calendar data:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
+// Get orders by labourer ID
+router.get("/getByLabourId/:labourerId", async (req, res) => {
+  try {
+    const labourerId = req.params.labourerId;
+
+    const orders = await Order.find({ labourer: labourerId })
+      .populate({
+        path: "userId",
+      })
+      .populate({
+        path: "cartItems.itemId",
+        model: "Service",
+      });
+
+    if (orders.length === 0) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    res.status(200).json({ success: true, orders });
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
-
-
-
-

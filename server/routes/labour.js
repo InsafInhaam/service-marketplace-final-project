@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const { generateAccessToken, generateRefreshToken } = require("../helpers/token");
 // const requireLogin = require("../middleware/requireLogin");
 
+// labour login
 router.post("/register", async (req, res) => {
   try {
     const {
@@ -60,6 +61,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
+// labour registration
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 

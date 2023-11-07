@@ -14,6 +14,8 @@ import { logout, updateUser } from "./redux/slice/userActions";
 import Popup from "./components/Popup";
 import Dashboard from "./screens/Dashboard";
 import Order from "./screens/Order";
+import CalendarPage from "./screens/CalendarPage";
+import OrdersMap from "./screens/OrdersMap";
 
 const Routing = () => {
   const user = useSelector((state) => state.user.user);
@@ -31,6 +33,18 @@ const Routing = () => {
         path="/orders"
         element={user ? <Order /> : <Navigate to="/login" />}
       />
+      <Route
+        exact
+        path="/calendar"
+        element={user ? <CalendarPage /> : <Navigate to="/login" />}
+      />
+
+      <Route
+        exact
+        path="/trackingorder"
+        element={user ? <OrdersMap /> : <Navigate to="/login" />}
+      />
+
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
     </Routes>

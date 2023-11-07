@@ -1,9 +1,125 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import { Line } from "react-chartjs-2";
+import {
+  Chart,
+  LineController,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+} from "chart.js";
+import { useSelector } from "react-redux";
+
+Chart.register(
+  LineController,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement
+);
 
 const Dashboard = () => {
+  const labourer = useSelector((state) => state.user.user);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [newOrders, setNewOrders] = useState([]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        // Fetch New Orders
+        const newOrdersResponse = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/orders/eligible-orders/${labourer._id}`
+        );
+        const newOrdersData = await newOrdersResponse.json();
+        setNewOrders(newOrdersData.eligibleOrders);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
+
+    fetchOrders();
+  }, [labourer._id, newOrders]);
+
+  useEffect(() => {
+    // Fetch orders for the logged-in labourer
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/orders/getByLabourId/${labourer._id}`
+        );
+        const data = await response.json();
+        setOrders(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, [orders]);
+
+  // If still loading, you can return a loading indicator
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  // Assuming that orders is an array
+  const orderDates = Array.isArray(orders.orders)
+    ? orders.orders.map((order) =>
+        new Date(order.createdAt).toLocaleDateString()
+      )
+    : [];
+    
+  const orderTotalPrices = Array.isArray(orders.orders)
+    ? orders.orders.map((order) => order.totalPrice)
+    : [];
+
+  const data = {
+    labels: orderDates,
+    datasets: [
+      {
+        label: "Order Total Prices",
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: "rgba(75,192,192,0.4)",
+        borderColor: "rgba(75,192,192,1)",
+        borderCapStyle: "butt",
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: "miter",
+        pointBorderColor: "rgba(75,192,192,1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba(75,192,192,1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: orderTotalPrices,
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      x: {
+        type: "category", // This should be "category" for the x-axis
+        labels: orderDates,
+      },
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
+  // console.log(newOrders[1].cartItems[0].itemId.name);
+
   return (
     <div>
       <header>
@@ -15,7 +131,84 @@ const Dashboard = () => {
       </header>
       {/*Main layout*/}
       <main style={{ marginTop: "58px" }}>
-        <div className="container pt-4"></div>
+        <div className="container">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card-counter primary">
+                <i class="fa fa-code-fork"></i>
+                <span class="count-numbers">12</span>
+                <span class="count-name">Flowz</span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card-counter danger">
+                <i class="fa fa-ticket"></i>
+                <span class="count-numbers">599</span>
+                <span class="count-name">Instances</span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card-counter success">
+                <i class="fa fa-database"></i>
+                <span class="count-numbers">6875</span>
+                <span class="count-name">Data</span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card-counter info">
+                <i class="fa fa-users"></i>
+                <span class="count-numbers">35</span>
+                <span class="count-name">Users</span>
+              </div>
+            </div>
+          </div>
+          <div className="row pt-5">
+            <div className="col-md-8">
+              <h2>Orders</h2>
+              <Line data={data} options={options} />
+            </div>
+            <div className="col-md-4">
+              <div class="card">
+                <div class="card-header">
+                  <strong>Incoming Orders</strong>
+                </div>
+                <div class="card-body">
+                  <table className="table align-middle mb-0 bg-white">
+                    <tbody>
+                      {newOrders?.map((newOrder) => (
+                        <tr key={newOrder._id}>
+                          <td>
+                            <div className="d-flex align-items-center">
+                              <div className="">
+                                {newOrder?.cartItems?.map((cartItem) => (
+                                  <p key={cartItem._id} className=" mb-1">
+                                    {cartItem.itemId.name}
+                                  </p>
+                                ))}
+                              </div>
+                            </div>
+                          </td>
+
+                          <td>
+                            <a
+                              className="btn btn-link btn-sm btn-rounded mx-2"
+                              href="/orders"
+                            >
+                              View More
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   );

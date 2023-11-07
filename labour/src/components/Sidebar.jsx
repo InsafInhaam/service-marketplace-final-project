@@ -14,7 +14,7 @@ const Sidebar = () => {
             aria-current="true"
           >
             <i className="fas fa-tachometer-alt fa-fw me-3" />
-            <span>Main dashboard</span>
+            <span>Dashboard</span>
           </a>
 
           <a
@@ -22,7 +22,7 @@ const Sidebar = () => {
             className="list-group-item list-group-item-action py-2 ripple"
           >
             <i className="fas fa-chart-line fa-fw me-3" />
-            <span>Analytics</span>
+            <span>Analytics and Reports</span>
           </a>
 
           <a
@@ -30,15 +30,39 @@ const Sidebar = () => {
             className="list-group-item list-group-item-action py-2 ripple"
           >
             <i className="fas fa-chart-bar fa-fw me-3" />
-            <span>Orders</span>
+            <span>Order Management</span>
           </a>
 
           <a
-            href="#"
+            href="/calendar"
             className="list-group-item list-group-item-action py-2 ripple"
           >
             <i className="fas fa-calendar fa-fw me-3" />
-            <span>Calendar</span>
+            <span>Schedule and Calendar</span>
+          </a>
+
+          <a
+            href="/calendar"
+            className="list-group-item list-group-item-action py-2 ripple"
+          >
+            <i className="fas fa-wallet fa-fw me-3" />
+            <span>Earnings</span>
+          </a>
+
+          <a
+            href="/trackingorder"
+            className="list-group-item list-group-item-action py-2 ripple"
+          >
+            <i className="fas fa-location fa-fw me-3" />
+            <span>Location Tracking</span>
+          </a>
+
+          <a
+            href="/calendar"
+            className="list-group-item list-group-item-action py-2 ripple"
+          >
+            <i className="fas fa-star fa-fw me-3" />
+            <span>Reviews and Ratings</span>
           </a>
         </div>
       </div>
@@ -47,8 +71,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
-
-
-
-

@@ -70,6 +70,8 @@ const Wallet = () => {
     .toString()
     .toUpperCase();
 
+
+    
   return (
     <>
       <div class="wallet mb-5">

@@ -44,7 +44,7 @@ const Order = () => {
     };
 
     fetchOrders();
-  }, [user._id]);
+  }, [user._id, newOrders, assignedOrders, completedOrders]);
 
   // useEffect(() => {
   //   const fetchServices = async () => {
@@ -177,10 +177,10 @@ const Order = () => {
                   <table className="table align-middle mb-0 bg-white">
                     <thead className="bg-light">
                       <tr>
-                        <th>Name</th>
-                        <th>Title</th>
+                      <th>Order ID</th>
+                        <th>Service Date & Time</th>
                         <th>Status</th>
-                        <th>Position</th>
+                        <th>Total Price</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -234,10 +234,10 @@ const Order = () => {
                   <table className="table align-middle mb-0 bg-white">
                     <thead className="bg-light">
                       <tr>
-                        <th>Name</th>
-                        <th>Title</th>
+                      <th>Order ID</th>
+                        <th>Service Date & Time</th>
                         <th>Status</th>
-                        <th>Position</th>
+                        <th>Total Price</th>
                         <th>Actions</th>
                       </tr>
                     </thead>

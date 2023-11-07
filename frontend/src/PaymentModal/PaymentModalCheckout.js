@@ -65,7 +65,6 @@ const PaymentModal = ({
   window.payhere.onError = function onError(error) {
     console.log("Error:" + error);
   };
-
   function pay() {
     if (!streetName || !houseNo || !zipCode || !serviceDate || !serviceTime) {
       toast.error("Please provide all required information");
@@ -122,7 +121,6 @@ const PaymentModal = ({
         toast.error("An error occurred while processing your payment.");
       });
   }
-
   return (
     // <button type="button" onClick={pay} className="btn btn-primary btn-block">
     //   Add Money
