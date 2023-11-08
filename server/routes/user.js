@@ -292,6 +292,18 @@ router.get(
 );
 
 // Get customers
+router.get("/users", async (req, res) => {
+  try {
+    const users = await User.find();
+
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Get customers
 router.get("/users/customers", async (req, res) => {
   try {
     const customers = await User.find({ role: "customer" });

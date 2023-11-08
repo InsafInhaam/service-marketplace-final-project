@@ -22,10 +22,10 @@ const Routing = () => {
 
   return (
     <Routes>
-      <Route exact path="/" element={<Home />} />
+      {/* <Route exact path="/" element={<Home />} /> */}
       <Route
         exact
-        path="/dashboard"
+        path="/"
         element={user ? <Dashboard /> : <Navigate to="/login" />}
       />
       <Route

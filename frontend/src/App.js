@@ -157,7 +157,7 @@ function App() {
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, [dispatch, user._id]);
+  }, [dispatch]);
 
   // console.log(updateUser);
 

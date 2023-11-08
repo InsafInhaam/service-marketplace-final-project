@@ -8,7 +8,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/api/user/users/customers")
+    fetch(process.env.REACT_APP_API_URL + "/api/user/users")
       .then((res) => res.json())
       .then((result) => {
         setUsers(result);

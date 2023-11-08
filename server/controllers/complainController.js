@@ -17,7 +17,7 @@ const complainOrder = async (req, res) => {
 
     res.status(200).json(complain);
   } catch (error) {
-    console.error('Error complaining about order:', error);
+    // console.error('Error complaining about order:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
@@ -29,7 +29,7 @@ const fetchComplaints = async (req, res) => {
     const complaints = await Complain.find({ orderId });
     res.json(complaints);
   } catch (error) {
-    console.error('Error fetching complaints:', error);
+    // console.error('Error fetching complaints:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
