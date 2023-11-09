@@ -98,14 +98,32 @@ const OrderDetails = ({
                     key={item?.itemId}
                     className="d-flex align-itens-center justify-content-between"
                   >
-                    <div>{item?.itemId?.name}</div>
+                    <div className="d-flex align-items-center w-50">
+                      <img
+                        src={item?.itemId?.image}
+                        alt={item?.itemId?.name}
+                        style={{
+                          width: "45px",
+                          height: "45px",
+                          objectFit: "cover",
+                        }}
+                        className="rounded-circle"
+                      />
+                      <div className="ms-3">
+                        <p className="fw-bold mb-1">{item?.itemId?.name}</p>
+                        <p className="text-muted mb-0">
+                          {item?.itemId?.description}
+                        </p>
+                      </div>
+                    </div>
+                    {/* <div>{item?.itemId?.name}</div> */}
                     <div>
-                      - <strong> Quantity: </strong>
+                      - <strong> Qty: </strong>
                       {item?.quantity}
                     </div>
                     <div>
-                      - <strong> Price: </strong>
-                      LKR {item?.itemId?.price}
+                      <strong> LKR </strong>
+                      {item?.itemId?.price}
                     </div>
                   </li>
                 ))}
@@ -113,25 +131,29 @@ const OrderDetails = ({
             </div>
             <div>
               {/* Render reviews */}
-              <div>
-                <h4>Reviews</h4>
-                {reviews.map((review) => (
-                  <div key={review._id}>
-                    <p>Rating: {review.rating}</p>
-                    <p>Comment: {review.review}</p>
-                  </div>
-                ))}
-              </div>
+              {reviews.length > 0 && (
+                <div>
+                  <h4>Reviews</h4>
+                  {reviews.map((review) => (
+                    <div key={review._id}>
+                      <p>Rating: {review.rating}</p>
+                      <p>Comment: {review.review}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Render complaints */}
-              <div>
-                <h4>Complaints</h4>
-                {complaints.map((complaint) => (
-                  <div key={complaint._id}>
-                    <p>Reason: {complaint.reason}</p>
-                  </div>
-                ))}
-              </div>
+              {complaints.length > 0 && (
+                <div>
+                  <h4>Complaints</h4>
+                  {complaints.map((complaint) => (
+                    <div key={complaint._id}>
+                      <p>Reason: {complaint.reason}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           <div className="modal-footer">

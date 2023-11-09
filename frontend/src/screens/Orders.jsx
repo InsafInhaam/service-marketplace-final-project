@@ -9,6 +9,7 @@ import axios from "axios";
 import ReviewModal from "../components/ReviewModal";
 import ComplainModal from "../components/ComplainModal";
 import OrderDetails from "../components/OrderDetails";
+import OrderLabour from "../components/OrderLabour";
 
 const Orders = () => {
   const user = useSelector((state) => state.user.user);
@@ -18,13 +19,17 @@ const Orders = () => {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showComplainModal, setShowComplainModal] = useState(false);
   const [showSelectedOrderModal, setShowSelectedOrderModal] = useState(false);
+  const [showOrderLabourModal, setShowOrderLabourModal] = useState(false);
+
+  const [selectedOrderLabour, setSelectedOrderLabour] = useState(null);
+
 
   useEffect(() => {
     // Fetch orders when the component mounts
     fetchOrders();
   }, [orders]);
 
-  console.log(selectedOrder)
+  console.log(selectedOrder);
 
   const fetchOrders = async () => {
     try {
@@ -54,9 +59,7 @@ const Orders = () => {
 
   const handleTrackOrder = (order) => {
     setSelectedOrder(order);
-    setShowSelectedOrderModal(true); // Show the selectedOrder modal
-    // setSelectedReview(null); // Close the review modal
-    // setSelectedComplain(null); // Close the complain modal
+    setShowSelectedOrderModal(true); 
   };
 
   const handleCancelOrder = async () => {
@@ -98,6 +101,17 @@ const Orders = () => {
     setShowComplainModal(true);
   };
 
+  const handleOrderLabour = (order) => {
+    setSelectedOrderLabour(order);
+    setShowOrderLabourModal(true);
+  };
+
+  const handleCloseOrderLabour = () => {
+    setSelectedOrderLabour(null);
+    setShowOrderLabourModal(false);
+  };
+
+  // console.log(orders[0]);
   return (
     <div className="page-wraper">
       <Navbar />
@@ -137,6 +151,20 @@ const Orders = () => {
                           >
                             Track order details
                           </button>
+                          {order.labourer !== null && (
+                            <>
+                              <br />
+                              <button
+                                className="btn btn-outline-primary mt-2 w-100"
+                                type="button"
+                                data-toggle="modal"
+                                data-target="#orderDetailsModal"
+                                onClick={() => handleOrderLabour(order)}
+                              >
+                                Assigned Worker
+                              </button>
+                            </>
+                          )}
                         </div>
                       </div>
                       <hr className="my-4" />
@@ -202,6 +230,14 @@ const Orders = () => {
           userId={user._id}
           orderId={selectedOrder._id}
           onClose={() => setShowComplainModal(false)}
+        />
+      )}
+
+      {/* Order Labour Modal */}
+      {showOrderLabourModal && (
+        <OrderLabour
+          selectedOrder={selectedOrderLabour}
+          onClose={handleCloseOrderLabour}
         />
       )}
 

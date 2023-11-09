@@ -113,7 +113,7 @@
 
 const express = require('express');
 const router = express.Router();
-const reviewController = require('../controllers/review.controller');
+const reviewController = require('../controllers/reviewController');
 
 router.post("/reviewOrder/:userId/:orderId", reviewController.reviewOrder);
 router.get('/reviews/:orderId', reviewController.fetchReviewsForOrder);

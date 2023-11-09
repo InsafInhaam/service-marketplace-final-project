@@ -93,8 +93,6 @@ router.get("/orders", async (req, res) => {
 //   }
 // });
 
-
-
 // Function to calculate distance between two points on Earth
 function calculateDistance(lat1, lon1, lat2, lon2) {
   const R = 6371; // Radius of the Earth in kilometers
@@ -286,9 +284,14 @@ router.get("/orders/:orderId", async (req, res) => {
 // Get orders by user ID
 router.get("/user/:userId", async (req, res) => {
   try {
-    const orders = await Order.find({ userId: req.params.userId }).populate(
-      "cartItems.itemId"
-    );
+    const orders = await Order.find({ userId: req.params.userId })
+      .populate("cartItems.itemId")
+      .populate({
+        path: "labourer",
+        model: "Labour", // Reference to the Labour model
+      });
+
+    // console.log("Orders:", orders); 
     res.status(200).json(orders);
   } catch (error) {
     console.error("Error getting orders by user ID:", error);
