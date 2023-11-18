@@ -1,117 +1,90 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-const Admins = () => {
-  const [admins, setAdmins] = useState([]);
+const Promo = () => {
+  const [promos, setPromos] = useState([]);
 
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [image, setImage] = useState("");
-  const [profilePic, setProfilePic] = useState("");
-  const [showModal, setShowModal] = useState(false); // State to track the modal visibility
+  const [promoCode, setpromoCode] = useState("");
+  const [description, setDescription] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [discountPercentage, setDiscountPercentage] = useState("");
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/api/admin/admins")
+    fetch(process.env.REACT_APP_API_URL + "/api/promo/get-promo")
       .then((res) => res.json())
       .then((result) => {
-        setAdmins(result);
+        console.log(result);
+        setPromos(result);
       });
-  }, [admins]);
+  }, [promos]);
 
+  // console.log(promos);
   const handleFormSubmit = () => {
-    if (!name ||
-        !email ||
-        !password ||
-        !image ||
-        !address ||
-        !phone) {
+    if (
+      !promoCode ||
+      !description ||
+      !startDate ||
+      !expiryDate ||
+      !discountPercentage
+    ) {
       return toast.error("Please fill all required fields");
     }
     setLoading(true);
-    handleImageUpload();
+    let body = {
+      promoCode,
+      description,
+      startDate,
+      expiryDate,
+      discountPercentage,
+      isActive: true,
+    };
 
+    // console.log(body);
+
+    fetch(process.env.REACT_APP_API_URL + "/api/promo/add-promo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          toast.error(data.error);
+        } else {
+          setLoading(false);
+          toast.success(data.message);
+          console.log(data.message);
+          toggleModal();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setShowModal(false);
 
-    // Reset the input fields and state variables once the form is submitted
-    setName("");
-    setEmail("");
-    setPhone("");
-    setAddress("");
-    setPassword("");
-    setImage(null);
+    setDescription("");
+    setpromoCode("");
+    setStartDate("");
+    setExpiryDate("");
+    setDiscountPercentage("");
   };
 
   const toggleModal = () => {
     setShowModal(!showModal);
   };
 
-  useEffect(() => {
-    if (profilePic) {
-      let body = {
-        name,
-        email,
-        password,
-        address,
-        phone,
-        image: profilePic,
-      };
-
-      console.log(body);
-
-      fetch(process.env.REACT_APP_API_URL + "/api/admin/admins", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.error) {
-            toast.error(data.error);
-          } else {
-            setLoading(false);
-            toast.success(data.message);
-            console.log(data.message);
-            toggleModal();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [profilePic]);
-
-
-  const handleImageUpload = () => {
-    if (image) {
-      const data = new FormData();
-      data.append("file", image);
-      data.append("upload_preset", "surge-intern-test");
-      data.append("cloud_name", "dp6yyczpu");
-      fetch(process.env.REACT_APP_CLOUDINARY_URL, {
-        method: "POST",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-            setProfilePic(data.secure_url);
-          console.log(data.secure_url);
-        })
-        .catch((error) => console.log(error));
-    }
-  };
-
   const handleDelete = (id) => {
-    fetch(process.env.REACT_APP_API_URL + "/api/admin/admins/" + id, {
+    fetch(process.env.REACT_APP_API_URL + "/api/promos/deleteCategory/" + id, {
       method: "DELETE",
       // headers: {
       //   Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -126,12 +99,9 @@ const Admins = () => {
   return (
     <>
       <div className="container-scroller">
-        {/* partial:../../partials/_navbar.html */}
         <Navbar />
-        {/* partial */}
         <div className="container-fluid page-body-wrapper">
           <Sidebar />
-          {/* partial */}
           <div className="main-panel">
             <div className="content-wrapper">
               <div className="row">
@@ -140,7 +110,7 @@ const Admins = () => {
                     <div className="card-body">
                       <div className="d-flex align-items-start justify-content-between">
                         <div>
-                          <h4 className="card-title">Admin Table</h4>
+                          <h4 className="card-title">PromoCode</h4>
                           <p className="card-description">
                             Lorem ipsum dolor sit amet
                           </p>
@@ -152,32 +122,36 @@ const Admins = () => {
                           data-toggle="modal"
                           data-target="#exampleModal"
                         >
-                          New Admin
+                          New Promo
                         </button>
                       </div>
                       <div className="table-responsive">
                         <table className="table table-striped">
                           <thead>
                             <tr>
-                              <th>User</th>
-                              <th>Name</th>
-                              <th>Email</th>
-                              <th>Phone</th>
-                              <th>Address</th>
+                              <th>PromoCode Id</th>
+                              <th>Promo Code</th>
+                              <th>Description</th>
+                              <th>Start Date</th>
+                              <th>End Date</th>
+                              <th>Discount Percentage</th>
+                              <th>Status</th>
                               <th>Edit</th>
                               <th>Delete</th>
                             </tr>
                           </thead>
                           <tbody>
-                            {admins?.map((admin) => (
-                              <tr key={admin._id}>
-                                <td className="py-1">
-                                  <img src={admin.image} alt="image" />
+                            {promos?.map((promo) => (
+                              <tr key={promo._id}>
+                                <td>{promo._id}</td>
+                                <td>{promo.promoCode}</td>
+                                <td>{promo.description}</td>
+                                <td>{promo.startDate}</td>
+                                <td>{promo.expiryDate}</td>
+                                <td>{promo.discountPercentage}</td>
+                                <td>
+                                  {promo.isActive ? "Active" : "Not Active"}
                                 </td>
-                                <td>{admin.name}</td>
-                                <td>{admin.email}</td>
-                                <td>{admin.phone}</td>
-                                <td>{admin.address}</td>
                                 <td>
                                   <button
                                     type="button"
@@ -192,7 +166,7 @@ const Admins = () => {
                                   <button
                                     type="button"
                                     className="btn btn-danger"
-                                    onClick={() => handleDelete(admin._id)}
+                                    onClick={() => handleDelete(promo._id)}
                                   >
                                     Delete
                                   </button>
@@ -217,13 +191,13 @@ const Admins = () => {
             tabindex="-1"
             role="dialog"
             aria-labelledby="exampleModalLabel"
-            aria-hidden={!showModal} // Hide the modal from screen readers when it's closed
+            aria-hidden={!showModal}
           >
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="exampleModalLabel">
-                    Add Admin
+                    Add Category
                   </h5>
                   <button
                     type="button"
@@ -237,67 +211,61 @@ const Admins = () => {
                 <div className="modal-body">
                   <form action="#" method="post">
                     <div className="form-group first">
-                      <label htmlFor="name">Name</label>
+                      <label htmlFor="promoCode">Promo Code</label>
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Enter ur name"
-                        id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Enter ur Promo Code"
+                        id="promoCode"
+                        value={promoCode}
+                        onChange={(e) => setpromoCode(e.target.value)}
                       />
                     </div>
                     <div className="form-group first">
-                      <label htmlFor="email">Email</label>
+                      <label htmlFor="description">Description</label>
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Enter ur email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Enter ur description"
+                        id="description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                       />
                     </div>
                     <div className="form-group first">
-                      <label htmlFor="phone">Phone</label>
+                      <label htmlFor="startdate">Start Date</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        placeholder="Enter ur Start Date"
+                        id="startdate"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="form-group first">
+                      <label htmlFor="expiryDate">Expiry Date</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        placeholder="Enter ur Expiry Date"
+                        id="expiryDate"
+                        value={expiryDate}
+                        onChange={(e) => setExpiryDate(e.target.value)}
+                      />
+                    </div>
+                    <div className="form-group first">
+                      <label htmlFor="discountPercentage">
+                        Discount Percentage
+                      </label>
                       <input
                         type="number"
                         className="form-control"
-                        placeholder="Enter ur phone"
-                        id="phone"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
-                    </div>
-                    <div className="form-group first">
-                      <label htmlFor="address">Address</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter ur address"
-                        id="address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                      />
-                    </div>
-                    <div className="form-group last mb-3">
-                      <label htmlFor="password">Password</label>
-                      <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Your Password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </div>
-                    <div className="form-group last mb-3">
-                      <label htmlFor="password">Image</label>
-                      <input
-                        className="form-control"
-                        id="image"
-                        type="file"
-                        onChange={(e) => setImage(e.target.files[0])}
+                        placeholder="Enter ur Discount Percentage"
+                        id="discountPercentage"
+                        value={discountPercentage}
+                        onChange={(e) => setDiscountPercentage(e.target.value)}
                       />
                     </div>
                   </form>
@@ -328,4 +296,4 @@ const Admins = () => {
   );
 };
 
-export default Admins;
+export default Promo;

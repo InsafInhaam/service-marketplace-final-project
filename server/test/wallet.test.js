@@ -1,23 +1,27 @@
-const { chargePoints } = require('../controllers/walletController');
+const {
+  chargePoints,
+  usePoints,
+  getBalance,
+} = require("../controllers/walletController");
 const User = require("../models/User");
 
-jest.mock('../models/User', () => ({
+jest.mock("../models/User", () => ({
   findById: jest.fn(),
 }));
 
-describe('chargePoints', () => {
+describe("chargePoints", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should charge points to the user successfully', async () => {
+  it("should charge points to the user successfully", async () => {
     const mockUser = {
       points: 100,
       save: jest.fn().mockResolvedValue(true),
     };
 
     const mockReq = {
-      body: { amount: '50' },
+      body: { amount: "50" },
       user: mockUser,
     };
     const mockRes = {
@@ -35,9 +39,9 @@ describe('chargePoints', () => {
     });
   });
 
-  it('should return 404 if user not found', async () => {
+  it("should return 404 if user not found", async () => {
     const mockReq = {
-      body: { amount: '50' },
+      body: { amount: "50" },
       user: null,
     };
     const mockRes = {
@@ -54,9 +58,9 @@ describe('chargePoints', () => {
     });
   });
 
-  it('should handle invalid amount', async () => {
+  it("should handle invalid amount", async () => {
     const mockReq = {
-      body: { amount: 'invalid' },
+      body: { amount: "invalid" },
       user: { points: 100, save: jest.fn() },
     };
     const mockRes = {
@@ -73,10 +77,13 @@ describe('chargePoints', () => {
     });
   });
 
-  it('should handle internal server error', async () => {
+  it("should handle internal server error", async () => {
     const mockReq = {
-      body: { amount: '50' },
-      user: { points: 100, save: jest.fn().mockRejectedValue(new Error('Error saving')) },
+      body: { amount: "50" },
+      user: {
+        points: 100,
+        save: jest.fn().mockRejectedValue(new Error("Error saving")),
+      },
     };
     const mockRes = {
       json: jest.fn(),
@@ -93,23 +100,19 @@ describe('chargePoints', () => {
   });
 });
 
-
-// Import the necessary functions and mocked modules
-const { usePoints } = require('../controllers/walletController');
-
-describe('usePoints', () => {
+describe("usePoints", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should deduct points from the user successfully', async () => {
+  it("should deduct points from the user successfully", async () => {
     const mockUser = {
       points: 150,
       save: jest.fn().mockResolvedValue(true),
     };
 
     const mockReq = {
-      body: { amount: '50' },
+      body: { amount: "50" },
       user: mockUser,
     };
     const mockRes = {
@@ -127,9 +130,9 @@ describe('usePoints', () => {
     });
   });
 
-  it('should return 400 if user has insufficient points', async () => {
+  it("should return 400 if user has insufficient points", async () => {
     const mockReq = {
-      body: { amount: '200' },
+      body: { amount: "200" },
       user: { points: 100, save: jest.fn() },
     };
     const mockRes = {
@@ -146,9 +149,9 @@ describe('usePoints', () => {
     });
   });
 
-  it('should return 400 if the amount is invalid', async () => {
+  it("should return 400 if the amount is invalid", async () => {
     const mockReq = {
-      body: { amount: 'invalid' },
+      body: { amount: "invalid" },
       user: { points: 100, save: jest.fn() },
     };
     const mockRes = {
@@ -165,10 +168,13 @@ describe('usePoints', () => {
     });
   });
 
-  it('should handle internal server error', async () => {
+  it("should handle internal server error", async () => {
     const mockReq = {
-      body: { amount: '50' },
-      user: { points: 100, save: jest.fn().mockRejectedValue(new Error('Error saving')) },
+      body: { amount: "50" },
+      user: {
+        points: 100,
+        save: jest.fn().mockRejectedValue(new Error("Error saving")),
+      },
     };
     const mockRes = {
       json: jest.fn(),
@@ -185,15 +191,12 @@ describe('usePoints', () => {
   });
 });
 
-// Import the necessary functions and mocked modules
-const { getBalance } = require('../controllers/walletController');
-
-describe('getBalance', () => {
+describe("getBalance", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should return the balance of the user', async () => {
+  it("should return the balance of the user", async () => {
     const mockReq = {
       user: { points: 100 },
     };
@@ -207,7 +210,7 @@ describe('getBalance', () => {
     expect(mockRes.json).toHaveBeenCalledWith({ balance: 100 });
   });
 
-  it('should return 404 if user not found', async () => {
+  it("should return 404 if user not found", async () => {
     const mockReq = {
       user: null,
     };
@@ -225,21 +228,22 @@ describe('getBalance', () => {
     });
   });
 
-  it('should handle internal server error', async () => {
+  it("should handle internal server error", async () => {
     const mockReq = {
       user: { points: 100 },
     };
     const mockRes = {
       json: jest.fn(),
-      status: jest.fn(() => {
-        throw new Error('Internal Server Error');
-      }).mockReturnThis(),
+      status: jest
+        .fn(() => {
+          throw new Error("Internal Server Error");
+        })
+        .mockReturnThis(),
     };
-  
+
     try {
       await getBalance(mockReq, mockRes);
     } catch (e) {
-      // The error is caught here since it's not an async operation
       expect(mockRes.status).toHaveBeenCalledWith(500);
       expect(mockRes.json).toHaveBeenCalledWith({
         success: false,
@@ -247,6 +251,4 @@ describe('getBalance', () => {
       });
     }
   });
-  
 });
-

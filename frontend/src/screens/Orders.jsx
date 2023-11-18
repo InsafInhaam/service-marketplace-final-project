@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useSelector } from "react-redux";
-// import OrderStatus from "../components/OrderStatus";
 import OrderStatusIndicate from "../components/OrderStatusIndicate";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -10,6 +9,7 @@ import ReviewModal from "../components/ReviewModal";
 import ComplainModal from "../components/ComplainModal";
 import OrderDetails from "../components/OrderDetails";
 import OrderLabour from "../components/OrderLabour";
+import Chat from "../components/Chat";
 
 const Orders = () => {
   const user = useSelector((state) => state.user.user);
@@ -23,18 +23,19 @@ const Orders = () => {
 
   const [selectedOrderLabour, setSelectedOrderLabour] = useState(null);
 
+  const [showLabourMessageModal, setShowLabourMessageModal] = useState(false);
+  const [selectedLabourMessage, setSelectedLabourMessage] = useState(null);
 
   useEffect(() => {
-    // Fetch orders when the component mounts
     fetchOrders();
   }, [orders]);
 
-  console.log(selectedOrder);
+  // console.log(selectedOrder);
 
   const fetchOrders = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/orders/user/${user._id}`, // Assuming userId is available
+        `${process.env.REACT_APP_API_URL}/api/orders/user/${user._id}`,
         {
           method: "GET",
           headers: {
@@ -59,7 +60,7 @@ const Orders = () => {
 
   const handleTrackOrder = (order) => {
     setSelectedOrder(order);
-    setShowSelectedOrderModal(true); 
+    setShowSelectedOrderModal(true);
   };
 
   const handleCancelOrder = async () => {
@@ -70,7 +71,7 @@ const Orders = () => {
       );
       const updatedOrder = response.data;
 
-      console.log("Order cancelled:", updatedOrder);
+      // console.log("Order cancelled:", updatedOrder);
       toast.success("Order cancelled successfully");
 
       // Manually remove the modal backdrop with fade and show classes
@@ -111,9 +112,19 @@ const Orders = () => {
     setShowOrderLabourModal(false);
   };
 
+  const handleLabourMessage = (order) => {
+    setSelectedLabourMessage(order);
+    setShowLabourMessageModal(true);
+  };
+
+  const handleCloseLabourMessage = () => {
+    setSelectedLabourMessage(null);
+    setShowLabourMessageModal(false);
+  };
+
   // console.log(orders[0]);
   return (
-    <div className="page-wraper">
+    <div className="page-wraper" style={{ position: "relative" }}>
       <Navbar />
       <div className="page-content">
         <div className="aon-page-benner-area2">
@@ -162,6 +173,16 @@ const Orders = () => {
                                 onClick={() => handleOrderLabour(order)}
                               >
                                 Assigned Worker
+                              </button>
+                              <br />
+                              <button
+                                className="btn btn-outline-primary mt-2 w-100"
+                                type="button"
+                                data-toggle="modal"
+                                data-target="#orderDetailsModal"
+                                onClick={() => handleLabourMessage(order)}
+                              >
+                                Message
                               </button>
                             </>
                           )}
@@ -238,6 +259,14 @@ const Orders = () => {
         <OrderLabour
           selectedOrder={selectedOrderLabour}
           onClose={handleCloseOrderLabour}
+        />
+      )}
+      {showLabourMessageModal && (
+        <Chat
+          user={user}
+          recipient={selectedLabourMessage}
+          orderId={selectedLabourMessage._id}
+          onClose={handleCloseLabourMessage}
         />
       )}
 

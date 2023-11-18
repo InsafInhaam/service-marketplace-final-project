@@ -7,14 +7,9 @@ const reviewSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    // laborerId: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "Labour",
-    //   required: true,
-    // },
     laborerId: {
-      // type: mongoose.Schema.Types.ObjectId,
-      // ref: "Labour",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Labour",
       type: String,
       required: true,
     },

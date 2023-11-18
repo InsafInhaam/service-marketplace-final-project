@@ -33,8 +33,21 @@ const fetchReviewsForOrder = async (req, res) => {
   }
 };
 
+const fetchAllReviews = async (req, res) => {
+  try {
+    const reviews = await Review.find().populate({
+      path: "customerId",
+    });
+    res.json(reviews);
+  } catch (error) {
+    // console.error('Error fetching reviews:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
 module.exports = {
   reviewOrder,
-  fetchReviewsForOrder
+  fetchReviewsForOrder,
+  fetchAllReviews
 };

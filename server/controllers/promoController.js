@@ -21,8 +21,8 @@ exports.AddPromo = async (req, res) => {
     });
 
     const savedPromo = await newPromoCode.save();
-    console.log(savedPromo);
-    return res.status(201).json({ savedPromo });
+    // console.log(savedPromo);
+    return res.status(201).json({ message: "Promocode added successfully", savedPromo });
   } catch (err) {
     res.status(400).json({ error: "Failed to create promo code" });
   }
@@ -53,3 +53,13 @@ exports.ValidatePromo = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+
+exports.GetPromo = async (req, res) => {
+  try {
+    const promos = await Promo.find();
+    res.status(200).json(promos);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}

@@ -48,7 +48,13 @@ router.post("/add-order", async (req, res) => {
 // Get all orders
 router.get("/orders", async (req, res) => {
   try {
-    const orders = await Order.find().populate("service");
+    const orders = await Order.find().populate({
+      path: "userId",
+    }).populate({
+      path: "cartItems.itemId",
+      model: "Service",
+    });
+
     res.status(200).json(orders);
   } catch (error) {
     console.error("Error getting orders:", error);
@@ -94,6 +100,7 @@ router.get("/orders", async (req, res) => {
 // });
 
 // Function to calculate distance between two points on Earth
+
 function calculateDistance(lat1, lon1, lat2, lon2) {
   const R = 6371; // Radius of the Earth in kilometers
   const dLat = deg2rad(lat2 - lat1);
@@ -291,7 +298,7 @@ router.get("/user/:userId", async (req, res) => {
         model: "Labour", // Reference to the Labour model
       });
 
-    // console.log("Orders:", orders); 
+    // console.log("Orders:", orders);
     res.status(200).json(orders);
   } catch (error) {
     console.error("Error getting orders by user ID:", error);

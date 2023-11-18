@@ -10,19 +10,6 @@ const ServiceListing = () => {
   const [services, setServices] = useState([]);
   const [relatedSubcategories, setRelatedSubcategories] = useState([]);
 
-  // const handleAddToCart = (service) => {
-  //   // Dispatch the action
-  //   dispatch({ type: "ADD_TO_CART", payload: service });
-
-  //   // Optionally, update local storage
-  //   const updatedCart = [...cart, { ...service, quantity: 1 }];
-  //   localStorage.setItem("cart", JSON.stringify(updatedCart));
-  // };
-
-  // const handleAddToCart = (item) => {
-  //   dispatch(addToCart(item));
-  // };
-
   useEffect(() => {
     const fetchRelatedSubcategories = async () => {
       try {

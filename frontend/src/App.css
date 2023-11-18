@@ -373,3 +373,49 @@ ul.search-results {
 .gallery-image {
   border-radius: 12px;
 }
+
+/* chat */
+
+#chat4 .form-control {
+  border-color: transparent;
+}
+
+#chat4 .form-control:focus {
+  border-color: transparent;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+.chat-app {
+  position: fixed;
+  top: 220px;
+  right: 10px;
+  width: 430px;
+  z-index: 9;
+}
+
+
+.chat-app-close-icon {
+  margin-top: 20px;
+  font-size: 20px;
+  right: 10px;
+  position: absolute;
+  top: -70px;
+  background: red;
+  width: 35px;
+  border-radius: 50%;
+  color: #fff;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+}

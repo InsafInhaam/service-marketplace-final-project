@@ -108,15 +108,12 @@ describe("getAllCategories", () => {
   });
 });
 
-// Assuming you have a utility function that gets the counts
-// If not, you would need to mock the `User.countDocuments` function as well
 describe("getCategoriesWithCounts", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('should return categories with the number of service providers', async () => {
-    // Mock the Category.find method
     const categories = [{ title: 'Category 1', toObject: jest.fn().mockReturnValue({ title: 'Category 1' }) }];
     Category.find = jest.fn().mockResolvedValue(categories);
     User.countDocuments = jest.fn().mockResolvedValue(5);

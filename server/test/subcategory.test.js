@@ -49,11 +49,10 @@ describe("SubCategory Controller", () => {
 
   // getAllSubCategories
   SubCategory.find.mockImplementation(() => ({
-    populate: jest.fn().mockReturnThis(), // mockReturnThis() to allow chaining
-    exec: jest.fn().mockResolvedValue([]), // mockResolvedValue([]) to resolve the chain
+    populate: jest.fn().mockReturnThis(),
+    exec: jest.fn().mockResolvedValue([]),
   }));
 
-  // getAllSubCategories
   it("gets all subcategories successfully", async () => {
     // Mocks
     const mockRes = {
@@ -61,18 +60,14 @@ describe("SubCategory Controller", () => {
       json: jest.fn(),
     };
 
-    // Execute the controller function
     await getAllSubCategories(null, mockRes);
 
-    // Assertions to ensure the correct functions were called with the expected values
     expect(SubCategory.find).toHaveBeenCalled();
     expect(mockRes.status).toHaveBeenCalledWith(200);
-    // expect(mockRes.json).toHaveBeenCalledWith([]);
   });
 
   // getSubCategoryById
   it("gets subcategory by ID successfully", async () => {
-    // Mocks
     const mockReq = {
       params: { id: new mongoose.Types.ObjectId() },
     };
@@ -87,14 +82,11 @@ describe("SubCategory Controller", () => {
         image: "SubCategory Image",
         category: new mongoose.Types.ObjectId(),
       })
-    ); // Make sure this resolves with a valid subcategory object
+    );
 
-    // Test
     await getSubCategoryById(mockReq, mockRes);
 
     expect(SubCategory.findById).toHaveBeenCalledWith(mockReq.params.id);
     expect(mockRes.json).toHaveBeenCalledWith(expect.any(Object));
   });
-
-
 });

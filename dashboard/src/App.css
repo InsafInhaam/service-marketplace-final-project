@@ -31226,3 +31226,27 @@ div.tagsinput span.tag a {
 .bg-red {
   background-color: #d9534f !important;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #9d9b9b;
+  color: white;
+  border: 1px solid #ddd;
+  margin: 0 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pagination button:hover {
+  background-color: #3c3c3c;
+}
+
+.pagination button.active {
+  background-color: #3c3c3c;
+}

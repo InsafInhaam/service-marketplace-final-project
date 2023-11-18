@@ -75,6 +75,8 @@ const CartItem = ({ cartItem }) => {
               </button>
             </div>
 
+            
+
             <a
               href="#"
               style={{ color: "#cecece", marginLeft: "100px" }}

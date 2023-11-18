@@ -118,10 +118,10 @@ const ServiceItem = ({ service }) => {
                 <div className="d-flex flex-row align-items-center mb-1">
                   <h4 className="mb-1 me-1">{`LKR ${service.price}`}</h4>
                   <span className="text-danger">
-                    <s>$20.99</s>
+                    {/* <s>$20.99</s> */}
                   </span>
                 </div>
-                <h6 className="text-success">Free shipping</h6>
+                {/* <h6 className="text-success">Free shipping</h6> */}
                 <div className="d-flex flex-column mt-4">
                   <button className="btn btn-primary btn-sm" type="button" onClick={() => handleAddToCart(service)}>
                     Add to Cart

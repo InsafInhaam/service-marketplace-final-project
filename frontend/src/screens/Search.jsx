@@ -3,8 +3,6 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import ServiceItem from "../components/ServiceItem";
 
-// const ITEMS_PER_PAGE = 10; // Number of labor cards per page
-
 const Search = () => {
   const [categories, setCategories] = useState([]);
   const [filteredLabours, setFilteredLabours] = useState([]);
@@ -13,7 +11,7 @@ const Search = () => {
   const [priceMax, setPriceMax] = useState("");
   const [category, setCategory] = useState("");
   const [services, setServices] = useState([]);
-  const [isFiltered, setIsFiltered] = useState(false); // New state to track if filters are applied
+  const [isFiltered, setIsFiltered] = useState(false); 
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "/api/subcategories/allsubcategories")
@@ -24,7 +22,6 @@ const Search = () => {
   }, [categories]);
 
   useEffect(() => {
-    // Fetch services from the backend API and store them in the state
     fetch(process.env.REACT_APP_API_URL + "/api/services/services")
       .then((res) => res.json())
       .then((result) => {
@@ -33,7 +30,6 @@ const Search = () => {
   }, [services]);
 
   const handleFilter = () => {
-    // Filter services based on the selected filters
     const filtered = services.filter((service) => {
       const keywordMatch =
         !keyword || service.name.toLowerCase().includes(keyword.toLowerCase());
@@ -42,12 +38,11 @@ const Search = () => {
         (!priceMin || service.price >= parseInt(priceMin)) &&
         (!priceMax || service.price <= parseInt(priceMax));
 
-      // Combine the filter conditions using the AND (&&) operator
       return keywordMatch && categoryMatch  && priceMatch;
     });
 
-    setFilteredLabours(filtered); // Update the filtered services in the state
-    setIsFiltered(true); // Set isFiltered to true after applying filters
+    setFilteredLabours(filtered); 
+    setIsFiltered(true);
   };
 
   console.log(filteredLabours);

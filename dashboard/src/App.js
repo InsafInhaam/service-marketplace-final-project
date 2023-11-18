@@ -15,6 +15,10 @@ import Categories from "./screens/Categories";
 import Admins from "./screens/Admins";
 import Services from "./screens/Services";
 import SubCategories from "./screens/SubCategories";
+import Promo from "./screens/Promo";
+import Complain from "./screens/Complain";
+import Reviews from "./screens/Reviews";
+import Order from "./screens/Order";
 
 // Define the initial state
 const initialState = {
@@ -74,6 +78,26 @@ const Routing = () => {
         exact
         path="/services"
         element={user ? <Services /> : <Navigate to="/login" />}
+      />
+      <Route
+        exact
+        path="/promo"
+        element={user ? <Promo /> : <Navigate to="/login" />}
+      />
+      <Route
+        exact
+        path="/complain"
+        element={user ? <Complain /> : <Navigate to="/login" />}
+      />
+      <Route
+        exact
+        path="/reviews"
+        element={user ? <Reviews /> : <Navigate to="/login" />}
+      />
+      <Route
+        exact
+        path="/orders"
+        element={user ? <Order /> : <Navigate to="/login" />}
       />
       <Route exact path="/login" element={<Login />} />
     </Routes>

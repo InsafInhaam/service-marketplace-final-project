@@ -60,8 +60,8 @@ const Navbar = () => {
                     >
                       <img
                         src={user.image ? user.image : profileImg}
-                        className="rounded-circle navbar-profile-img"
                         alt={user.name}
+                        className="rounded-circle navbar-profile-img"
                         loading="lazy"
                       />
                     </button>

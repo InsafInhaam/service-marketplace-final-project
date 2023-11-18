@@ -5,19 +5,14 @@ const {
 } = require("../controllers/reviewController");
 const Review = require("../models/Review");
 
-// Mock the Review model
 jest.mock('../models/Review', () => {
     const mockReview = {
       save: jest.fn(),
     };
-    // Mock the static methods of Review
     mockReview.find = jest.fn();
-    // The constructor mock
     return jest.fn(() => mockReview);
   });
-  
 
-// Mock static methods of Review
 Review.find = jest.fn();
 
 describe("Review Controller", () => {
