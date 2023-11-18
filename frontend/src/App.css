@@ -372,7 +372,28 @@ ul.search-results {
 
 .gallery-image {
   border-radius: 12px;
+  width: 150px;
+  height: 300px;
+  object-fit: cover;
+  position: relative;
 }
+
+.gallery-image::after{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 999;
+}
+
+.banner-img {
+  height: 600px;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* https://freefrontend.com/css-hover-effects/ */
 
 /* chat */
 
@@ -398,7 +419,7 @@ ul.search-results {
   top: 220px;
   right: 10px;
   width: 430px;
-  z-index: 9;
+  z-index: 9999;
 }
 
 
@@ -418,4 +439,101 @@ ul.search-results {
   justify-content: center;
   font-weight: bold;
   cursor: pointer;
+}
+
+.chat-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity by changing the last value (0.5) */
+  z-index: 999; /* Ensure it's above other elements */
+}
+
+
+/* faq */
+.section_padding_130 {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+.faq_area {
+  position: relative;
+  z-index: 1;
+  background-color: #f5f5ff;
+}
+
+.faq-accordian {
+  position: relative;
+  z-index: 1;
+}
+.faq-accordian .card {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1.5rem;
+}
+.faq-accordian .card:last-child {
+  margin-bottom: 0;
+}
+.faq-accordian .card .card-header {
+  background-color: #ffffff;
+  padding: 0;
+  border-bottom-color: #ebebeb;
+}
+.faq-accordian .card .card-header h6 {
+  cursor: pointer;
+  padding: 1.75rem 2rem;
+  color: #3f43fd;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.faq-accordian .card .card-header h6 span {
+  font-size: 1.5rem;
+}
+.faq-accordian .card .card-header h6.collapsed {
+  color: #070a57;
+}
+.faq-accordian .card .card-header h6.collapsed span {
+  -webkit-transform: rotate(-180deg);
+  transform: rotate(-180deg);
+}
+.faq-accordian .card .card-body {
+  padding: 1.75rem 2rem;
+}
+.faq-accordian .card .card-body p:last-child {
+  margin-bottom: 0;
+}
+
+@media only screen and (max-width: 575px) {
+  .support-button p {
+      font-size: 14px;
+  }
+}
+
+.support-button i {
+  color: #3f43fd;
+  font-size: 1.25rem;
+}
+@media only screen and (max-width: 575px) {
+  .support-button i {
+      font-size: 1rem;
+  }
+}
+
+.support-button a {
+  text-transform: capitalize;
+  color: #2ecc71;
+}
+@media only screen and (max-width: 575px) {
+  .support-button a {
+      font-size: 13px;
+  }
 }

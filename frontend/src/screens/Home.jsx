@@ -6,6 +6,17 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { Link, useNavigate } from "react-router-dom";
 import ChangeLocation from "../components/ChangeLocation";
+import Service001 from "../assets/service001.jpg";
+import Service002 from "../assets/service002.jpg";
+import Service003 from "../assets/service003.jpg";
+import Service004 from "../assets/service004.jpg";
+import Service005 from "../assets/service005.jpg";
+import Service006 from "../assets/service006.jpg";
+import Service007 from "../assets/service007.jpg";
+import Service008 from "../assets/service008.jpg";
+import Banner001 from "../assets/banner001.jpg";
+import Banner002 from "../assets/banner002.jpg";
+import Banner003 from "../assets/banner003.jpg";
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
@@ -32,7 +43,7 @@ const Home = () => {
 
   const responsiveOptions = {
     0: {
-      items: 1, 
+      items: 1,
     },
     768: {
       items: 2,
@@ -156,67 +167,238 @@ const Home = () => {
               <div className="row">
                 <div className="col-md-3">
                   <img
-                    src="https://via.placeholder.com/150"
+                    src={Service001}
                     alt="Image 1"
                     className="img-fluid gallery-image w-100"
                   />
-                  <h4 className="text-left py-2">Title 1</h4>
+                  <h4 className="text-left py-2">Cleaners</h4>
                 </div>
                 <div className="col-md-3">
                   <img
-                    src="https://via.placeholder.com/150"
+                    src={Service002}
                     alt="Image 2"
                     className="img-fluid gallery-image w-100"
                   />
-                  <h4 className="text-left py-2">Title 2</h4>
+                  <h4 className="text-left py-2">Painters</h4>
                 </div>
                 <div className="col-md-3">
                   <img
-                    src="https://via.placeholder.com/150"
+                    src={Service003}
                     alt="Image 3"
                     className="img-fluid gallery-image w-100"
                   />
-                  <h4 className="text-left py-2">Title 3</h4>
+                  <h4 className="text-left py-2">Carpenters</h4>
                 </div>
                 <div className="col-md-3">
                   <img
-                    src="https://via.placeholder.com/150"
+                    src={Service004}
                     alt="Image 4"
                     className="img-fluid gallery-image w-100"
                   />
-                  <h4 className="text-left py-2">Title 4</h4>
+                  <h4 className="text-left py-2">Electrician</h4>
                 </div>
                 <div className="col-md-3">
                   <img
-                    src="https://via.placeholder.com/150"
+                    src={Service005}
                     alt="Image 5"
                     className="img-fluid gallery-image w-100"
                   />
-                  <h4 className="text-left py-2">Title 5</h4>
+                  <h4 className="text-left py-2">Plumber</h4>
                 </div>
                 <div className="col-md-3">
                   <img
-                    src="https://via.placeholder.com/150"
+                    src={Service006}
                     alt="Image 3"
                     className="img-fluid gallery-image w-100"
                   />
-                  <h4 className="text-left py-2">Title 3</h4>
+                  <h4 className="text-left py-2">Housekeepers</h4>
                 </div>
                 <div className="col-md-3">
                   <img
-                    src="https://via.placeholder.com/150"
+                    src={Service007}
                     alt="Image 4"
                     className="img-fluid gallery-image w-100"
                   />
-                  <h4 className="text-left py-2">Title 4</h4>
+                  <h4 className="text-left py-2">Cab Driver</h4>
                 </div>
                 <div className="col-md-3">
                   <img
-                    src="https://via.placeholder.com/150"
+                    src={Service008}
                     alt="Image 5"
                     className="img-fluid gallery-image w-100"
                   />
-                  <h4 className="text-left py-2">Title 5</h4>
+                  <h4 className="text-left py-2">House Movers</h4>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="mt-5">
+            <div className="faq_area section_padding_130" id="faq">
+              <div className="container">
+                <div className="row justify-content-center">
+                  <div className="col-12 col-sm-8 col-lg-6">
+                    {/* Section Heading*/}
+                    <div
+                      className="section_heading text-center wow fadeInUp"
+                      data-wow-delay="0.2s"
+                      style={{
+                        visibility: "visible",
+                        animationDelay: "0.2s",
+                        animationName: "fadeInUp",
+                      }}
+                    >
+                      <h3>
+                        <span>Frequently </span> Asked Questions
+                      </h3>
+                      <p>
+                        Appland is completely creative, lightweight, clean &amp;
+                        super responsive app landing page.
+                      </p>
+                      <div className="line" />
+                    </div>
+                  </div>
+                </div>
+                <div className="row justify-content-center">
+                  {/* FAQ Area*/}
+                  <div className="col-12 col-sm-10 col-lg-8">
+                    <div className="accordion faq-accordian" id="faqAccordion">
+                      <div
+                        className="card border-0 wow fadeInUp"
+                        data-wow-delay="0.2s"
+                        style={{
+                          visibility: "visible",
+                          animationDelay: "0.2s",
+                          animationName: "fadeInUp",
+                        }}
+                      >
+                        <div className="card-header" id="headingOne">
+                          <h6
+                            className="mb-0 collapsed"
+                            data-toggle="collapse"
+                            data-target="#collapseOne"
+                            aria-expanded="true"
+                            aria-controls="collapseOne"
+                          >
+                            How can I install this app?
+                            <span className="lni-chevron-up" />
+                          </h6>
+                        </div>
+                        <div
+                          className="collapse"
+                          id="collapseOne"
+                          aria-labelledby="headingOne"
+                          data-parent="#faqAccordion"
+                        >
+                          <div className="card-body">
+                            <p>
+                              Lorem ipsum dolor sit amet consectetur adipisicing
+                              elit. Architecto quidem facere deserunt sint animi
+                              sapiente vitae suscipit.
+                            </p>
+                            <p>
+                              Appland is completely creative, lightweight, clean
+                              &amp; super responsive app landing page.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        className="card border-0 wow fadeInUp"
+                        data-wow-delay="0.3s"
+                        style={{
+                          visibility: "visible",
+                          animationDelay: "0.3s",
+                          animationName: "fadeInUp",
+                        }}
+                      >
+                        <div className="card-header" id="headingTwo">
+                          <h6
+                            className="mb-0 collapsed"
+                            data-toggle="collapse"
+                            data-target="#collapseTwo"
+                            aria-expanded="true"
+                            aria-controls="collapseTwo"
+                          >
+                            The apps isn't installing?
+                            <span className="lni-chevron-up" />
+                          </h6>
+                        </div>
+                        <div
+                          className="collapse"
+                          id="collapseTwo"
+                          aria-labelledby="headingTwo"
+                          data-parent="#faqAccordion"
+                        >
+                          <div className="card-body">
+                            <p>
+                              Lorem ipsum dolor sit amet consectetur adipisicing
+                              elit. Architecto quidem facere deserunt sint animi
+                              sapiente vitae suscipit.
+                            </p>
+                            <p>
+                              Appland is completely creative, lightweight, clean
+                              &amp; super responsive app landing page.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        className="card border-0 wow fadeInUp"
+                        data-wow-delay="0.4s"
+                        style={{
+                          visibility: "visible",
+                          animationDelay: "0.4s",
+                          animationName: "fadeInUp",
+                        }}
+                      >
+                        <div className="card-header" id="headingThree">
+                          <h6
+                            className="mb-0 collapsed"
+                            data-toggle="collapse"
+                            data-target="#collapseThree"
+                            aria-expanded="true"
+                            aria-controls="collapseThree"
+                          >
+                            Contact form isn't working?
+                            <span className="lni-chevron-up" />
+                          </h6>
+                        </div>
+                        <div
+                          className="collapse"
+                          id="collapseThree"
+                          aria-labelledby="headingThree"
+                          data-parent="#faqAccordion"
+                        >
+                          <div className="card-body">
+                            <p>
+                              Lorem ipsum dolor sit amet consectetur adipisicing
+                              elit. Architecto quidem facere deserunt sint animi
+                              sapiente vitae suscipit.
+                            </p>
+                            <p>
+                              Appland is completely creative, lightweight, clean
+                              &amp; super responsive app landing page.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Support Button*/}
+                    <div
+                      className="support-button text-center d-flex align-items-center justify-content-center mt-4 wow fadeInUp"
+                      data-wow-delay="0.5s"
+                      style={{
+                        visibility: "visible",
+                        animationDelay: "0.5s",
+                        animationName: "fadeInUp",
+                      }}
+                    >
+                      <i className="lni-emoji-sad" />
+                      <p className="mb-0 px-2">Can't find your answers?</p>
+                      <a href="#"> Contact us</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -267,22 +449,22 @@ const Home = () => {
                     <div className="carousel-inner">
                       <div className="carousel-item active">
                         <img
-                          src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp"
-                          className="d-block w-100"
+                          src={Banner001}
+                          className="d-block w-100 banner-img"
                           alt="Wild Landscape"
                         />
                       </div>
                       <div className="carousel-item">
                         <img
-                          src="https://mdbcdn.b-cdn.net/img/new/slides/042.webp"
-                          className="d-block w-100"
+                          src={Banner002}
+                          className="d-block w-100 banner-img"
                           alt="Camera"
                         />
                       </div>
                       <div className="carousel-item">
                         <img
-                          src="https://mdbcdn.b-cdn.net/img/new/slides/043.webp"
-                          className="d-block w-100"
+                          src={Banner003}
+                          className="d-block w-100 banner-img"
                           alt="Exotic Fruits"
                         />
                       </div>

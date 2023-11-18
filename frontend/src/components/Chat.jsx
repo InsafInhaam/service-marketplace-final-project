@@ -61,7 +61,9 @@ const Chat = ({ user, orderId, recipient, onClose }) => {
 
   return (
     <section className="chat-app">
-      <span className="chat-app-close-icon" onClick={onClose}>X </span>
+      <span className="chat-app-close-icon" onClick={onClose}>
+        X
+      </span>
       {/* <div className="container"> */}
       {/* <div className="row d-flex justify-content-end"> */}
       <div className="col-md-3 w-100">
@@ -77,7 +79,8 @@ const Chat = ({ user, orderId, recipient, onClose }) => {
           <div className="d-flex justify-content-between align-items-center text-white">
             <span>
               Chatting with
-              {" " + recipient?.labourer?.firstname +
+              {" " +
+                recipient?.labourer?.firstname +
                 " " +
                 recipient?.labourer?.lastname}
             </span>

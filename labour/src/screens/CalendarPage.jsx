@@ -55,8 +55,8 @@ const MyCalendar = () => {
         {/* Navbar */}
       </header>
       {/*Main layout*/}
-      <main style={{ marginTop: "58px" }}>
-        <div className="container pt-4">
+      <main className="main-content">
+        <div className="container mt-5 shadow-lg bg-white p-4 rounded">
           <Calendar
             localizer={localizer}
             events={calendarEvents} // Use calendarEvents instead of events

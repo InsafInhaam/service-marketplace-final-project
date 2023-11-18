@@ -11,12 +11,12 @@ const OrderDetail = ({ onClose, selectedOrder }) => {
             </h5>
             <button
               type="button"
-              className="close btn btn-danger btn-sm"
+              className="close btn-custom btn-sm text-danger"
               data-dismiss="modal"
               aria-label="Close"
               onClick={onClose}
             >
-              X
+             <i class='bx bx-window-close' ></i>
             </button>
           </div>
           <div className="modal-body">

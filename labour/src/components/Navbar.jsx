@@ -41,7 +41,7 @@ const Navbar = () => {
           </ul>
           {/* Left links */}
         </div>
-        {user ? (
+        {user && (
           <div className="d-flex align-items-center">
             {/* Notifications */}
             <div className="dropdown">
@@ -91,8 +91,7 @@ const Navbar = () => {
               >
                 <img
                   src={user.image ? user.image : profileImg}
-                  className="rounded-circle"
-                  height={50}
+                  className="rounded-circle navbar-profile-img"
                   alt={user.firstname}
                   loading="lazy"
                 />
@@ -127,10 +126,6 @@ const Navbar = () => {
               </ul>
             </div>
           </div>
-        ) : (
-          <button type="button" class="btn btn-dark">
-            Login
-          </button>
         )}
 
         {/* Right elements */}

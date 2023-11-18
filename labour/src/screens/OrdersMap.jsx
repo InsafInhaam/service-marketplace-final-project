@@ -48,9 +48,9 @@ const OrdersMap = () => {
         <Sidebar />
         <Navbar />
       </header>
-      <main style={{ marginTop: "58px" }}>
+      <main className="main-content">
         <div className="container">
-          <div class="row">
+          <div class="row shadow-lg p-0 rounded">
             <MapContainer
               center={[6.4447452, 80.0168602]}
               zoom={12}

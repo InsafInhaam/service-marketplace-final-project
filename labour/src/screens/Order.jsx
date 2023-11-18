@@ -107,7 +107,7 @@ const Order = () => {
           {/* Navbar */}
           <Navbar />
         </header>
-        <main>
+        <main className="main-content">
           <div className="container pt-4">
             <div class="mb-5">
               <div class="card">
@@ -150,17 +150,24 @@ const Order = () => {
                           <td>
                             <button
                               type="button"
-                              className="btn btn-link btn-sm btn-rounded mx-2"
+                              className="mx-2 btn-custom text-warning"
                               onClick={() => handleTrackOrder(newOrder)}
                             >
-                              View More
+                              <i class="bx bxs-chevron-down-square"></i>
                             </button>
                             <button
                               type="button"
-                              className="btn btn-sm btn-rounded btn-success mx-2"
+                              className="mx-2 btn-custom text-success"
                               onClick={() => handleAcceptOrder(newOrder._id)}
                             >
-                              Accept
+                              <i class="bx bx-check-circle"></i>
+                            </button>
+                            <button
+                              type="button"
+                              className="mx-2  btn-custom text-primary"
+                              onClick={() => handleAcceptOrder(newOrder._id)}
+                            >
+                              <i class="bx bx-chat"></i>
                             </button>
                           </td>
                         </tr>
@@ -177,7 +184,7 @@ const Order = () => {
                   <table className="table align-middle mb-0 bg-white">
                     <thead className="bg-light">
                       <tr>
-                      <th>Order ID</th>
+                        <th>Order ID</th>
                         <th>Service Date & Time</th>
                         <th>Status</th>
                         <th>Total Price</th>
@@ -213,12 +220,11 @@ const Order = () => {
                           <td>
                             <button
                               type="button"
-                              className="btn btn-link btn-sm btn-rounded mx-2"
+                              className="mx-2 btn-custom text-warning"
                               onClick={() => handleTrackOrder(assignedOrder)}
                             >
-                              View More
+                              <i class="bx bxs-chevron-down-square"></i>
                             </button>
-                            {/* ... (additional buttons or actions for assigned orders) */}
                           </td>
                         </tr>
                       ))}
@@ -234,7 +240,7 @@ const Order = () => {
                   <table className="table align-middle mb-0 bg-white">
                     <thead className="bg-light">
                       <tr>
-                      <th>Order ID</th>
+                        <th>Order ID</th>
                         <th>Service Date & Time</th>
                         <th>Status</th>
                         <th>Total Price</th>
@@ -270,10 +276,10 @@ const Order = () => {
                           <td>
                             <button
                               type="button"
-                              className="btn btn-link btn-sm btn-rounded mx-2"
+                              className="mx-2 btn-custom text-warning"
                               onClick={() => handleTrackOrder(completedOrder)}
                             >
-                              View More
+                              <i class="bx bxs-chevron-down-square"></i>
                             </button>
                           </td>
                         </tr>

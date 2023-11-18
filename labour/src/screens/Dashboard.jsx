@@ -12,6 +12,7 @@ import {
   LineElement,
 } from "chart.js";
 import { useSelector } from "react-redux";
+import LoadingScreen from "../components/LoadingScreen";
 
 Chart.register(
   LineController,
@@ -65,7 +66,7 @@ const Dashboard = () => {
 
   // If still loading, you can return a loading indicator
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingScreen/>;
   }
 
   // Assuming that orders is an array
@@ -127,10 +128,9 @@ const Dashboard = () => {
         <Sidebar />
         {/* Navbar */}
         <Navbar />
-        {/* Navbar */}
       </header>
       {/*Main layout*/}
-      <main style={{ marginTop: "58px" }}>
+      <main className="main-content">
         <div className="container">
           <div class="row">
             <div class="col-md-3">
@@ -166,16 +166,16 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="row pt-5">
-            <div className="col-md-8">
+            <div className="col-md-8 shadow-lg bg-white p-3 rounded">
               <h2>Orders</h2>
               <Line data={data} options={options} />
             </div>
             <div className="col-md-4">
-              <div class="card">
+              <div class="card shadow-lg bg-white p-3 rounded">
                 <div class="card-header">
                   <strong>Incoming Orders</strong>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0">
                   <table className="table align-middle mb-0 bg-white">
                     <tbody>
                       {newOrders?.map((newOrder) => (
@@ -194,10 +194,10 @@ const Dashboard = () => {
 
                           <td>
                             <a
-                              className="btn btn-link btn-sm btn-rounded mx-2"
+                              className="btn-custom text-warning mx-2"
                               href="/orders"
                             >
-                              View More
+                              <i class="bx bxs-chevron-down-square"></i>
                             </a>
                           </td>
                         </tr>
