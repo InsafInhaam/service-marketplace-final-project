@@ -134,15 +134,15 @@ const Sidebar = () => {
                 <span className="line" />
               </div>
               <li className="item">
-                <a href="/calendar" className="link flex">
+                <a href="/review" className="link flex">
                   <i className="bx bx-flag" />
                   <span>Reviews and Ratings</span>
                 </a>
               </li>
               <li className="item">
-                <a href="#" className="link flex">
+                <a href="/complain" className="link flex">
                   <i className="bx bx-award" />
-                  <span>Award</span>
+                  <span>Complain</span>
                 </a>
               </li>
               <li className="item">
@@ -161,7 +161,9 @@ const Sidebar = () => {
               />
             </span>
             <div className="data_text">
-              <span className="name">{user.firstname + " " + user.lastname}</span>
+              <span className="name">
+                {user.firstname + " " + user.lastname}
+              </span>
               <br />
               <span className="email">{user.email}</span>
             </div>

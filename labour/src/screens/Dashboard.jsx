@@ -132,36 +132,36 @@ const Dashboard = () => {
       {/*Main layout*/}
       <main className="main-content">
         <div className="container">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="card-counter primary">
-                <i class="fa fa-code-fork"></i>
-                <span class="count-numbers">12</span>
-                <span class="count-name">Flowz</span>
+          <div className="row">
+            <div className="col-md-3">
+              <div className="card-counter primary">
+                <i className="fa fa-code-fork"></i>
+                <span className="count-numbers">12</span>
+                <span className="count-name">Flowz</span>
               </div>
             </div>
 
-            <div class="col-md-3">
-              <div class="card-counter danger">
-                <i class="fa fa-ticket"></i>
-                <span class="count-numbers">599</span>
-                <span class="count-name">Instances</span>
+            <div className="col-md-3">
+              <div className="card-counter danger">
+                <i className="fa fa-ticket"></i>
+                <span className="count-numbers">599</span>
+                <span className="count-name">Instances</span>
               </div>
             </div>
 
-            <div class="col-md-3">
-              <div class="card-counter success">
-                <i class="fa fa-database"></i>
-                <span class="count-numbers">6875</span>
-                <span class="count-name">Data</span>
+            <div className="col-md-3">
+              <div className="card-counter success">
+                <i className="fa fa-database"></i>
+                <span className="count-numbers">6875</span>
+                <span className="count-name">Data</span>
               </div>
             </div>
 
-            <div class="col-md-3">
-              <div class="card-counter info">
-                <i class="fa fa-users"></i>
-                <span class="count-numbers">35</span>
-                <span class="count-name">Users</span>
+            <div className="col-md-3">
+              <div className="card-counter info">
+                <i className="fa fa-users"></i>
+                <span className="count-numbers">35</span>
+                <span className="count-name">Users</span>
               </div>
             </div>
           </div>
@@ -171,11 +171,11 @@ const Dashboard = () => {
               <Line data={data} options={options} />
             </div>
             <div className="col-md-4">
-              <div class="card shadow-lg bg-white p-3 rounded">
-                <div class="card-header">
+              <div className="card shadow-lg bg-white p-3 rounded">
+                <div className="card-header">
                   <strong>Incoming Orders</strong>
                 </div>
-                <div class="card-body p-0">
+                <div className="card-body p-0">
                   <table className="table align-middle mb-0 bg-white">
                     <tbody>
                       {newOrders?.map((newOrder) => (
@@ -197,7 +197,7 @@ const Dashboard = () => {
                               className="btn-custom text-warning mx-2"
                               href="/orders"
                             >
-                              <i class="bx bxs-chevron-down-square"></i>
+                              <i className="bx bxs-chevron-down-square"></i>
                             </a>
                           </td>
                         </tr>

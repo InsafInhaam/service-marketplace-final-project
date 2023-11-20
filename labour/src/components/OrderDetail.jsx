@@ -16,7 +16,7 @@ const OrderDetail = ({ onClose, selectedOrder }) => {
               aria-label="Close"
               onClick={onClose}
             >
-             <i class='bx bx-window-close' ></i>
+             <i className='bx bx-window-close' ></i>
             </button>
           </div>
           <div className="modal-body">

@@ -8,8 +8,17 @@ const ComplainSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    orderId: { type: ObjectId, ref: "Order", required: true },
+    orderId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Order",
+      required: true,
+    },
     reason: { type: String, required: true },
+    laborerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Labour",
+      required: true,
+    },
   },
   {
     timestamps: true,

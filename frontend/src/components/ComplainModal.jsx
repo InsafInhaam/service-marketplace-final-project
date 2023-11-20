@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const ComplainModal = ({ userId, orderId, onClose }) => {
+const ComplainModal = ({ userId, orderId, onClose , laborerId}) => {
   const [reason, setReason] = useState("");
 
   const handleComplain = async () => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/complain/complainOrder/${userId}/${orderId}`,
-        { reason }
+        { reason , laborerId }
       );
 
       const updatedOrder = response.data;

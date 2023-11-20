@@ -3,6 +3,7 @@ const router = express.Router();
 const Order = require("../models/Order");
 const Labour = require("../models/Labour");
 const { authenticateTokenLabour } = require("../middleware/requireLogin");
+const Notification = require("../models/Notification");
 
 router.post("/add-order", async (req, res) => {
   try {
@@ -48,12 +49,14 @@ router.post("/add-order", async (req, res) => {
 // Get all orders
 router.get("/orders", async (req, res) => {
   try {
-    const orders = await Order.find().populate({
-      path: "userId",
-    }).populate({
-      path: "cartItems.itemId",
-      model: "Service",
-    });
+    const orders = await Order.find()
+      .populate({
+        path: "userId",
+      })
+      .populate({
+        path: "cartItems.itemId",
+        model: "Service",
+      });
 
     res.status(200).json(orders);
   } catch (error) {
@@ -257,13 +260,37 @@ router.put("/accept/:orderId", authenticateTokenLabour, async (req, res) => {
       orderId,
       { status: "assigned_to_labourer", labourer: req.user._id }, // Assuming req.user._id contains the labourer's ID
       { new: true }
-    );
+    ).populate("userId");
 
     if (!updatedOrder) {
       return res
         .status(404)
         .json({ success: false, message: "Order not found" });
     }
+
+    console.log(updatedOrder);
+
+    console.log(updatedOrder.userId._id.toString());
+
+    const addNotification = async (type, content, orderId, userId) => {
+      try {
+        await Notification.create({
+          type,
+          content,
+          order: orderId,
+          user: userId,
+        });
+      } catch (error) {
+        console.error("Error adding notification:", error);
+      }
+    };
+
+    addNotification(
+      "order_status",
+      "Your order has been accepted",
+      orderId,
+      updatedOrder.userId._id.toString()
+    );
 
     res.status(200).json({ success: true, updatedOrder });
   } catch (error) {
@@ -346,6 +373,10 @@ router.get("/in-progress/:labourerId", async (req, res) => {
       .populate({
         path: "cartItems.itemId",
         model: "Service",
+      })
+      .populate({
+        path: "labourer",
+        model: "Labour", // Reference to the Labour model
       });
 
     res.status(200).json({ success: true, orders: ordersInProgress });

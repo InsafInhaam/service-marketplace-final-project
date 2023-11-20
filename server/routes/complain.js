@@ -46,6 +46,7 @@ const complainController = require('../controllers/complainController');
 router.post('/complainOrder/:userId/:orderId', complainController.complainOrder);
 router.get('/complaints/:orderId', complainController.fetchComplaints);
 router.get('/complaints/', complainController.fetchAllComplaints);
+router.get('/complaints/byLabour/:labourId', complainController.fetchComplaintsByLabour);
 
 module.exports = router;
 

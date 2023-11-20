@@ -32,73 +32,79 @@ const Navbar = () => {
 
             <div className="extra-nav header-2-nav d-flex align-items-center justify-content-center">
               {/* <div className="extra-cell"> */}
-                <Link
-                  className="mx-3"
-                  to="/search"
-                  style={{ fontSize: "20px" }}
-                >
-                  <i className="fa-solid fa-search"></i>
-                </Link>
-                <Link
-                  className="mx-3 d-flex align-items-center justify-content-center"
-                  to="/cart"
-                  style={{ fontSize: "20px" }}
-                >
-                  <i className="fa-solid fa-cart-shopping m-1"></i>
-                  <span className="badge badge-light m-1">
-                    {cart.cartItems && cart.cartItems.length}
-                  </span>
-                </Link>
+              <Link className="mx-3" to="/search" style={{ fontSize: "20px" }}>
+                <i className="fa-solid fa-search"></i>
+              </Link>
+              <Link
+                className="mx-3 d-flex align-items-center justify-content-center"
+                to="/cart"
+                style={{ fontSize: "20px" }}
+              >
+                <i className="fa-solid fa-cart-shopping m-1"></i>
+                <span className="badge badge-light m-1">
+                  {cart.cartItems && cart.cartItems.length}
+                </span>
+              </Link>
 
-                {user ? (
-                  <div className="btn-group shadow-none mx-3">
-                    <button
-                      type="button"
-                      className="btn btn-primary dropdown-toggle dropdown-toggle-split navbar-profile-img-btn-dropdown"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <img
-                        src={user.image ? user.image : profileImg}
-                        alt={user.name}
-                        className="rounded-circle navbar-profile-img"
-                        loading="lazy"
-                      />
-                    </button>
-                    <ul className="dropdown-menu">
-                      <li>
-                        <Link className="dropdown-item" to="/profile">
-                          Profile
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" to="/order">
-                          Orders
-                        </Link>
-                      </li>
-                      <li>
-                        <hr className="dropdown-divider" />
-                      </li>
-                      <li>
-                        <Link
-                          className="dropdown-item"
-                          to="#"
-                          onClick={() => {
-                            localStorage.clear();
-                            dispatch({ type: "LOGOUT" });
-                            history("/login");
-                          }}
-                        >
-                          Logout
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                ) : (
-                  <Link className="site-button aon-btn-signup" to="/login">
-                    Login
-                  </Link>
-                )}
+              {user ? (
+                <div className="btn-group shadow-none mx-3">
+                  <button
+                    type="button"
+                    className="btn btn-primary dropdown-toggle dropdown-toggle-split navbar-profile-img-btn-dropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img
+                      src={user.image ? user.image : profileImg}
+                      alt={user.name}
+                      className="rounded-circle navbar-profile-img"
+                      loading="lazy"
+                    />
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link className="dropdown-item" to="/profile">
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/order">
+                        Orders
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/notification">
+                        Notification
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/Promotion">
+                        Promotion
+                      </Link>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
+                      <Link
+                        className="dropdown-item"
+                        to="#"
+                        onClick={() => {
+                          localStorage.clear();
+                          dispatch({ type: "LOGOUT" });
+                          history("/login");
+                        }}
+                      >
+                        Logout
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <Link className="site-button aon-btn-signup" to="/login">
+                  Login
+                </Link>
+              )}
               {/* </div> */}
             </div>
           </div>

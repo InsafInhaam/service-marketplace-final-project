@@ -16,6 +16,8 @@ import Dashboard from "./screens/Dashboard";
 import Order from "./screens/Order";
 import CalendarPage from "./screens/CalendarPage";
 import OrdersMap from "./screens/OrdersMap";
+import Complain from "./screens/Complain";
+import Review from "./screens/Review";
 
 const Routing = () => {
   const user = useSelector((state) => state.user.user);
@@ -43,6 +45,18 @@ const Routing = () => {
         exact
         path="/trackingorder"
         element={user ? <OrdersMap /> : <Navigate to="/login" />}
+      />
+
+      <Route
+        exact
+        path="/complain"
+        element={user ? <Complain /> : <Navigate to="/login" />}
+      />
+
+      <Route
+        exact
+        path="/review"
+        element={user ? <Review /> : <Navigate to="/login" />}
       />
 
       <Route exact path="/login" element={<Login />} />
@@ -75,7 +89,7 @@ function App() {
     };
 
     // Fetch updated user details every second
-    const intervalId = setInterval(fetchUpdatedUserDetails, 1000);
+    const intervalId = setInterval(fetchUpdatedUserDetails, 10000);
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);

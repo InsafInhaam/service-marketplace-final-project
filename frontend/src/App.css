@@ -378,8 +378,8 @@ ul.search-results {
   position: relative;
 }
 
-.gallery-image::after{
-  content: '';
+.gallery-image::after {
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -392,8 +392,6 @@ ul.search-results {
   width: 100%;
   object-fit: cover;
 }
-
-/* https://freefrontend.com/css-hover-effects/ */
 
 /* chat */
 
@@ -422,7 +420,6 @@ ul.search-results {
   z-index: 9999;
 }
 
-
 .chat-app-close-icon {
   margin-top: 20px;
   font-size: 20px;
@@ -447,10 +444,14 @@ ul.search-results {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity by changing the last value (0.5) */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Adjust the opacity by changing the last value (0.5) */
   z-index: 999; /* Ensure it's above other elements */
 }
-
 
 /* faq */
 .section_padding_130 {
@@ -514,7 +515,7 @@ ul.search-results {
 
 @media only screen and (max-width: 575px) {
   .support-button p {
-      font-size: 14px;
+    font-size: 14px;
   }
 }
 
@@ -524,7 +525,7 @@ ul.search-results {
 }
 @media only screen and (max-width: 575px) {
   .support-button i {
-      font-size: 1rem;
+    font-size: 1rem;
   }
 }
 
@@ -534,6 +535,54 @@ ul.search-results {
 }
 @media only screen and (max-width: 575px) {
   .support-button a {
-      font-size: 13px;
+    font-size: 13px;
   }
+}
+
+/* notification page */
+.notification-ui_dd-content {
+  margin-bottom: 30px;
+}
+
+.notification-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 7px;
+  background: #fff;
+  -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.notification-list--unread {
+  border-left: 2px solid #29b6f6;
+}
+
+.notification-list .notification-list_content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.notification-list .notification-list_content .notification-list_img img {
+  height: 48px;
+  width: 48px;
+  border-radius: 50px;
+  margin-right: 20px;
+}
+
+.notification-list .notification-list_content .notification-list_detail p {
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+.notification-list .notification-list_feature-img img {
+  height: 48px;
+  width: 48px;
+  border-radius: 5px;
+  margin-left: 20px;
 }

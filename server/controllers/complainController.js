@@ -2,7 +2,7 @@ const Complain = require("../models/Complain");
 
 const complainOrder = async (req, res) => {
   try {
-    const { reason } = req.body;
+    const { reason, laborerId } = req.body;
     const { userId, orderId } = req.params;
 
     // You might want to add validation for the reason
@@ -11,6 +11,7 @@ const complainOrder = async (req, res) => {
       userId,
       orderId,
       reason,
+      laborerId,
     });
 
     await complain.save();
@@ -38,10 +39,25 @@ const fetchAllComplaints = async (req, res) => {
   try {
     const complaints = await Complain.find().populate({
       path: "userId",
-    });;
+    });
     res.json(complaints);
   } catch (error) {
     // console.error('Error fetching complaints:', error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const fetchComplaintsByLabour = async (req, res) => {
+  const laborerId = req.params.labourId;
+
+  try {
+    const complaints = await Complain.find({ laborerId }).populate({
+      path: "userId",
+    });
+
+    res.json(complaints);
+  } catch (error) {
+    console.error('Error fetching complaints by labour ID:', error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -50,4 +66,5 @@ module.exports = {
   complainOrder,
   fetchComplaints,
   fetchAllComplaints,
+  fetchComplaintsByLabour
 };

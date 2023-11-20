@@ -74,12 +74,12 @@ const Wallet = () => {
     
   return (
     <>
-      <div class="wallet mb-5">
-        <div class="card">
-          <div class="card-header">Wallet Balance</div>
-          <div class="card-body">
+      <div className="wallet mb-5">
+        <div className="card">
+          <div className="card-header">Wallet Balance</div>
+          <div className="card-body">
             <h5 className="card-title">Current Balance: ${balance}</h5>
-            <p class="card-text">
+            <p className="card-text">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
               varius lectus nec metus rhoncus, id aliquet ex consectetur.
             </p>

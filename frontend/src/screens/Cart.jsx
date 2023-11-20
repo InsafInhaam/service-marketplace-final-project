@@ -358,12 +358,12 @@ const Cart = () => {
                                   }
                                 />
                               </div>
-                              <div class="row">
-                                <div class="col-md-6 mb-3">
+                              <div className="row">
+                                <div className="col-md-6 mb-3">
                                   <label for="house-no">House No</label>
                                   <input
                                     type="text"
-                                    class="form-control"
+                                    className="form-control"
                                     id="house-no"
                                     placeholder="House No"
                                     value={houseNo}
@@ -371,11 +371,11 @@ const Cart = () => {
                                     required=""
                                   />
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div className="col-md-6 mb-3">
                                   <label for="zip-code">Zip Code</label>
                                   <input
                                     type="text"
-                                    class="form-control"
+                                    className="form-control"
                                     id="zip-code"
                                     placeholder="Zip Code"
                                     value={zipCode}

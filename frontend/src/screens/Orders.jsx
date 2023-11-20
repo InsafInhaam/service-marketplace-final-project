@@ -175,6 +175,11 @@ const Orders = () => {
                                 >
                                   Assigned Worker
                                 </button>
+                              </>
+                            )}
+                            {(order.status === "assigned_to_labourer" ||
+                              order.status === "in_progress") && (
+                              <>
                                 <br />
                                 <button
                                   className="btn btn-outline-primary mt-2 w-100"
@@ -252,6 +257,7 @@ const Orders = () => {
             userId={user._id}
             orderId={selectedOrder._id}
             onClose={() => setShowComplainModal(false)}
+            laborerId={selectedOrder.labourer._id}
           />
         )}
 

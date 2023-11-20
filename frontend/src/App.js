@@ -25,6 +25,8 @@ import { useEffect, useState } from "react";
 import { logout, updateUser } from "./redux/slice/userActions";
 import Orders from "./screens/Orders";
 import LabourerRegistration from "./unused/LabourerRegistration";
+import Notification from "./screens/Notification";
+import Promotion from "./screens/Promotion";
 // import jwt from 'jsonwebtoken';
 
 const Routing = () => {
@@ -105,9 +107,21 @@ const Routing = () => {
 
       <Route
         exact
+        path="/notification"
+        element={user ? <Notification /> : <Navigate to="/login" />}
+      />
+
+      <Route
+        exact
+        path="/promotion"
+        element={user ? <Promotion /> : <Navigate to="/login" />}
+      />
+
+      {/* <Route
+        exact
         path="/LabourerRegistration"
         element={<LabourerRegistration />}
-      />
+      /> */}
 
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
@@ -153,7 +167,7 @@ function App() {
     };
 
     // Fetch updated user details every second
-    const intervalId = setInterval(fetchUpdatedUserDetails, 1000);
+    const intervalId = setInterval(fetchUpdatedUserDetails, 10000);
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);

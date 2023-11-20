@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import OrderDetail from "../components/OrderDetail";
 import toast from "react-hot-toast";
+import Chat from "../components/Chat";
 
 const Order = () => {
   const user = useSelector((state) => state.user.user);
@@ -14,6 +15,8 @@ const Order = () => {
   const [completedOrders, setCompletedOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showSelectedOrderModal, setShowSelectedOrderModal] = useState(false);
+  const [showLabourMessageModal, setShowLabourMessageModal] = useState(false);
+  const [selectedLabourMessage, setSelectedLabourMessage] = useState(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -45,24 +48,6 @@ const Order = () => {
 
     fetchOrders();
   }, [user._id, newOrders, assignedOrders, completedOrders]);
-
-  // useEffect(() => {
-  //   const fetchServices = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `${process.env.REACT_APP_API_URL}/api/orders/eligible-orders/${user._id}`
-  //       );
-  //       const result = await response.json();
-  //       setNewOrders(result.eligibleOrders);
-  //     } catch (error) {
-  //       console.error("Error fetching services:", error);
-  //     }
-  //   };
-
-  //   fetchServices();
-  // }, [newOrders, user._id]);
-
-  // console.log(newOrders);
 
   const ordersToRender = Array.isArray(newOrders) ? newOrders : [];
 
@@ -98,6 +83,17 @@ const Order = () => {
     }
   };
 
+  const handleLabourMessage = (order) => {
+    setSelectedLabourMessage(order);
+    setShowLabourMessageModal(true);
+    console.log(order);
+  };
+
+  const handleCloseLabourMessage = () => {
+    setSelectedLabourMessage(null);
+    setShowLabourMessageModal(false);
+  };
+
   return (
     <>
       <div>
@@ -109,10 +105,10 @@ const Order = () => {
         </header>
         <main className="main-content">
           <div className="container pt-4">
-            <div class="mb-5">
-              <div class="card">
-                <div class="card-header">New Orders</div>
-                <div class="card-body">
+            <div className="mb-5">
+              <div className="card">
+                <div className="card-header">New Orders</div>
+                <div className="card-body">
                   <table className="table align-middle mb-0 bg-white">
                     <thead className="bg-light">
                       <tr>
@@ -153,21 +149,14 @@ const Order = () => {
                               className="mx-2 btn-custom text-warning"
                               onClick={() => handleTrackOrder(newOrder)}
                             >
-                              <i class="bx bxs-chevron-down-square"></i>
+                              <i className="bx bxs-chevron-down-square"></i>
                             </button>
                             <button
                               type="button"
                               className="mx-2 btn-custom text-success"
                               onClick={() => handleAcceptOrder(newOrder._id)}
                             >
-                              <i class="bx bx-check-circle"></i>
-                            </button>
-                            <button
-                              type="button"
-                              className="mx-2  btn-custom text-primary"
-                              onClick={() => handleAcceptOrder(newOrder._id)}
-                            >
-                              <i class="bx bx-chat"></i>
+                              <i className="bx bx-check-circle"></i>
                             </button>
                           </td>
                         </tr>
@@ -177,10 +166,10 @@ const Order = () => {
                 </div>
               </div>
             </div>
-            <div class="mb-5">
-              <div class="card">
-                <div class="card-header">Accept Orders</div>
-                <div class="card-body">
+            <div className="mb-5">
+              <div className="card">
+                <div className="card-header">Accept Orders</div>
+                <div className="card-body">
                   <table className="table align-middle mb-0 bg-white">
                     <thead className="bg-light">
                       <tr>
@@ -223,7 +212,14 @@ const Order = () => {
                               className="mx-2 btn-custom text-warning"
                               onClick={() => handleTrackOrder(assignedOrder)}
                             >
-                              <i class="bx bxs-chevron-down-square"></i>
+                              <i className="bx bxs-chevron-down-square"></i>
+                            </button>
+                            <button
+                              type="button"
+                              className="mx-2  btn-custom text-primary"
+                              onClick={() => handleLabourMessage(assignedOrder)}
+                            >
+                              <i className="bx bx-chat"></i>
                             </button>
                           </td>
                         </tr>
@@ -233,10 +229,10 @@ const Order = () => {
                 </div>
               </div>
             </div>
-            <div class="mb-5">
-              <div class="card">
-                <div class="card-header">Complete Orders</div>
-                <div class="card-body">
+            <div className="mb-5">
+              <div className="card">
+                <div className="card-header">Complete Orders</div>
+                <div className="card-body">
                   <table className="table align-middle mb-0 bg-white">
                     <thead className="bg-light">
                       <tr>
@@ -279,7 +275,7 @@ const Order = () => {
                               className="mx-2 btn-custom text-warning"
                               onClick={() => handleTrackOrder(completedOrder)}
                             >
-                              <i class="bx bxs-chevron-down-square"></i>
+                              <i className="bx bxs-chevron-down-square"></i>
                             </button>
                           </td>
                         </tr>
@@ -297,6 +293,18 @@ const Order = () => {
           onClose={() => setSelectedOrder(null)}
           selectedOrder={selectedOrder}
         />
+      )}
+
+      {showLabourMessageModal && (
+        <>
+          <div className="chat-overlay"></div>
+          <Chat
+            user={user}
+            recipient={selectedLabourMessage}
+            orderId={selectedLabourMessage._id}
+            onClose={handleCloseLabourMessage}
+          />
+        </>
       )}
     </>
   );
