@@ -19,6 +19,7 @@ import Promo from "./screens/Promo";
 import Complain from "./screens/Complain";
 import Reviews from "./screens/Reviews";
 import Order from "./screens/Order";
+import Contact from "./screens/Contact";
 
 // Define the initial state
 const initialState = {
@@ -98,6 +99,12 @@ const Routing = () => {
         exact
         path="/orders"
         element={user ? <Order /> : <Navigate to="/login" />}
+      />
+
+      <Route
+        exact
+        path="/contact"
+        element={user ? <Contact /> : <Navigate to="/login" />}
       />
       <Route exact path="/login" element={<Login />} />
     </Routes>

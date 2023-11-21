@@ -10,7 +10,6 @@ const reviewSchema = new mongoose.Schema(
     laborerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Labour",
-      type: String,
       required: true,
     },
     orderId: {

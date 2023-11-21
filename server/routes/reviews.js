@@ -118,5 +118,7 @@ const reviewController = require('../controllers/reviewController');
 router.post("/reviewOrder/:userId/:orderId", reviewController.reviewOrder);
 router.get('/reviews/:orderId', reviewController.fetchReviewsForOrder);
 router.get('/reviews/', reviewController.fetchAllReviews);
+router.get('/reviewsByLabour/:labourId', reviewController.fetchReviewsByLabour);
+router.get('/count/:laborerId', reviewController.getReviewCountByLabourId);
 
 module.exports = router;

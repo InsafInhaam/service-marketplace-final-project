@@ -28,6 +28,10 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [newOrders, setNewOrders] = useState([]);
 
+  const [reviewCount, setReviewCount] = useState(0);
+  const [complaintCount, setComplaintCount] = useState(0);
+  const [completedOrderCount, setCompletedOrderCount] = useState(0);
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -64,9 +68,37 @@ const Dashboard = () => {
     fetchOrders();
   }, [orders]);
 
+  useEffect(() => {
+    const fetchLabourStats = async () => {
+      try {
+        const reviewResponse = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/reviews/count/${labourer._id}`
+        );
+        const reviewData = await reviewResponse.json();
+        setReviewCount(reviewData.reviewCount);
+
+        const complaintResponse = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/complain/count/${labourer._id}`
+        );
+        const complaintData = await complaintResponse.json();
+        setComplaintCount(complaintData.complaintCount);
+
+        const completedOrderResponse = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/orders/completed/count/${labourer._id}`
+        );
+        const completedOrderData = await completedOrderResponse.json();
+        setCompletedOrderCount(completedOrderData.completedOrderCount);
+      } catch (error) {
+        console.error("Error fetching labour stats:", error);
+      }
+    };
+
+    fetchLabourStats();
+  }, [labourer._id]);
+
   // If still loading, you can return a loading indicator
   if (loading) {
-    return <LoadingScreen/>;
+    return <LoadingScreen />;
   }
 
   // Assuming that orders is an array
@@ -75,7 +107,7 @@ const Dashboard = () => {
         new Date(order.createdAt).toLocaleDateString()
       )
     : [];
-    
+
   const orderTotalPrices = Array.isArray(orders.orders)
     ? orders.orders.map((order) => order.totalPrice)
     : [];
@@ -118,7 +150,6 @@ const Dashboard = () => {
       },
     },
   };
-
   // console.log(newOrders[1].cartItems[0].itemId.name);
 
   return (
@@ -136,24 +167,24 @@ const Dashboard = () => {
             <div className="col-md-3">
               <div className="card-counter primary">
                 <i className="fa fa-code-fork"></i>
-                <span className="count-numbers">12</span>
-                <span className="count-name">Flowz</span>
+                <span className="count-numbers">{reviewCount}</span>
+                <span className="count-name">Review</span>
               </div>
             </div>
 
             <div className="col-md-3">
               <div className="card-counter danger">
                 <i className="fa fa-ticket"></i>
-                <span className="count-numbers">599</span>
-                <span className="count-name">Instances</span>
+                <span className="count-numbers">{complaintCount}</span>
+                <span className="count-name">Complaint</span>
               </div>
             </div>
 
             <div className="col-md-3">
               <div className="card-counter success">
                 <i className="fa fa-database"></i>
-                <span className="count-numbers">6875</span>
-                <span className="count-name">Data</span>
+                <span className="count-numbers">{completedOrderCount}</span>
+                <span className="count-name">Completed Order</span>
               </div>
             </div>
 

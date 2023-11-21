@@ -245,8 +245,7 @@ const Orders = () => {
           <ReviewModal
             userId={user._id}
             orderId={selectedOrder._id}
-            // labourerId={selectedOrder.labourer}
-            labourerId={`466437hw7hwew8832`} // once labour is complete pass his id
+            labourerId={selectedOrder.labourer._id}
             onClose={() => setShowReviewModal(false)}
           />
         )}

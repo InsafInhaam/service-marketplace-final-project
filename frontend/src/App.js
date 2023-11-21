@@ -27,6 +27,7 @@ import Orders from "./screens/Orders";
 import LabourerRegistration from "./unused/LabourerRegistration";
 import Notification from "./screens/Notification";
 import Promotion from "./screens/Promotion";
+import ContactForm from "./screens/ContactForm";
 // import jwt from 'jsonwebtoken';
 
 const Routing = () => {
@@ -122,7 +123,7 @@ const Routing = () => {
         path="/LabourerRegistration"
         element={<LabourerRegistration />}
       /> */}
-
+      <Route exact path="/contact" element={<ContactForm />} />
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
       <Route exact path="/forgot-password" element={<ForgetPassword />} />

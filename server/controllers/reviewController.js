@@ -45,9 +45,37 @@ const fetchAllReviews = async (req, res) => {
   }
 };
 
+const fetchReviewsByLabour = async (req, res) => {
+  const labourId = req.params.labourId;
+
+  try {
+    const reviews = await Review.find({ laborerId: labourId }).populate({
+      path: "customerId",
+    });
+
+    res.json(reviews);
+  } catch (error) {
+    console.error('Error fetching reviews by labour ID:', error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const getReviewCountByLabourId = async (req, res) => {
+  const { laborerId } = req.params;
+
+  try {
+    const reviewCount = await Review.countDocuments({ laborerId });
+    res.json({ reviewCount });
+  } catch (error) {
+    console.error('Error fetching review count:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 module.exports = {
   reviewOrder,
   fetchReviewsForOrder,
-  fetchAllReviews
+  fetchAllReviews,
+  fetchReviewsByLabour,
+  getReviewCountByLabourId
 };

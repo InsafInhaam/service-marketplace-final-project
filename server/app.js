@@ -29,6 +29,7 @@ app.use("/api/orders", require("./routes/orderRoute"));
 app.use("/api/wallet", require("./routes/wallet"));
 app.use("/api/message", require("./routes/messages"));
 app.use("/api/notification", require("./routes/notification"));
+app.use("/api/contact", require("./routes/contactRoutes"));
 
 app.listen(PORT, () => {
   console.log("listening on port", PORT);

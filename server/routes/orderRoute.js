@@ -4,6 +4,7 @@ const Order = require("../models/Order");
 const Labour = require("../models/Labour");
 const { authenticateTokenLabour } = require("../middleware/requireLogin");
 const Notification = require("../models/Notification");
+const Admin = require("../models/Admin");
 
 router.post("/add-order", async (req, res) => {
   try {
@@ -478,6 +479,71 @@ router.get("/getByLabourId/:labourerId", async (req, res) => {
     res.status(200).json({ success: true, orders });
   } catch (error) {
     console.error("Error fetching orders:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.patch("/completeOrder/:orderId", async (req, res) => {
+  const orderId = req.params.orderId;
+
+  try {
+    // Find the order by orderId and update the status to "completed"
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { $set: { status: "completed" } },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    // Update labourer's wallet
+    const labourer = updatedOrder.labourer;
+    const labourerEarnings = calculateLabourerEarnings(updatedOrder.totalPrice);
+    labourer.wallet += labourerEarnings;
+    await labourer.save();
+
+    // Update admin's wallet (20% of the total order amount)
+    const adminEarnings = calculateAdminEarnings(updatedOrder.totalPrice);
+    const admin = await Admin.findOne(); // Assuming there is only one admin
+    admin.wallet += adminEarnings;
+    await admin.save();
+
+    // Record transaction history
+    const transactionData = {
+      labourer: labourer._id,
+      admin: admin._id,
+      order: orderId,
+      amount: labourerEarnings,
+    };
+    await TransactionHistory.create(transactionData);
+
+    res.json(updatedOrder);
+
+  } catch (error) {
+    console.error("Error completing order:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Helper function to calculate labourer earnings (80% of the total order amount)
+const calculateLabourerEarnings = (totalAmount) => (totalAmount * 0.8);
+
+// Helper function to calculate admin earnings (20% of the total order amount)
+const calculateAdminEarnings = (totalAmount) => (totalAmount * 0.2);
+
+router.get("/completed/count/:labourerId", async (req, res) => {
+  const { labourerId } = req.params;
+
+  try {
+    const completedOrderCount = await Order.countDocuments({
+      labourer: labourerId,
+      status: "completed",
+    });
+    res.json({ completedOrderCount });
+  } catch (error) {
+    console.error("Error fetching completed order count:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

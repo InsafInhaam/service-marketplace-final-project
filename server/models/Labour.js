@@ -35,6 +35,10 @@ const LabourSchema = new mongoose.Schema(
     hourlyPrice: { type: String, required: true },
     description: { type: String },
     ApprovedStatus: { type: Boolean, default: false },
+    wallet: {
+      type: Number,
+      default: 0, // Initial wallet balance is 0
+    },
     // location: {
     //   type: {
     //     type: String, 

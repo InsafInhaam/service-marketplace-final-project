@@ -77,17 +77,16 @@ const createService = async (req, res) => {
 
 const updateService = async (req, res) => {
   try {
-    const { title, description, price, category, location, duration } =
-      req.body;
+    const { name, description, price, subcategory, hours, image } = req.body;
     const service = await Service.findByIdAndUpdate(
       req.params.id,
-      { title, description, price, category, location, duration },
+      { name, description, price, subcategory, hours, image },
       { new: true }
     );
     if (!service) {
       return res.status(404).json({ message: "Service not found" });
     }
-    res.json(service);
+    res.json({ message: "Service updated sucessfully", service });
   } catch (error) {
     // console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -96,13 +95,13 @@ const updateService = async (req, res) => {
 
 const deleteService = async (req, res) => {
   try {
-    const service = await Service.findByIdAndRemove(req.params.id);
+    const service = await Service.findByIdAndDelete(req.params.id);
     if (!service) {
       return res.status(404).json({ message: "Service not found" });
     }
     res.json({ message: "Service deleted successfully" });
   } catch (error) {
-    // console.error(error);
+    console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

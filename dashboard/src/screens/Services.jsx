@@ -7,15 +7,21 @@ import { toast } from "react-hot-toast";
 
 const Services = () => {
   const [services, setServices] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [hours, setHours] = useState("");
+  const [category, setCategory] = useState("");
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
   const [serviceImage, setServiceImage] = useState("");
-  const [showModal, setShowModal] = useState(false); // State to track the modal visibility
+  const [showModal, setShowModal] = useState(false);
+
+  const [editService, setEditService] = useState(null);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/api/services/allservices")
+    fetch(process.env.REACT_APP_API_URL + "/api/services/services")
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -23,21 +29,22 @@ const Services = () => {
       });
   }, [services]);
 
-  console.log(services);
+  // console.log(services);
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API_URL + "/api/subcategories/allsubcategories")
+      .then((res) => res.json())
+      .then((result) => {
+        setSubcategories(result);
+      });
+  }, []);
 
   const handleFormSubmit = () => {
-    if (!title || !description || !image) {
+    if (!title || !description || !price || !hours || !category || !image) {
       return toast.error("Please fill all required fields");
     }
     setLoading(true);
     handleImageUpload();
-
-    setShowModal(false);
-
-    // Reset the input fields and state variables once the form is submitted
-    setTitle("");
-    setDescription("");
-    setImage(null);
   };
 
   const toggleModal = () => {
@@ -47,14 +54,15 @@ const Services = () => {
   useEffect(() => {
     if (serviceImage) {
       let body = {
-        title,
-        description,
+        name: title,
+        description: description,
+        price: price,
+        hours: hours,
+        subcategory: category,
         image: serviceImage,
       };
 
-      console.log(body);
-
-      fetch(process.env.REACT_APP_API_URL + "/api/services/services", {
+      fetch(process.env.REACT_APP_API_URL + "/api/services/service", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,8 +76,13 @@ const Services = () => {
           } else {
             setLoading(false);
             toast.success(data.message);
-            console.log(data.message);
             toggleModal();
+            setTitle("");
+            setDescription("");
+            setPrice("");
+            setHours("");
+            setCategory("");
+            setImage("");
           }
         })
         .catch((err) => {
@@ -77,7 +90,6 @@ const Services = () => {
         });
     }
   }, [serviceImage]);
-
 
   const handleImageUpload = () => {
     if (image) {
@@ -99,21 +111,79 @@ const Services = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(
-      process.env.REACT_APP_API_URL + "/api/services/deleteService/" + id,
-      {
-        method: "DELETE",
-        // headers: {
-        //   Authorization: "Bearer " + localStorage.getItem("jwt"),
-        // },
-      }
-    )
+    fetch(process.env.REACT_APP_API_URL + `/api/services/services/${id}`, {
+      method: "DELETE",
+    })
       .then((res) => res.json())
       .then((result) => {
         toast.success(result.message);
+      })
+      .catch((error) => {
+        toast.error("Error deleting service");
+        console.log(error);
       });
   };
 
+  const handleEdit = (service) => {
+    setEditService(service);
+    setTitle(service.name);
+    setDescription(service.description);
+    setPrice(service.price);
+    setHours(service.hours);
+    setCategory(service.subcategory._id);
+    // Assuming you have an image field in the service object, update accordingly
+    setImage(service.image);
+    toggleModal();
+  };
+
+  const handleUpdate = () => {
+    if (!title || !description || !price || !hours || !category) {
+      return toast.error("Please fill all required fields");
+    }
+    setLoading(true);
+
+    // Assuming you have a separate API endpoint for updating services
+    fetch(
+      process.env.REACT_APP_API_URL +
+        `/api/services/services/${editService._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: title,
+          description: description,
+          price: price,
+          hours: hours,
+          subcategory: category,
+          // Assuming you have an image field in the service object, update accordingly
+          image: image,
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          toast.error(data.error);
+        } else {
+          setLoading(false);
+          toast.success(data.message);
+          toggleModal();
+          setEditService(null);
+          // Reset the input fields and state variables once the form is submitted
+          setTitle("");
+          setDescription("");
+          setPrice("");
+          setHours("");
+          setCategory("");
+          setImage("");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -152,7 +222,7 @@ const Services = () => {
                           <thead>
                             <tr>
                               <th>Image</th>
-                              <th>Title</th>
+                              <th>Name</th>
                               <th>Description</th>
                               <th>Category</th>
                               <th>Price</th>
@@ -167,14 +237,18 @@ const Services = () => {
                                 <td className="py-1">
                                   <img src={service.image} alt="image" />
                                 </td>
-                                <td>{service.title}</td>
+                                <td>{service.name}</td>
                                 <td>{service.description}</td>
+                                <td>{service.subcategory?.title}</td>
+                                <td>{service.price}</td>
+                                <td>{service.hours}</td>
                                 <td>
                                   <button
                                     type="button"
                                     className="btn btn-warning"
                                     data-toggle="modal"
                                     data-target="#exampleModal"
+                                    onClick={() => handleEdit(service)}
                                   >
                                     Edit
                                   </button>
@@ -205,10 +279,10 @@ const Services = () => {
           <div
             className={`modal fade ${showModal ? "show" : ""}`}
             id="exampleModal"
-            tabindex="-1"    
+            tabIndex="-1"
             role="dialog"
             aria-labelledby="exampleModalLabel"
-            aria-hidden={!showModal} // Hide the modal from screen readers when it's closed
+            aria-hidden={!showModal}
           >
             <div className="modal-dialog" role="document">
               <div className="modal-content">
@@ -221,6 +295,10 @@ const Services = () => {
                     className="close"
                     data-dismiss="modal"
                     aria-label="Close"
+                    onClick={() => {
+                      setLoading(false);
+                      toggleModal();
+                    }}
                   >
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -228,11 +306,11 @@ const Services = () => {
                 <div className="modal-body">
                   <form action="#" method="post">
                     <div className="form-group first">
-                      <label htmlFor="title">Title</label>
+                      <label htmlFor="title">Name</label>
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Enter ur title"
+                        placeholder="Enter service name"
                         id="title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
@@ -243,47 +321,54 @@ const Services = () => {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Enter ur description"
+                        placeholder="Enter service description"
                         id="description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                       />
                     </div>
                     <div className="form-group first">
-                      <label htmlFor="title">Title</label>
+                      <label htmlFor="price">Price</label>
                       <input
-                        type="text"
+                        type="number"
                         className="form-control"
-                        placeholder="Enter ur title"
-                        id="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        placeholder="Enter service price"
+                        id="price"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
                       />
                     </div>
                     <div className="form-group first">
-                      <label htmlFor="description">Description</label>
+                      <label htmlFor="hours">Hours</label>
                       <input
-                        type="text"
+                        type="number"
                         className="form-control"
-                        placeholder="Enter ur description"
-                        id="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="Enter service hours"
+                        id="hours"
+                        value={hours}
+                        onChange={(e) => setHours(e.target.value)}
                       />
                     </div>
                     <div className="form-group first">
-                      <label htmlFor="description">Description</label>
-                      <input
-                        type="text"
+                      <label htmlFor="category">Category</label>
+                      <select
                         className="form-control"
-                        placeholder="Enter ur description"
-                        id="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                      />
+                        id="category"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                      >
+                        <option value="" disabled>
+                          Select category
+                        </option>
+                        {subcategories.map((subcategory) => (
+                          <option key={subcategory._id} value={subcategory._id}>
+                            {subcategory.title}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="form-group last mb-3">
-                      <label htmlFor="password">Image</label>
+                      <label htmlFor="image">Image</label>
                       <input
                         className="form-control"
                         id="image"
@@ -298,15 +383,29 @@ const Services = () => {
                     type="button"
                     className="btn btn-secondary"
                     data-dismiss="modal"
+                    onClick={() => {
+                      setLoading(false);
+                      toggleModal();
+                      setEditService(null);
+                      // Reset the input fields and state variables once the modal is closed
+                      setTitle("");
+                      setDescription("");
+                      setPrice("");
+                      setHours("");
+                      setCategory("");
+                      setImage("");
+                    }}
                   >
                     Close
                   </button>
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={() => handleFormSubmit()}
+                    onClick={() =>
+                      editService ? handleUpdate() : handleFormSubmit()
+                    }
                   >
-                    {loading ? "Creating..." : "Save"}
+                    {loading ? "Updating..." : "Save"}
                   </button>
                 </div>
               </div>

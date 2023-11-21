@@ -62,9 +62,23 @@ const fetchComplaintsByLabour = async (req, res) => {
   }
 };
 
+const getComplaintCountByLabourId = async (req, res) => {
+  const { laborerId } = req.params;
+
+  try {
+    const complaintCount = await Complain.countDocuments({ laborerId });
+    res.json({ complaintCount });
+  } catch (error) {
+    console.error('Error fetching complaint count:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
 module.exports = {
   complainOrder,
   fetchComplaints,
   fetchAllComplaints,
-  fetchComplaintsByLabour
+  fetchComplaintsByLabour,
+  getComplaintCountByLabourId
 };

@@ -58,6 +58,11 @@ const orderSchema = new mongoose.Schema(
     },
     latitude: { type: Number, required: true }, //order plcaed user latitude
     longitude: { type: Number, required: true }, // order plcaed user longitude
+    paymentStatus: {
+      type: String,
+      enum: ["pending", "completed"],
+      default: "pending",
+    },
   },
   {
     timestamps: true,

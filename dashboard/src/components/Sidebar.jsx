@@ -130,6 +130,12 @@ const Sidebar = () => {
               <span className="menu-title">Admins</span>
             </a>
           </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/contact">
+              <i className="mdi mdi-account-circle menu-icon" />
+              <span className="menu-title">Contact <br /> Submission</span>
+            </a>
+          </li>
         </ul>
       </nav>
     </>

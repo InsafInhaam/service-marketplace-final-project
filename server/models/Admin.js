@@ -7,6 +7,10 @@ const adminSchema = new mongoose.Schema({
   phone: { type: String },
   address: { type: String },
   image: { type: String },
+  wallet: {
+    type: Number,
+    default: 0, // Initial wallet balance is 0
+  },
 }, {
   timestamps: true,
 });

@@ -7,20 +7,20 @@ import UserDetailsReviews from "./../components/UserDetailsReviews";
 const Review = () => {
   const user = useSelector((state) => state.user.user);
 
-  const [complains, setComplains] = useState([]);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     fetch(
       process.env.REACT_APP_API_URL +
-        "/api/complain/complaints/byLabour/" +
+        "/api/reviews/reviewsByLabour/" +
         user._id
     )
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
-        setComplains(result);
+        setReviews(result);
       });
-  }, [complains]);
+  }, [reviews]);
 
   return (
     <>
@@ -40,31 +40,33 @@ const Review = () => {
                   <table className="table align-middle mb-0 bg-white">
                     <thead className="bg-light">
                       <tr>
-                        <th>Complain Id</th>
+                        {/* <th>Review Id</th> */}
                         <th>Order Id</th>
                         <th>Order Person</th>
-                        <th>Complain Reason</th>
+                        <th>Rating Points</th>
+                        <th>Review</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {complains?.map((complain) => (
-                        <tr key={complain._id}>
-                          <td>
+                      {reviews?.map((review) => (
+                        <tr key={review._id}>
+                          {/* <td>
                             <div className="d-flex align-items-center">
                               <div className="">
-                                <p className="fw-bold mb-1">{complain._id}</p>
+                                <p className="fw-bold mb-1">{review.customerId._id}</p>
                               </div>
                             </div>
-                          </td>
+                          </td> */}
                           <td>
-                            <p className="fw-normal mb-1">{complain.orderId}</p>
+                            <p className="fw-normal mb-1">{review.orderId}</p>
                           </td>
                           <td>
                             <p className="text-muted mb-0">
-                              {complain.userId.name}
+                              {review.customerId.name}
                             </p>
                           </td>
-                          <td>{complain.reason}</td>
+                          <td>{review.rating}</td>
+                          <td>{review.review}</td>
                         </tr>
                       ))}
                     </tbody>

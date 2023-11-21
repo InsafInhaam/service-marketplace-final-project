@@ -94,6 +94,36 @@ const Order = () => {
     setShowLabourMessageModal(false);
   };
 
+  const handleCompleteOrder = async (order) => {
+    try {
+      const orderId = order._id;
+
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/orders/completeOrder/${orderId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("refreshToken"),
+          },
+        }
+      );
+
+      if (response.ok) {
+        const updatedOrder = await response.json();
+        // Show a success toast
+        toast.success("Order completed successfully!");
+        // You can update the UI or perform additional actions as needed
+      } else {
+        console.error("Failed to complete the order");
+        // Handle error or show a notification to the user
+      }
+    } catch (error) {
+      console.error("Error completing order:", error);
+      // Handle error or show a notification to the user
+    }
+  };
+
   return (
     <>
       <div>
@@ -220,6 +250,16 @@ const Order = () => {
                               onClick={() => handleLabourMessage(assignedOrder)}
                             >
                               <i className="bx bx-chat"></i>
+                            </button>
+
+                            <button
+                              type="button"
+                              className="mx-2 btn-custom text-warning"
+                              onClick={() =>
+                                handleCompleteOrder(assignedOrder)
+                              }
+                            >
+                              <i class="bx bx-check-double"></i>
                             </button>
                           </td>
                         </tr>

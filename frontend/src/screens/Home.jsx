@@ -385,7 +385,7 @@ const Home = () => {
                     >
                       <i className="lni-emoji-sad" />
                       <p className="mb-0 px-2">Can't find your answers?</p>
-                      <a href="#"> Contact us</a>
+                      <a href="/contact"> Contact us</a>
                     </div>
                   </div>
                 </div>
