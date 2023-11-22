@@ -5,7 +5,7 @@ const transactionHistorySchema = new mongoose.Schema(
   {
     labourer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Labourer",
+      ref: "Labour",
     },
     admin: {
       type: mongoose.Schema.Types.ObjectId,

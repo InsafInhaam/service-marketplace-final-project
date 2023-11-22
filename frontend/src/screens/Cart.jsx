@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CartItem from "../components/CartItem";
-import { getTotals } from "../redux/slice/cartSlice";
+import { clearCart, getTotals } from "../redux/slice/cartSlice";
 import ChangeLocation from "../components/ChangeLocation";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -167,6 +167,7 @@ const Cart = () => {
 
         if (responseOrder.ok) {
           toast.success(dataOrder.message);
+          dispatch(clearCart());
         } else {
           toast.error(dataOrder.message);
         }

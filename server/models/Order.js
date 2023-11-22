@@ -53,7 +53,7 @@ const orderSchema = new mongoose.Schema(
     },
     labourer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Labourer",
+      ref: "Labour",
       default: null,
     },
     latitude: { type: Number, required: true }, //order plcaed user latitude

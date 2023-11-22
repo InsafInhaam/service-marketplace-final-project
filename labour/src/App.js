@@ -18,6 +18,7 @@ import CalendarPage from "./screens/CalendarPage";
 import OrdersMap from "./screens/OrdersMap";
 import Complain from "./screens/Complain";
 import Review from "./screens/Review";
+import Earning from "./screens/Earning";
 
 const Routing = () => {
   const user = useSelector((state) => state.user.user);
@@ -57,6 +58,12 @@ const Routing = () => {
         exact
         path="/review"
         element={user ? <Review /> : <Navigate to="/login" />}
+      />
+
+      <Route
+        exact
+        path="/earning"
+        element={user ? <Earning /> : <Navigate to="/login" />}
       />
 
       <Route exact path="/login" element={<Login />} />

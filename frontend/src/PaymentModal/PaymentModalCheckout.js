@@ -1,6 +1,8 @@
 import React from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { clearCart } from "../redux/slice/cartSlice";
+import { useDispatch } from "react-redux";
 
 const PaymentModal = ({
   name,
@@ -50,9 +52,11 @@ const PaymentModal = ({
   };
 
   const history = useNavigate();
+  const dispatch = useDispatch();
 
   window.payhere.onCompleted = function onCompleted(orderId) {
     console.log("Payment completed. OrderID:" + orderId);
+    dispatch(clearCart());
     toast.success("Payment done successfully.");
     history("/cart");
     handleClose();

@@ -5,6 +5,7 @@ const Labour = require("../models/Labour");
 const { authenticateTokenLabour } = require("../middleware/requireLogin");
 const Notification = require("../models/Notification");
 const Admin = require("../models/Admin");
+const TransactionHistory = require("../models/TransactionHistory");
 
 router.post("/add-order", async (req, res) => {
   try {
@@ -269,9 +270,9 @@ router.put("/accept/:orderId", authenticateTokenLabour, async (req, res) => {
         .json({ success: false, message: "Order not found" });
     }
 
-    console.log(updatedOrder);
+    // console.log(updatedOrder);
 
-    console.log(updatedOrder.userId._id.toString());
+    // console.log(updatedOrder.userId._id.toString());
 
     const addNotification = async (type, content, orderId, userId) => {
       try {
@@ -348,6 +349,16 @@ router.put("/cancelOrder/:orderId", async (req, res) => {
     if (!updatedOrder) {
       return res.status(404).json({ error: "Order not found" });
     }
+
+    console.log(updatedOrder)
+
+    // Refund the amount to the user's wallet
+    // const user = updatedOrder.user;
+    // const refundedAmount = updatedOrder.totalPrice;
+
+    // // Add the refunded amount to user's points
+    // user.points += refundedAmount;
+    // await user.save();
 
     res
       .status(200)
@@ -492,17 +503,24 @@ router.patch("/completeOrder/:orderId", async (req, res) => {
       orderId,
       { $set: { status: "completed" } },
       { new: true }
-    );
+    )
+      .populate("labourer")
+      .populate("userId");
 
     if (!updatedOrder) {
       return res.status(404).json({ error: "Order not found" });
     }
 
+    // console.log(updatedOrder.labourer._id.toString());
+
     // Update labourer's wallet
-    const labourer = updatedOrder.labourer;
+    const labourId = updatedOrder.labourer._id.toString();
     const labourerEarnings = calculateLabourerEarnings(updatedOrder.totalPrice);
-    labourer.wallet += labourerEarnings;
-    await labourer.save();
+
+    await Labour.updateOne(
+      { _id: labourId },
+      { $inc: { wallet: labourerEarnings } }
+    );
 
     // Update admin's wallet (20% of the total order amount)
     const adminEarnings = calculateAdminEarnings(updatedOrder.totalPrice);
@@ -512,15 +530,35 @@ router.patch("/completeOrder/:orderId", async (req, res) => {
 
     // Record transaction history
     const transactionData = {
-      labourer: labourer._id,
+      labourer: labourId,
       admin: admin._id,
       order: orderId,
       amount: labourerEarnings,
     };
+
     await TransactionHistory.create(transactionData);
 
-    res.json(updatedOrder);
+    const addNotification = async (type, content, orderId, userId) => {
+      try {
+        await Notification.create({
+          type,
+          content,
+          order: orderId,
+          user: userId,
+        });
+      } catch (error) {
+        console.error("Error adding notification:", error);
+      }
+    };
 
+    addNotification(
+      "order_status",
+      "Your order has been Completed",
+      orderId,
+      updatedOrder.userId._id.toString()
+    );
+
+    res.json(updatedOrder);
   } catch (error) {
     console.error("Error completing order:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -528,10 +566,10 @@ router.patch("/completeOrder/:orderId", async (req, res) => {
 });
 
 // Helper function to calculate labourer earnings (80% of the total order amount)
-const calculateLabourerEarnings = (totalAmount) => (totalAmount * 0.8);
+const calculateLabourerEarnings = (totalAmount) => totalAmount * 0.8;
 
 // Helper function to calculate admin earnings (20% of the total order amount)
-const calculateAdminEarnings = (totalAmount) => (totalAmount * 0.2);
+const calculateAdminEarnings = (totalAmount) => totalAmount * 0.2;
 
 router.get("/completed/count/:labourerId", async (req, res) => {
   const { labourerId } = req.params;

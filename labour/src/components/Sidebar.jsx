@@ -93,13 +93,13 @@ const Sidebar = () => {
               </div>
               <li className="item">
                 <a href="/" className="link flex">
-                  <i className="bx bx-home-alt" />
+                  <i className="bx bx-line-chart"></i>
                   <span>Analytics and Reports</span>
                 </a>
               </li>
               <li className="item">
                 <a href="/orders" className="link flex">
-                  <i className="bx bx-grid-alt" />
+                  <i className="bx bx-shopping-bag" />
                   <span>Order Management</span>
                 </a>
               </li>
@@ -111,19 +111,19 @@ const Sidebar = () => {
               </div>
               <li className="item">
                 <a href="/calendar" className="link flex">
-                  <i className="bx bxs-magic-wand" />
+                  <i className="bx bx-calendar" />
                   <span>Schedule and Calendar</span>
                 </a>
               </li>
               <li className="item">
-                <a href="/calendar" className="link flex">
-                  <i className="bx bx-folder" />
+                <a href="/earning" className="link flex">
+                  <i className="bx bx-dollar"></i>
                   <span>Earnings</span>
                 </a>
               </li>
               <li className="item">
                 <a href="/trackingorder" className="link flex">
-                  <i className="bx bx-cloud-upload" />
+                  <i className="bx bx-map"></i>
                   <span>Location Tracking</span>
                 </a>
               </li>
@@ -141,7 +141,7 @@ const Sidebar = () => {
               </li>
               <li className="item">
                 <a href="/complain" className="link flex">
-                  <i className="bx bx-award" />
+                  <i className="bx bx-error-circle"></i>
                   <span>Complain</span>
                 </a>
               </li>

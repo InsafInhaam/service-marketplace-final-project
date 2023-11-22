@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import { useSelector } from "react-redux";
-import UserDetailsReviews from "./../components/UserDetailsReviews";
 
 const Review = () => {
   const user = useSelector((state) => state.user.user);

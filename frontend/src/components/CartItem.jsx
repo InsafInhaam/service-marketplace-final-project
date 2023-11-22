@@ -37,9 +37,9 @@ const CartItem = ({ cartItem }) => {
           <div className="d-flex flex-row align-items-center">
             <div>
               <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
+                src={cartItem?.image}
                 className="img-fluid rounded-3"
-                alt="Shopping item"
+                alt={cartItem?.name}
                 style={{ width: "65px" }}
               />
             </div>

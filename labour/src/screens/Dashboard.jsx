@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { useSelector } from "react-redux";
 import LoadingScreen from "../components/LoadingScreen";
+import axios from "axios";
 
 Chart.register(
   LineController,
@@ -31,6 +32,8 @@ const Dashboard = () => {
   const [reviewCount, setReviewCount] = useState(0);
   const [complaintCount, setComplaintCount] = useState(0);
   const [completedOrderCount, setCompletedOrderCount] = useState(0);
+
+  const [walletBalance, setWalletBalance] = useState(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -94,6 +97,23 @@ const Dashboard = () => {
     };
 
     fetchLabourStats();
+  }, [labourer._id]);
+
+  useEffect(() => {
+    const fetchWalletBalance = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/labour/${labourer._id}/wallet`
+        );
+        setWalletBalance(response.data.wallet);
+        // setLoading(false);
+      } catch (error) {
+        console.error("Error fetching wallet balance:", error);
+        // setLoading(false);
+      }
+    };
+
+    fetchWalletBalance();
   }, [labourer._id]);
 
   // If still loading, you can return a loading indicator
@@ -166,7 +186,7 @@ const Dashboard = () => {
           <div className="row">
             <div className="col-md-3">
               <div className="card-counter primary">
-                <i className="fa fa-code-fork"></i>
+                <i className="fa fa-star"></i>
                 <span className="count-numbers">{reviewCount}</span>
                 <span className="count-name">Review</span>
               </div>
@@ -174,7 +194,7 @@ const Dashboard = () => {
 
             <div className="col-md-3">
               <div className="card-counter danger">
-                <i className="fa fa-ticket"></i>
+                <i className="fa fa-exclamation-triangle"></i>
                 <span className="count-numbers">{complaintCount}</span>
                 <span className="count-name">Complaint</span>
               </div>
@@ -182,7 +202,7 @@ const Dashboard = () => {
 
             <div className="col-md-3">
               <div className="card-counter success">
-                <i className="fa fa-database"></i>
+                <i className="fa fa-check"></i>
                 <span className="count-numbers">{completedOrderCount}</span>
                 <span className="count-name">Completed Order</span>
               </div>
@@ -190,9 +210,11 @@ const Dashboard = () => {
 
             <div className="col-md-3">
               <div className="card-counter info">
-                <i className="fa fa-users"></i>
-                <span className="count-numbers">35</span>
-                <span className="count-name">Users</span>
+              <i className="fas fa-dollar-sign"></i>
+                <span className="count-numbers">
+                  {Math.round(walletBalance * 100) / 100}
+                </span>
+                <span className="count-name">Earnings</span>
               </div>
             </div>
           </div>

@@ -3,7 +3,10 @@ const router = express.Router();
 const Labour = require("../models/Labour");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { generateAccessToken, generateRefreshToken } = require("../helpers/token");
+const {
+  generateAccessToken,
+  generateRefreshToken,
+} = require("../helpers/token");
 // const requireLogin = require("../middleware/requireLogin");
 
 // labour login
@@ -187,6 +190,25 @@ router.get("/labours/service/:serviceProvided", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.get("/:labourId/wallet", async (req, res) => {
+  const { labourId } = req.params;
+
+  try {
+    // Find labourer by ID
+    const labourer = await Labour.findById(labourId);
+
+    if (!labourer) {
+      return res.status(404).json({ error: "Labourer not found" });
+    }
+
+    // Return the wallet balance
+    res.json({ wallet: labourer.wallet });
+  } catch (error) {
+    console.error("Error getting labourer wallet:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
