@@ -62,11 +62,11 @@ const PaymentModal = ({
     handleClose();
   };
 
-  window.payhere.onDismissed = function onDismissed() {
+  window.payhere.onDismissed = function onDismissed() {  
     console.log("Payment dismissed");
   };
 
-  window.payhere.onError = function onError(error) {
+  window.payhere.onError = function onError(error) { 
     console.log("Error:" + error);
   };
   function pay() {

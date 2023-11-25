@@ -81,13 +81,13 @@ const OrderDetails = ({
                 <strong>Status:</strong> {selectedOrder.status}
               </p>
               <p>
-                <strong>Order Date:</strong> {selectedOrder.createdAt}
+                <strong>Order Date:</strong> {new Date(selectedOrder.createdAt).toLocaleString()}
               </p>
               <p>
                 <strong>Delivery Address:</strong> {user.address}
               </p>
               <p>
-                <strong>Total Price:</strong> ${selectedOrder.totalPrice}
+                <strong>Total Price:</strong> LKR {selectedOrder.totalPrice}
               </p>
             </div>
             <div>

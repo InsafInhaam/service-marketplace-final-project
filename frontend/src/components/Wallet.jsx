@@ -11,7 +11,6 @@ const Wallet = () => {
   const [balance, setBalance] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [rechargeAmount, setRechargeAmount] = useState(0);
-  // const [amount, setAmount] = useState("");
 
   const handleClose = () => setShowModal(false);
 
@@ -33,7 +32,7 @@ const Wallet = () => {
   };
 
   useEffect(() => {
-    fetchBalance(); // Fetch the balance when the component mounts
+    fetchBalance(); 
   }, [balance]);
 
   // const handleAddMoney = async () => {

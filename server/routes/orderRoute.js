@@ -6,6 +6,7 @@ const { authenticateTokenLabour } = require("../middleware/requireLogin");
 const Notification = require("../models/Notification");
 const Admin = require("../models/Admin");
 const TransactionHistory = require("../models/TransactionHistory");
+const User = require('../models/User');
 
 router.post("/add-order", async (req, res) => {
   try {
@@ -350,15 +351,22 @@ router.put("/cancelOrder/:orderId", async (req, res) => {
       return res.status(404).json({ error: "Order not found" });
     }
 
-    console.log(updatedOrder)
+    console.log(updatedOrder.userId.toString())
 
-    // Refund the amount to the user's wallet
-    // const user = updatedOrder.user;
-    // const refundedAmount = updatedOrder.totalPrice;
+    const userId = updatedOrder.userId.toString();
 
-    // // Add the refunded amount to user's points
-    // user.points += refundedAmount;
-    // await user.save();
+    // Fetch the user document using the ID
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const refundedAmount = updatedOrder.totalPrice;
+
+    // Add the refunded amount to user's points
+    user.points += refundedAmount;
+    await user.save();
 
     res
       .status(200)

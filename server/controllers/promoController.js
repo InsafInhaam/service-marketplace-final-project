@@ -63,3 +63,18 @@ exports.GetPromo = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 }
+
+exports.DeletePromo = async (req, res) => {
+  try {
+    const promo = await Promo.findByIdAndDelete(req.params.id);
+
+    if (!promo) {
+      return res.status(404).json({ error: "Promo code not found" });
+    }
+
+    res.json({ message: "Promo code deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

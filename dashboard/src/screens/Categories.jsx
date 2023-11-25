@@ -13,19 +13,34 @@ const Categories = () => {
   const [loading, setLoading] = useState(false);
   const [categoryImage, setCategoryImage] = useState("");
   const [showModal, setShowModal] = useState(false); // State to track the modal visibility
+  const [editCategory, setEditCategory] = useState(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+  const [editImage, setEditImage] = useState("");
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "/api/categories/allcategories")
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         setCategories(result);
       });
   }, [categories]);
 
-  console.log(categories);
+  // console.log(categories);
 
   const handleFormSubmit = () => {
+    setLoading(true);
+    if (editCategory) {
+      // If editCategory is present, it's an update
+      handleUpdateCategory();
+    } else {
+      // If editCategory is not present, it's a new category
+      handleCreateCategory();
+    }
+  };
+
+  const handleCreateCategory = () => {
     if (!title || !description || !image) {
       return toast.error("Please fill all required fields");
     }
@@ -33,11 +48,53 @@ const Categories = () => {
     handleImageUpload();
 
     setShowModal(false);
+  };
 
-    // Reset the input fields and state variables once the form is submitted
-    setTitle("");
-    setDescription("");
-    setImage(null);
+  const handleUpdateCategory = () => {
+    if (!editCategory || !editCategory._id) {
+      toast.error("Invalid category for update");
+      return;
+    }
+
+    if (!title || !description) {
+      return toast.error("Please fill all required fields");
+    }
+
+    const body = {
+      title,
+      description,
+      image,
+    };
+
+    fetch(
+      `${process.env.REACT_APP_API_URL}/api/categories/categories/${editCategory._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          toast.error(data.error);
+        } else {
+          setLoading(false);
+          toast.success(data.message);
+          setEditCategory(null);
+          setTitle("");
+          setDescription("");
+          setImage(null);
+          setShowModal(false);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+        toast.error("Internal server error");
+      });
   };
 
   const toggleModal = () => {
@@ -52,7 +109,7 @@ const Categories = () => {
         image: categoryImage,
       };
 
-      console.log(body);
+      // console.log(body);
 
       fetch(process.env.REACT_APP_API_URL + "/api/categories/categories", {
         method: "POST",
@@ -68,8 +125,11 @@ const Categories = () => {
           } else {
             setLoading(false);
             toast.success(data.message);
-            console.log(data.message);
-            toggleModal();
+            // console.log(data.message);
+            setTitle("");
+            setDescription("");
+            setImage(null);
+            setShowModal(false);
           }
         })
         .catch((err) => {
@@ -77,7 +137,6 @@ const Categories = () => {
         });
     }
   }, [categoryImage]);
-
 
   const handleImageUpload = () => {
     if (image) {
@@ -92,28 +151,52 @@ const Categories = () => {
         .then((res) => res.json())
         .then((data) => {
           setCategoryImage(data.secure_url);
-          console.log(data.secure_url);
+          // console.log(data.secure_url);
         })
         .catch((error) => console.log(error));
     }
   };
 
+  const handleEdit = (category) => {
+    setEditCategory(category);
+    setTitle(category.title);
+    setDescription(category.description);
+    setImage(category.image);
+    setShowModal(true);
+  };
+
   const handleDelete = (id) => {
     fetch(
-      process.env.REACT_APP_API_URL + "/api/categories/deleteCategory/" + id,
+      process.env.REACT_APP_API_URL + `/api/categories/deleteCategory/${id}`,
       {
         method: "DELETE",
-        // headers: {
-        //   Authorization: "Bearer " + localStorage.getItem("jwt"),
-        // },
       }
     )
       .then((res) => res.json())
       .then((result) => {
         toast.success(result.message);
+      })
+      .catch((err) => {
+        console.error(err);
       });
   };
 
+  // pagination and search
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const itemsPerPage = 5; // Adjust as needed
+
+  const filteredOrders = categories.filter((category) =>
+    category.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
@@ -132,7 +215,7 @@ const Categories = () => {
                     <div className="card-body">
                       <div className="d-flex align-items-start justify-content-between">
                         <div>
-                          <h4 className="card-title">Category Table</h4>
+                          <h4 className="card-title">Category</h4>
                           <p className="card-description">
                             Lorem ipsum dolor sit amet
                           </p>
@@ -147,6 +230,14 @@ const Categories = () => {
                           New Category
                         </button>
                       </div>
+                      {/* Add search input */}
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="form-control w-25"
+                      />
                       <div className="table-responsive">
                         <table className="table table-striped">
                           <thead>
@@ -159,7 +250,7 @@ const Categories = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {categories?.map((category) => (
+                            {currentItems?.map((category) => (
                               <tr key={category._id}>
                                 <td className="py-1">
                                   <img src={category.image} alt="image" />
@@ -170,6 +261,7 @@ const Categories = () => {
                                   <button
                                     type="button"
                                     className="btn btn-warning"
+                                    onClick={() => handleEdit(category)}
                                     data-toggle="modal"
                                     data-target="#exampleModal"
                                   >
@@ -190,6 +282,27 @@ const Categories = () => {
                           </tbody>
                         </table>
                       </div>
+                      {/* Pagination */}
+                      <div className="pagination">
+                        {Array.from(
+                          {
+                            length: Math.ceil(
+                              filteredOrders.length / itemsPerPage
+                            ),
+                          },
+                          (_, index) => (
+                            <button
+                              key={index + 1}
+                              onClick={() => handlePageChange(index + 1)}
+                              className={
+                                currentPage === index + 1 ? "active" : ""
+                              }
+                            >
+                              {index + 1}
+                            </button>
+                          )
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -202,7 +315,7 @@ const Categories = () => {
           <div
             className={`modal fade ${showModal ? "show" : ""}`}
             id="exampleModal"
-            tabindex="-1"    
+            tabindex="-1"
             role="dialog"
             aria-labelledby="exampleModalLabel"
             aria-hidden={!showModal} // Hide the modal from screen readers when it's closed

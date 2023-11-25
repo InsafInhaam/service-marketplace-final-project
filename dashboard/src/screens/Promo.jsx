@@ -84,16 +84,29 @@ const Promo = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(process.env.REACT_APP_API_URL + "/api/promos/deleteCategory/" + id, {
+    fetch(process.env.REACT_APP_API_URL + `/api/promo/delete-promo/${id}`, {
       method: "DELETE",
-      // headers: {
-      //   Authorization: "Bearer " + localStorage.getItem("jwt"),
-      // },
     })
       .then((res) => res.json())
       .then((result) => {
         toast.success(result.message);
       });
+  };
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const itemsPerPage = 5; // Adjust as needed
+
+  const filteredOrders = promos.filter((promo) =>
+    promo.promoCode.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -125,6 +138,13 @@ const Promo = () => {
                           New Promo
                         </button>
                       </div>
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="form-control w-25"
+                      />
                       <div className="table-responsive">
                         <table className="table table-striped">
                           <thead>
@@ -175,6 +195,27 @@ const Promo = () => {
                             ))}
                           </tbody>
                         </table>
+                      </div>
+                      {/* Pagination */}
+                      <div className="pagination">
+                        {Array.from(
+                          {
+                            length: Math.ceil(
+                              filteredOrders.length / itemsPerPage
+                            ),
+                          },
+                          (_, index) => (
+                            <button
+                              key={index + 1}
+                              onClick={() => handlePageChange(index + 1)}
+                              className={
+                                currentPage === index + 1 ? "active" : ""
+                              }
+                            >
+                              {index + 1}
+                            </button>
+                          )
+                        )}
                       </div>
                     </div>
                   </div>

@@ -589,3 +589,15 @@ ul.search-results {
 
 /* contact form */
 
+/* service listing banner  */
+
+.carousel-item img {
+  height: 460px !important;
+}
+
+/* popular category */
+.aon-categories-area2-iconbox img{
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}

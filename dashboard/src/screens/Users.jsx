@@ -46,7 +46,7 @@ const Users = () => {
                 <div className="col-lg-12 grid-margin stretch-card">
                   <div className="card">
                     <div className="card-body">
-                      <h4 className="card-title">Users Table</h4>
+                      <h4 className="card-title">Users</h4>
                       <p className="card-description">
                         Lorem ipsum dolor sit amet.
                       </p>

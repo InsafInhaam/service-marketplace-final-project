@@ -14,6 +14,22 @@ const Contact = () => {
       });
   }, [contacts]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const itemsPerPage = 5; // Adjust as needed
+
+  const filteredOrders = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div className="container-scroller">
       <Navbar />
@@ -33,6 +49,14 @@ const Contact = () => {
                         </p>
                       </div>
                     </div>
+                    {/* Add search input */}
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="form-control w-25"
+                    />
                     <div className="table-responsive">
                       <table className="table table-striped">
                         <thead>
@@ -45,7 +69,7 @@ const Contact = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {contacts?.map((contact) => (
+                          {currentItems?.map((contact) => (
                             <tr key={contact._id}>
                               <td>{contact.name}</td>
                               <td>{contact.email}</td>
@@ -56,6 +80,27 @@ const Contact = () => {
                           ))}
                         </tbody>
                       </table>
+                    </div>
+                    {/* Pagination */}
+                    <div className="pagination">
+                      {Array.from(
+                        {
+                          length: Math.ceil(
+                            filteredOrders.length / itemsPerPage
+                          ),
+                        },
+                        (_, index) => (
+                          <button
+                            key={index + 1}
+                            onClick={() => handlePageChange(index + 1)}
+                            className={
+                              currentPage === index + 1 ? "active" : ""
+                            }
+                          >
+                            {index + 1}
+                          </button>
+                        )
+                      )}
                     </div>
                   </div>
                 </div>

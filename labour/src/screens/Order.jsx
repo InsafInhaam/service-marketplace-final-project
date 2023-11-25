@@ -161,7 +161,7 @@ const Order = () => {
                           </td>
                           <td>
                             <p className="fw-normal mb-1">
-                              {newOrder.serviceDate}
+                            {new Date(newOrder.serviceDate).toLocaleString()}
                             </p>
                             <p className="text-muted mb-0">
                               {newOrder.serviceTime}
@@ -224,7 +224,7 @@ const Order = () => {
                           </td>
                           <td>
                             <p className="fw-normal mb-1">
-                              {assignedOrder.serviceDate}
+                            {new Date(assignedOrder.serviceDate).toLocaleString()}
                             </p>
                             <p className="text-muted mb-0">
                               {assignedOrder.serviceTime}
@@ -297,7 +297,8 @@ const Order = () => {
                           </td>
                           <td>
                             <p className="fw-normal mb-1">
-                              {completedOrder.serviceDate}
+                            {new Date(completedOrder.serviceDate).toLocaleString()}
+
                             </p>
                             <p className="text-muted mb-0">
                               {completedOrder.serviceTime}

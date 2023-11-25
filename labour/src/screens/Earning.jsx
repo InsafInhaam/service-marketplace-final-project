@@ -69,7 +69,7 @@ const Earning = () => {
             </div>
             <br /><br />
             <div className="card">
-              <div className="card-header">Reviews</div>
+              <div className="card-header">Transaction History</div>
               <div className="card-body">
                 <table className="table align-middle mb-0 bg-white">
                   <thead className="bg-light">

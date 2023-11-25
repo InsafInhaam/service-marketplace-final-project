@@ -132,4 +132,21 @@ router.delete('/admins/:id', async (req, res) => {
   }
 });
 
+router.get("/adminWallet", async (req, res) => {
+  try {
+    // Assuming there is only one admin, you might need to adjust this logic based on your application structure
+    const admin = await Admin.findOne();
+
+    if (!admin) {
+      return res.status(404).json({ error: "Admin not found" });
+    }
+
+    const adminWalletPoints = admin.wallet;
+    res.status(200).json({ adminWalletPoints });
+  } catch (error) {
+    console.error("Error fetching admin's wallet points:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;

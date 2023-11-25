@@ -7,9 +7,11 @@ import OrderDetail from "../components/OrderDetail";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 5; // Adjust as needed
+  
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showSelectedOrderModal, setShowSelectedOrderModal] = useState(false);
 
@@ -20,7 +22,7 @@ const Order = () => {
       .then((result) => {
         setOrders(result);
       });
-  }, []); // Only fetch once on component mount
+  }, []);
 
   const filteredOrders = orders.filter((order) =>
     order.userId.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -59,7 +61,7 @@ const Order = () => {
                     <div className="card-body">
                       <div className="d-flex align-items-start justify-content-between">
                         <div>
-                          <h4 className="card-title">Services Booked</h4>
+                          <h4 className="card-title">Orders</h4>
                           <p className="card-description">
                             Lorem ipsum dolor sit amet
                           </p>
@@ -95,7 +97,9 @@ const Order = () => {
                                   {order.userId.name} ({order.userId._id})
                                 </td>
                                 <td>{order.totalPrice}</td>
-                                <td>{order.serviceDate}</td>
+                                <td>
+                                  {new Date(order.serviceDate).toLocaleString()}
+                                </td>
                                 <td>{order.serviceTime}</td>
                                 <td>
                                   {order.labourer ? "Assigned" : "Not Assigned"}

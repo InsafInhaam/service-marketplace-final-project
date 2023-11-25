@@ -117,18 +117,35 @@ const SubCategories = () => {
 
   const handleDelete = (id) => {
     fetch(
-      process.env.REACT_APP_API_URL + "/api/subcategories/deleteCategory/" + id,
+      process.env.REACT_APP_API_URL + `/api/subcategories/deleteCategory/${id}`,
       {
         method: "DELETE",
-        // headers: {
-        //   Authorization: "Bearer " + localStorage.getItem("jwt"),
-        // },
       }
     )
       .then((res) => res.json())
       .then((result) => {
         toast.success(result.message);
+      })
+      .catch((err) => {
+        console.error(err);
       });
+  };
+  
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const itemsPerPage = 5; // Adjust as needed
+
+  const filteredOrders = subcategories.filter((subcategory) =>
+    subcategory.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -148,7 +165,7 @@ const SubCategories = () => {
                     <div className="card-body">
                       <div className="d-flex align-items-start justify-content-between">
                         <div>
-                          <h4 className="card-title">Sub Category Table</h4>
+                          <h4 className="card-title">Sub Category</h4>
                           <p className="card-description">
                             Lorem ipsum dolor sit amet
                           </p>
@@ -163,6 +180,13 @@ const SubCategories = () => {
                           New Sub Category
                         </button>
                       </div>
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="form-control w-25"
+                      />
                       <div className="table-responsive">
                         <table className="table table-striped">
                           <thead>
@@ -176,7 +200,7 @@ const SubCategories = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {subcategories?.map((subcategory) => (
+                            {currentItems?.map((subcategory) => (
                               <tr key={subcategory._id}>
                                 <td className="py-1">
                                   <img src={subcategory.image} alt="image" />
@@ -210,6 +234,27 @@ const SubCategories = () => {
                           </tbody>
                         </table>
                       </div>
+                      {/* Pagination */}
+                      <div className="pagination">
+                        {Array.from(
+                          {
+                            length: Math.ceil(
+                              filteredOrders.length / itemsPerPage
+                            ),
+                          },
+                          (_, index) => (
+                            <button
+                              key={index + 1}
+                              onClick={() => handlePageChange(index + 1)}
+                              className={
+                                currentPage === index + 1 ? "active" : ""
+                              }
+                            >
+                              {index + 1}
+                            </button>
+                          )
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -231,7 +276,7 @@ const SubCategories = () => {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="exampleModalLabel">
-                    Add Category
+                    Add Sub Category
                   </h5>
                   <button
                     type="button"

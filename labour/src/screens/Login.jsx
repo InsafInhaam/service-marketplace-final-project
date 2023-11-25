@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import logo from "../assets/logo.png";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const Login = () => {
               user: data.labour,
               accessToken: data.accessToken,
               refreshToken: data.refreshToken,
-              expirationTime: data.expirationTime
+              expirationTime: data.expirationTime,
             },
           });
           toast.success(data.message); //success message
@@ -55,31 +56,18 @@ const Login = () => {
   };
 
   return (
-    <section className="h-100 bg-dark">
+    <section className="h-100">
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col">
-            <div className="card card-registration my-4">
-              <div className="row g-0">
-                <div className="col-xl-6 d-none d-xl-block">
-                  <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
-                    alt="Sample photo"
-                    className="img-fluid"
-                    style={{
-                      borderTopLeftRadius: ".25rem",
-                      borderBottomLeftRadius: ".25rem",
-                    }}
-                  />
-                </div>
-                <div className="col-xl-6">
-                  <div className="card-body p-md-5 text-black">
-                    <h3 className=" text-uppercase">
-                      Student registration form
-                    </h3>
-                    <form action="#" method="post" className="pt-4">
-                    
-
+          {/* <div className="col"> */}
+          <div className="card card-registration w-50">
+            <div className="row">
+              <div className="col-xl-12 p-0">
+                <div className="card-body text-black">
+                  <div className="brand-logo" style={{ textAlign: "center" }}>
+                    <img src={logo} alt="logo" style={{ width: "200px" }} />
+                  </div>
+                  <form action="#" method="post" className="pt-4">
                     <div className="form-group first mt-3">
                       <label htmlFor="email">Email</label>
                       <input
@@ -91,10 +79,7 @@ const Login = () => {
                         onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
-                   
 
-                   
-               
                     <div className="form-group last mt-3">
                       <label htmlFor="password">Password</label>
                       <input
@@ -107,26 +92,25 @@ const Login = () => {
                       />
                     </div>
 
-                   
                     <div className="d-flex my-3 align-items-center">
                       <span className="ml-auto">
                         Don't have an account? &nbsp;
                         <a href="/register" className="forgot-pass">
-                           Register
+                          Register
                         </a>
                       </span>
                     </div>
                     <input
                       type="button"
                       defaultValue={"Login"}
-                      className="btn btn-block btn-primary"
+                      className="btn btn-primary text-white"
                       onClick={() => handleSubmit()}
                     />
                   </form>
-                  </div>
                 </div>
               </div>
             </div>
+            {/* </div> */}
           </div>
         </div>
       </div>

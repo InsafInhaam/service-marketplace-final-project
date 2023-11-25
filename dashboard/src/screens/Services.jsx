@@ -185,6 +185,22 @@ const Services = () => {
       });
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const itemsPerPage = 5; // Adjust as needed
+
+  const filteredOrders = services.filter((service) =>
+    service.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <>
       <div className="container-scroller">
@@ -202,7 +218,7 @@ const Services = () => {
                     <div className="card-body">
                       <div className="d-flex align-items-start justify-content-between">
                         <div>
-                          <h4 className="card-title">Service Table</h4>
+                          <h4 className="card-title">Services</h4>
                           <p className="card-description">
                             Lorem ipsum dolor sit amet
                           </p>
@@ -217,6 +233,13 @@ const Services = () => {
                           New Service
                         </button>
                       </div>
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="form-control w-25"
+                      />
                       <div className="table-responsive">
                         <table className="table table-striped">
                           <thead>
@@ -232,7 +255,7 @@ const Services = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {services?.map((service) => (
+                            {currentItems?.map((service) => (
                               <tr key={service._id}>
                                 <td className="py-1">
                                   <img src={service.image} alt="image" />
@@ -266,6 +289,27 @@ const Services = () => {
                             ))}
                           </tbody>
                         </table>
+                      </div>
+                      {/* Pagination */}
+                      <div className="pagination">
+                        {Array.from(
+                          {
+                            length: Math.ceil(
+                              filteredOrders.length / itemsPerPage
+                            ),
+                          },
+                          (_, index) => (
+                            <button
+                              key={index + 1}
+                              onClick={() => handlePageChange(index + 1)}
+                              className={
+                                currentPage === index + 1 ? "active" : ""
+                              }
+                            >
+                              {index + 1}
+                            </button>
+                          )
+                        )}
                       </div>
                     </div>
                   </div>

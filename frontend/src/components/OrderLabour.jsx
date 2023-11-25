@@ -8,7 +8,7 @@ const OrderLabour = ({ onClose, selectedOrder }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">
-              Order Details
+              Order Labour Details
             </h5>
             <button
               type="button"
@@ -26,8 +26,7 @@ const OrderLabour = ({ onClose, selectedOrder }) => {
                 <div className="flex-shrink-0">
                   <img
                     src={selectedOrder.labourer.image}
-                    alt="Generic placeholder image"
-                    className={
+                    alt={
                       selectedOrder.labourer.firstname +
                       " " +
                       selectedOrder.labourer.lastname
@@ -57,7 +56,7 @@ const OrderLabour = ({ onClose, selectedOrder }) => {
                         {selectedOrder.labourer.hourlyPrice}
                       </p>
                     </div>
-                    <div className="px-3">
+                    {/* <div className="px-3">
                       <p className="small text-muted mb-1">Completed</p>
                       <p className="mb-0">
                         {selectedOrder.labourer.serviceProvided}
@@ -68,22 +67,25 @@ const OrderLabour = ({ onClose, selectedOrder }) => {
                       <p className="mb-0">
                         {selectedOrder.labourer.serviceProvided}
                       </p>
+                    </div> */}
+                  </div>
+                  {selectedOrder.status !== "completed" && (
+                    <div className="d-flex pt-1">
+                      <button
+                        type="button"
+                        className="btn btn-outline-primary me-1 flex-grow-1"
+                      >
+                        Chat
+                      </button>
+
+                      <button
+                        type="button"
+                        className="btn btn-primary flex-grow-1"
+                      >
+                        Call
+                      </button>
                     </div>
-                  </div>
-                  <div className="d-flex pt-1">
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary me-1 flex-grow-1"
-                    >
-                      Chat
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-primary flex-grow-1"
-                    >
-                      Call
-                    </button>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useState } from "react";
 import LocationSearch from "../components/LocationSearch";
+import logo from "../assets/logo.png";
 
 const Register = () => {
   const history = useNavigate();
@@ -178,165 +179,152 @@ const Register = () => {
   };
 
   return (
-    <section className="h-100 bg-dark">
+    <section className="h-100">
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col">
-            <div className="card card-registration my-4">
-              <div className="row g-0">
-                <div className="col-xl-6 d-none d-xl-block">
-                  <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
-                    alt="Sample photo"
-                    className="img-fluid"
-                    style={{
-                      borderTopLeftRadius: ".25rem",
-                      borderBottomLeftRadius: ".25rem",
-                    }}
-                  />
-                </div>
-                <div className="col-xl-6">
-                  <div className="card-body p-md-5 text-black">
-                    <h3 className="text-uppercase">Labour Registration Form</h3>
+          <div className="card card-registration w-50 p-5">
+            <div className="row">
+              <div className="col-xl-12 p-0">
+                <div className="card-body text-black p-0">
+                  <div className="brand-logo" style={{ textAlign: "center" }}>
+                    <img src={logo} alt="logo" style={{ width: "200px" }} />
                   </div>
-                  <form action="#" method="post" className="px-5">
-                    <div className="form-group first ">
-                      <label htmlFor="name">FirstName</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter ur firstname"
-                        id="firstname"
-                        value={firstname}
-                        onChange={(e) => setFirstName(e.target.value)}
-                      />
-                    </div>
-
-                    <div className="form-group first mt-3">
-                      <label htmlFor="name">LastName</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter ur name"
-                        id="lastname"
-                        value={lastname}
-                        onChange={(e) => setLastName(e.target.value)}
-                      />
-                    </div>
-
-                    <div className="form-group first mt-3">
-                      <label htmlFor="email">Email</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter ur email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    </div>
-                    <div className="form-group first mt-3">
-                      <label htmlFor="phone">Phone</label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="Enter ur phone"
-                        id="phone"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
-                    </div>
-
-                    <div className="form-group first mt-3">
-                      <label htmlFor="address">Address</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search for an address..."
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                      />
-                      {searchResults.length > 0 && (
-                        <ul className="search-results shadow-3 ">
-                          {searchResults.map((result) => (
-                            <li key={result.display_name}>
-                              <a
-                                href="#"
-                                onClick={() => handleAddressSelect(result)}
-                              >
-                                {result.display_name}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-
-                    <div className="form-group mt-3">
-                      <label htmlFor="selectField">
-                        Select Field for Labour
-                      </label>
-                      <select
-                        className="form-control"
-                        id="labourCategory"
-                        value={labourCategory}
-                        onChange={(e) => setLabourCategory(e.target.value)}
-                      >
-                        <option value="">Select a Service u provide</option>
-                        {categories.map((category) => (
-                          <option key={category._id} value={category.title}>
-                            {category.title}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="form-group last mt-3">
-                      <label htmlFor="hourlyPrice">Hourly Price</label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="Your Hourly Price"
-                        id="hourlyPrice"
-                        value={hourlyPrice}
-                        onChange={(e) => setHourlyPrice(e.target.value)}
-                      />
-                    </div>
-                    <div className="form-group last mt-3">
-                      <label htmlFor="password">Password</label>
-                      <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Your Password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </div>
-                    <div className="form-group last mt-3">
-                      <label htmlFor="password">Image</label>
-                      <input
-                        className="form-control"
-                        id="image"
-                        type="file"
-                        onChange={(e) => setImage(e.target.files[0])}
-                      />
-                    </div>
-                    <div className="d-flex my-3 align-items-center">
-                      <span className="ml-auto">
-                        Already have an account? &nbsp;
-                        <a href="/login" className="forgot-pass">
-                           Login
-                        </a>
-                      </span>
-                    </div>
-                    <input
-                      type="button"
-                      defaultValue={loading ? "Registering..." : "Register"}
-                      className="btn btn-block btn-primary"
-                      onClick={() => handleFormSubmit()}
-                    />
-                  </form>
                 </div>
+                <form action="#" method="post" className="pt-4">
+                  <div className="form-group first ">
+                    <label htmlFor="name">FirstName</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter ur firstname"
+                      id="firstname"
+                      value={firstname}
+                      onChange={(e) => setFirstName(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="form-group first mt-3">
+                    <label htmlFor="name">LastName</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter ur name"
+                      id="lastname"
+                      value={lastname}
+                      onChange={(e) => setLastName(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="form-group first mt-3">
+                    <label htmlFor="email">Email</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter ur email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group first mt-3">
+                    <label htmlFor="phone">Phone</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="Enter ur phone"
+                      id="phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="form-group first mt-3">
+                    <label htmlFor="address">Address</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Search for an address..."
+                      value={searchQuery}
+                      onChange={handleSearchChange}
+                    />
+                    {searchResults.length > 0 && (
+                      <ul className="search-results shadow-3 ">
+                        {searchResults.map((result) => (
+                          <li key={result.display_name}>
+                            <a
+                              href="#"
+                              onClick={() => handleAddressSelect(result)}
+                            >
+                              {result.display_name}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+
+                  <div className="form-group mt-3">
+                    <label htmlFor="selectField">Select Field for Labour</label>
+                    <select
+                      className="form-control"
+                      id="labourCategory"
+                      value={labourCategory}
+                      onChange={(e) => setLabourCategory(e.target.value)}
+                    >
+                      <option value="">Select a Service u provide</option>
+                      {categories.map((category) => (
+                        <option key={category._id} value={category.title}>
+                          {category.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group last mt-3">
+                    <label htmlFor="hourlyPrice">Hourly Price</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="Your Hourly Price"
+                      id="hourlyPrice"
+                      value={hourlyPrice}
+                      onChange={(e) => setHourlyPrice(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group last mt-3">
+                    <label htmlFor="password">Password</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="Your Password"
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group last mt-3">
+                    <label htmlFor="password">Image</label>
+                    <input
+                      className="form-control"
+                      id="image"
+                      type="file"
+                      onChange={(e) => setImage(e.target.files[0])}
+                    />
+                  </div>
+                  <div className="d-flex my-3 align-items-center">
+                    <span className="ml-auto">
+                      Already have an account? &nbsp;
+                      <a href="/login" className="forgot-pass">
+                        Login
+                      </a>
+                    </span>
+                  </div>
+                  <input
+                    type="button"
+                    defaultValue={loading ? "Registering..." : "Register"}
+                    className="btn btn-primary text-white"
+                    onClick={() => handleFormSubmit()}
+                  />
+                </form>
               </div>
             </div>
           </div>

@@ -133,7 +133,7 @@ const updateSubCategory = async (req, res) => {
 
 const deleteSubCategory = async (req, res) => {
   try {
-    const category = await SubCategory.findByIdAndRemove(req.params.id);
+    const category = await SubCategory.findByIdAndDelete(req.params.id);
 
     if (!category) {
       return res.status(404).json({ error: "SubCategory not found" });

@@ -218,7 +218,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="row pt-5">
+          <div className="row pt-5 px-3">
             <div className="col-md-8 shadow-lg bg-white p-3 rounded">
               <h2>Orders</h2>
               <Line data={data} options={options} />

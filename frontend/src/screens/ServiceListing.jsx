@@ -3,6 +3,9 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useLocation } from "react-router-dom";
 import ServiceItem from "../components/ServiceItem";
+import Banner001 from "../assets/banner001.jpg";
+import Banner002 from "../assets/banner002.jpg";
+import Banner003 from "../assets/banner003.jpg";
 
 const ServiceListing = () => {
   const location = useLocation();
@@ -123,21 +126,21 @@ const ServiceListing = () => {
                   <div className="carousel-inner">
                     <div className="carousel-item active">
                       <img
-                        src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp"
-                        className="d-block w-100"
+                        src={Banner001}
+                        className="d-block w-100 h-50"
                         alt="Wild Landscape"
                       />
                     </div>
                     <div className="carousel-item">
                       <img
-                        src="https://mdbcdn.b-cdn.net/img/new/slides/042.webp"
+                        src={Banner002}
                         className="d-block w-100"
                         alt="Camera"
                       />
                     </div>
                     <div className="carousel-item">
                       <img
-                        src="https://mdbcdn.b-cdn.net/img/new/slides/043.webp"
+                        src={Banner003}
                         className="d-block w-100"
                         alt="Exotic Fruits"
                       />

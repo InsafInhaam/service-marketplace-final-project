@@ -28,7 +28,7 @@ const Orders = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, [orders]);
+  }, []);
 
   // console.log(selectedOrder);
 
@@ -88,7 +88,7 @@ const Orders = () => {
       setSelectedOrder(null);
     } catch (error) {
       console.error("Error cancelling order:", error);
-      toast.error("Error cancelling order");
+      // toast.error("Error cancelling order");
     }
   };
 
@@ -150,7 +150,7 @@ const Orders = () => {
                               Your order ID - {order._id}
                             </span>
                             <span className="text-muted small">
-                              by DHFL on {order.createdAt}
+                              {new Date(order.createdAt).toLocaleString()}
                             </span>
                           </div>
                           <div>

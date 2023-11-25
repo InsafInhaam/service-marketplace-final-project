@@ -96,7 +96,7 @@ function App() {
     };
 
     // Fetch updated user details every second
-    const intervalId = setInterval(fetchUpdatedUserDetails, 10000);
+    const intervalId = setInterval(fetchUpdatedUserDetails, 100000);
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);

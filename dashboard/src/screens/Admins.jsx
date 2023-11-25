@@ -123,6 +123,22 @@ const Admins = () => {
       });
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const itemsPerPage = 5; // Adjust as needed
+
+  const filteredOrders = admins.filter((admin) =>
+  admin.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <>
       <div className="container-scroller">
@@ -140,7 +156,7 @@ const Admins = () => {
                     <div className="card-body">
                       <div className="d-flex align-items-start justify-content-between">
                         <div>
-                          <h4 className="card-title">Admin Table</h4>
+                          <h4 className="card-title">Admin</h4>
                           <p className="card-description">
                             Lorem ipsum dolor sit amet
                           </p>
@@ -155,6 +171,14 @@ const Admins = () => {
                           New Admin
                         </button>
                       </div>
+                      {/* Add search input */}
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="form-control w-25"
+                      />
                       <div className="table-responsive">
                         <table className="table table-striped">
                           <thead>
@@ -169,7 +193,7 @@ const Admins = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {admins?.map((admin) => (
+                            {currentItems?.map((admin) => (
                               <tr key={admin._id}>
                                 <td className="py-1">
                                   <img src={admin.image} alt="image" />
@@ -201,6 +225,27 @@ const Admins = () => {
                             ))}
                           </tbody>
                         </table>
+                      </div>
+                       {/* Pagination */}
+                       <div className="pagination">
+                        {Array.from(
+                          {
+                            length: Math.ceil(
+                              filteredOrders.length / itemsPerPage
+                            ),
+                          },
+                          (_, index) => (
+                            <button
+                              key={index + 1}
+                              onClick={() => handlePageChange(index + 1)}
+                              className={
+                                currentPage === index + 1 ? "active" : ""
+                              }
+                            >
+                              {index + 1}
+                            </button>
+                          )
+                        )}
                       </div>
                     </div>
                   </div>
